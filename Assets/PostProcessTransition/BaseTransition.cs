@@ -38,7 +38,7 @@ public abstract class BaseTransition<T> where T : PostProcessEffectSettings
 
     }
 
-    public virtual void Transition(float value)
+    public virtual void Lerp(float value)
     {
 
     }

@@ -184,7 +184,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         }
     }
 
-    public override void Transition(float value)
+    public override void Lerp(float value)
     {
         m_tempSettings.intensity.value = Mathf.Lerp(m_intensity.x, m_intensity.y, value);
         m_tempSettings.color.value = Color.Lerp(m_fromColor, m_toColor, value);
