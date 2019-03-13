@@ -3,31 +3,35 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class UnitTest_PostProcessTransition : MonoBehaviour
 {
-    public PostProcessProfile targetPostProcessProfile;
-    public float duration;
+    public PostProcessProfile postProcessProfileA;
+    public PostProcessProfile postProcessProfileB;
+    [Range(0f, 1f)]
+    public float lerp;
+
     private PostProcessVolume m_postProcessVolume;
-    private PostProcessTransition m_postProcessTransition;
 
     private void Awake()
     {
         m_postProcessVolume = GetComponent<PostProcessVolume>();
     }
 
-    private void Update()
+    private void OnValidate()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if(m_postProcessVolume == null)
         {
-            OnTransitionComplete();
-            m_postProcessTransition = new PostProcessTransition(m_postProcessVolume, targetPostProcessProfile, duration, OnTransitionComplete);
+            m_postProcessVolume = GetComponent<PostProcessVolume>();
         }
-    }
 
-    private void OnTransitionComplete()
-    {
-        if(m_postProcessTransition != null)
+        if(m_postProcessVolume == null)
         {
-            m_postProcessTransition.Destroy();
-            m_postProcessTransition = null;
+            return;
         }
+
+        if(postProcessProfileA == null || postProcessProfileB == null)
+        {
+            return;
+        }
+
+        m_postProcessVolume.profile = PostProcessProfileUtils.Lerp(postProcessProfileA, postProcessProfileB, lerp);
     }
 }

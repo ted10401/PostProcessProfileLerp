@@ -3,7 +3,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class PostProcessProfileUtils
 {
-    public PostProcessProfile Lerp(PostProcessProfile postProcessProfileA, PostProcessProfile postProcessProfileB, float lerp)
+    public static PostProcessProfile Lerp(PostProcessProfile postProcessProfileA, PostProcessProfile postProcessProfileB, float lerp)
     {
         PostProcessProfile postProcessProfile = Object.Instantiate(postProcessProfileA);
         new BloomTransition(postProcessProfileA, postProcessProfileB, postProcessProfile).Lerp(lerp);
