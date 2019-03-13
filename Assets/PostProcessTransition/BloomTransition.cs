@@ -1,5 +1,5 @@
-﻿using UnityEngine.Rendering.PostProcessing;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class BloomTransition : BaseTransition<Bloom>
 {
@@ -42,8 +42,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.threshold.overrideState = false;
         }
-        threshold.x = m_fromSettings == null ? 0f : m_fromSettings.threshold.value;
-        threshold.y = m_toSettings == null ? 0f : m_toSettings.threshold.value;
+        threshold.x = m_fromSettings == null ? 1f : m_fromSettings.threshold.value;
+        threshold.y = m_toSettings == null ? 1f : m_toSettings.threshold.value;
 
         //softKnee
         if ((m_fromSettings != null && m_fromSettings.softKnee.overrideState) ||
@@ -55,8 +55,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.softKnee.overrideState = false;
         }
-        softKnee.x = m_fromSettings == null ? 0f : m_fromSettings.softKnee.value;
-        softKnee.y = m_toSettings == null ? 0f : m_toSettings.softKnee.value;
+        softKnee.x = m_fromSettings == null ? 0.5f : m_fromSettings.softKnee.value;
+        softKnee.y = m_toSettings == null ? 0.5f : m_toSettings.softKnee.value;
 
         //clamp
         if ((m_fromSettings != null && m_fromSettings.clamp.overrideState) ||
@@ -68,8 +68,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.clamp.overrideState = false;
         }
-        clamp.x = m_fromSettings == null ? 0f : m_fromSettings.clamp.value;
-        clamp.y = m_toSettings == null ? 0f : m_toSettings.clamp.value;
+        clamp.x = m_fromSettings == null ? 65472f : m_fromSettings.clamp.value;
+        clamp.y = m_toSettings == null ? 65472f : m_toSettings.clamp.value;
 
         //diffusion
         if ((m_fromSettings != null && m_fromSettings.diffusion.overrideState) ||
@@ -81,8 +81,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.diffusion.overrideState = false;
         }
-        diffusion.x = m_fromSettings == null ? 0f : m_fromSettings.diffusion.value;
-        diffusion.y = m_toSettings == null ? 0f : m_toSettings.diffusion.value;
+        diffusion.x = m_fromSettings == null ? 7f : m_fromSettings.diffusion.value;
+        diffusion.y = m_toSettings == null ? 7f : m_toSettings.diffusion.value;
 
         //anamorphicRatio
         if ((m_fromSettings != null && m_fromSettings.anamorphicRatio.overrideState) ||
@@ -107,8 +107,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.color.overrideState = false;
         }
-        fromColor = m_fromSettings == null ? Color.white : m_fromSettings.color.value;
-        toColor = m_toSettings == null ? Color.white : m_toSettings.color.value;
+        fromColor = m_fromSettings == null ? Color.black : m_fromSettings.color.value;
+        toColor = m_toSettings == null ? Color.black : m_toSettings.color.value;
 
         //dirtIntensity
         if ((m_fromSettings != null && m_fromSettings.dirtIntensity.overrideState) ||
@@ -152,6 +152,10 @@ public class BloomTransition : BaseTransition<Bloom>
                 {
                     m_tempSettings.fastMode.value = m_fromSettings.fastMode.value;
                 }
+                else
+                {
+                    m_tempSettings.fastMode.value = false;
+                }
             }
             else
             {
@@ -159,11 +163,49 @@ public class BloomTransition : BaseTransition<Bloom>
                 {
                     m_tempSettings.fastMode.value = m_toSettings.fastMode.value;
                 }
+                else
+                {
+                    m_tempSettings.fastMode.value = false;
+                }
             }
         }
         else
         {
             m_tempSettings.fastMode.overrideState = false;
+        }
+
+        //dirtTexture
+        if ((m_fromSettings != null && m_fromSettings.dirtTexture.overrideState) ||
+            (m_toSettings != null && m_toSettings.dirtTexture.overrideState))
+        {
+            m_tempSettings.dirtTexture.overrideState = true;
+
+            if (value < 0.5f)
+            {
+                if (m_fromSettings != null)
+                {
+                    m_tempSettings.dirtTexture.value = m_fromSettings.dirtTexture.value;
+                }
+                else
+                {
+                    m_tempSettings.dirtTexture.value = null;
+                }
+            }
+            else
+            {
+                if (m_toSettings != null)
+                {
+                    m_tempSettings.dirtTexture.value = m_toSettings.dirtTexture.value;
+                }
+                else
+                {
+                    m_tempSettings.dirtTexture.value = null;
+                }
+            }
+        }
+        else
+        {
+            m_tempSettings.dirtTexture.overrideState = false;
         }
     }
 }

@@ -278,7 +278,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c5da1b7d421e1343b5ebc8d8a20b6f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  postProcessProfile: {fileID: 11400000, guid: f604ebb6abd1af442837494b1ab8457a, type: 2}
+  postProcessProfileA: {fileID: 11400000, guid: a9d99af317e1d624ba63ae54eef2fe90,
+    type: 2}
+  postProcessProfileB: {fileID: 11400000, guid: f604ebb6abd1af442837494b1ab8457a,
+    type: 2}
   duration: 1
 --- !u!114 &534669907
 MonoBehaviour:

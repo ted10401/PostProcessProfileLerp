@@ -32,6 +32,40 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
             return;
         }
 
+        //spectralLut
+        if ((m_fromSettings != null && m_fromSettings.spectralLut.overrideState) ||
+            (m_toSettings != null && m_toSettings.spectralLut.overrideState))
+        {
+            m_tempSettings.spectralLut.overrideState = true;
+
+            if (value < 0.5f)
+            {
+                if (m_fromSettings != null)
+                {
+                    m_tempSettings.spectralLut.value = m_fromSettings.spectralLut.value;
+                }
+                else
+                {
+                    m_tempSettings.spectralLut.value = null;
+                }
+            }
+            else
+            {
+                if (m_toSettings != null)
+                {
+                    m_tempSettings.spectralLut.value = m_toSettings.spectralLut.value;
+                }
+                else
+                {
+                    m_tempSettings.spectralLut.value = null;
+                }
+            }
+        }
+        else
+        {
+            m_tempSettings.spectralLut.overrideState = false;
+        }
+
         m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
 
         //fastMode
@@ -46,12 +80,20 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
                 {
                     m_tempSettings.fastMode.value = m_fromSettings.fastMode.value;
                 }
+                else
+                {
+                    m_tempSettings.fastMode.value = false;
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.fastMode.value = m_toSettings.fastMode.value;
+                }
+                else
+                {
+                    m_tempSettings.fastMode.value = false;
                 }
             }
         }

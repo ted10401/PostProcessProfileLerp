@@ -42,8 +42,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.color.overrideState = false;
         }
-        fromColor = m_fromSettings == null ? Color.white : m_fromSettings.color.value;
-        toColor = m_toSettings == null ? Color.white : m_toSettings.color.value;
+        fromColor = m_fromSettings == null ? Color.black : m_fromSettings.color.value;
+        toColor = m_toSettings == null ? Color.black : m_toSettings.color.value;
 
         //noiseFilterTolerance
         if ((m_fromSettings != null && m_fromSettings.noiseFilterTolerance.overrideState) ||
@@ -68,8 +68,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.blurTolerance.overrideState = false;
         }
-        blurTolerance.x = m_fromSettings == null ? 0f : m_fromSettings.blurTolerance.value;
-        blurTolerance.y = m_toSettings == null ? 0f : m_toSettings.blurTolerance.value;
+        blurTolerance.x = m_fromSettings == null ? -4.6f : m_fromSettings.blurTolerance.value;
+        blurTolerance.y = m_toSettings == null ? -4.6f : m_toSettings.blurTolerance.value;
 
         //upsampleTolerance
         if ((m_fromSettings != null && m_fromSettings.upsampleTolerance.overrideState) ||
@@ -81,8 +81,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.upsampleTolerance.overrideState = false;
         }
-        upsampleTolerance.x = m_fromSettings == null ? 0f : m_fromSettings.upsampleTolerance.value;
-        upsampleTolerance.y = m_toSettings == null ? 0f : m_toSettings.upsampleTolerance.value;
+        upsampleTolerance.x = m_fromSettings == null ? -12f : m_fromSettings.upsampleTolerance.value;
+        upsampleTolerance.y = m_toSettings == null ? -12f : m_toSettings.upsampleTolerance.value;
 
         //thicknessModifier
         if ((m_fromSettings != null && m_fromSettings.thicknessModifier.overrideState) ||
@@ -94,8 +94,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.thicknessModifier.overrideState = false;
         }
-        thicknessModifier.x = m_fromSettings == null ? 0f : m_fromSettings.thicknessModifier.value;
-        thicknessModifier.y = m_toSettings == null ? 0f : m_toSettings.thicknessModifier.value;
+        thicknessModifier.x = m_fromSettings == null ? 1f : m_fromSettings.thicknessModifier.value;
+        thicknessModifier.y = m_toSettings == null ? 1f : m_toSettings.thicknessModifier.value;
 
         //directLightingStrength
         if ((m_fromSettings != null && m_fromSettings.directLightingStrength.overrideState) ||
@@ -120,8 +120,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.radius.overrideState = false;
         }
-        radius.x = m_fromSettings == null ? 0f : m_fromSettings.radius.value;
-        radius.y = m_toSettings == null ? 0f : m_toSettings.radius.value;
+        radius.x = m_fromSettings == null ? 0.25f : m_fromSettings.radius.value;
+        radius.y = m_toSettings == null ? 0.25f : m_toSettings.radius.value;
     }
 
     public override void Lerp(float value)
@@ -143,12 +143,20 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
                 {
                     m_tempSettings.mode.value = m_fromSettings.mode.value;
                 }
+                else
+                {
+                    m_tempSettings.mode.value = AmbientOcclusionMode.MultiScaleVolumetricObscurance;
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.mode.value = m_toSettings.mode.value;
+                }
+                else
+                {
+                    m_tempSettings.mode.value = AmbientOcclusionMode.MultiScaleVolumetricObscurance;
                 }
             }
         }
@@ -172,12 +180,20 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
                 {
                     m_tempSettings.ambientOnly.value = m_fromSettings.ambientOnly.value;
                 }
+                else
+                {
+                    m_tempSettings.ambientOnly.value = true;
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.ambientOnly.value = m_toSettings.ambientOnly.value;
+                }
+                else
+                {
+                    m_tempSettings.ambientOnly.value = true;
                 }
             }
         }
@@ -205,12 +221,20 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
                 {
                     m_tempSettings.quality.value = m_fromSettings.quality.value;
                 }
+                else
+                {
+                    m_tempSettings.quality.value = AmbientOcclusionQuality.Medium;
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.quality.value = m_toSettings.quality.value;
+                }
+                else
+                {
+                    m_tempSettings.quality.value = AmbientOcclusionQuality.Medium;
                 }
             }
         }

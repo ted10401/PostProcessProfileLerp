@@ -64,8 +64,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.toneCurveToeLength.overrideState = false;
         }
-        toneCurveToeLength.x = m_fromSettings == null ? 0f : m_fromSettings.toneCurveToeLength.value;
-        toneCurveToeLength.y = m_toSettings == null ? 0f : m_toSettings.toneCurveToeLength.value;
+        toneCurveToeLength.x = m_fromSettings == null ? 0.5f : m_fromSettings.toneCurveToeLength.value;
+        toneCurveToeLength.y = m_toSettings == null ? 0.5f : m_toSettings.toneCurveToeLength.value;
 
         //toneCurveShoulderStrength
         if ((m_fromSettings != null && m_fromSettings.toneCurveShoulderStrength.overrideState) ||
@@ -90,8 +90,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.toneCurveShoulderLength.overrideState = false;
         }
-        toneCurveShoulderLength.x = m_fromSettings == null ? 0f : m_fromSettings.toneCurveShoulderLength.value;
-        toneCurveShoulderLength.y = m_toSettings == null ? 0f : m_toSettings.toneCurveShoulderLength.value;
+        toneCurveShoulderLength.x = m_fromSettings == null ? 0.5f : m_fromSettings.toneCurveShoulderLength.value;
+        toneCurveShoulderLength.y = m_toSettings == null ? 0.5f : m_toSettings.toneCurveShoulderLength.value;
 
         //toneCurveShoulderAngle
         if ((m_fromSettings != null && m_fromSettings.toneCurveShoulderAngle.overrideState) ||
@@ -116,8 +116,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.toneCurveGamma.overrideState = false;
         }
-        toneCurveGamma.x = m_fromSettings == null ? 0f : m_fromSettings.toneCurveGamma.value;
-        toneCurveGamma.y = m_toSettings == null ? 0f : m_toSettings.toneCurveGamma.value;
+        toneCurveGamma.x = m_fromSettings == null ? 1f : m_fromSettings.toneCurveGamma.value;
+        toneCurveGamma.y = m_toSettings == null ? 1f : m_toSettings.toneCurveGamma.value;
 
         //ldrLutContribution
         if ((m_fromSettings != null && m_fromSettings.ldrLutContribution.overrideState) ||
@@ -129,8 +129,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.ldrLutContribution.overrideState = false;
         }
-        ldrLutContribution.x = m_fromSettings == null ? 0f : m_fromSettings.ldrLutContribution.value;
-        ldrLutContribution.y = m_toSettings == null ? 0f : m_toSettings.ldrLutContribution.value;
+        ldrLutContribution.x = m_fromSettings == null ? 1f : m_fromSettings.ldrLutContribution.value;
+        ldrLutContribution.y = m_toSettings == null ? 1f : m_toSettings.ldrLutContribution.value;
 
         //temperature
         if ((m_fromSettings != null && m_fromSettings.temperature.overrideState) ||
@@ -246,8 +246,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerRedOutRedIn.overrideState = false;
         }
-        mixerRedOutRedIn.x = m_fromSettings == null ? 0f : m_fromSettings.mixerRedOutRedIn.value;
-        mixerRedOutRedIn.y = m_toSettings == null ? 0f : m_toSettings.mixerRedOutRedIn.value;
+        mixerRedOutRedIn.x = m_fromSettings == null ? 100f : m_fromSettings.mixerRedOutRedIn.value;
+        mixerRedOutRedIn.y = m_toSettings == null ? 100f : m_toSettings.mixerRedOutRedIn.value;
 
         //mixerRedOutGreenIn
         if ((m_fromSettings != null && m_fromSettings.mixerRedOutGreenIn.overrideState) ||
@@ -298,8 +298,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerGreenOutGreenIn.overrideState = false;
         }
-        mixerGreenOutGreenIn.x = m_fromSettings == null ? 0f : m_fromSettings.mixerGreenOutGreenIn.value;
-        mixerGreenOutGreenIn.y = m_toSettings == null ? 0f : m_toSettings.mixerGreenOutGreenIn.value;
+        mixerGreenOutGreenIn.x = m_fromSettings == null ? 100f : m_fromSettings.mixerGreenOutGreenIn.value;
+        mixerGreenOutGreenIn.y = m_toSettings == null ? 100f : m_toSettings.mixerGreenOutGreenIn.value;
 
         //mixerGreenOutBlueIn
         if ((m_fromSettings != null && m_fromSettings.mixerGreenOutBlueIn.overrideState) ||
@@ -350,8 +350,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerBlueOutBlueIn.overrideState = false;
         }
-        mixerBlueOutBlueIn.x = m_fromSettings == null ? 0f : m_fromSettings.mixerBlueOutBlueIn.value;
-        mixerBlueOutBlueIn.y = m_toSettings == null ? 0f : m_toSettings.mixerBlueOutBlueIn.value;
+        mixerBlueOutBlueIn.x = m_fromSettings == null ? 100f : m_fromSettings.mixerBlueOutBlueIn.value;
+        mixerBlueOutBlueIn.y = m_toSettings == null ? 100f : m_toSettings.mixerBlueOutBlueIn.value;
 
         //lift
         if ((m_fromSettings != null && m_fromSettings.lift.overrideState) ||
@@ -363,8 +363,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.lift.overrideState = false;
         }
-        fromLift = m_fromSettings == null ? Vector4.zero : m_fromSettings.lift.value;
-        toLift = m_toSettings == null ? Vector4.zero : m_toSettings.lift.value;
+        fromLift = m_fromSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_fromSettings.lift.value;
+        toLift = m_toSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_toSettings.lift.value;
 
         //gamma
         if ((m_fromSettings != null && m_fromSettings.gamma.overrideState) ||
@@ -376,8 +376,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.gamma.overrideState = false;
         }
-        fromGamma = m_fromSettings == null ? Vector4.zero : m_fromSettings.gamma.value;
-        toGamma = m_toSettings == null ? Vector4.zero : m_toSettings.gamma.value;
+        fromGamma = m_fromSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_fromSettings.gamma.value;
+        toGamma = m_toSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_toSettings.gamma.value;
 
         //gain
         if ((m_fromSettings != null && m_fromSettings.gain.overrideState) ||
@@ -389,8 +389,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.gain.overrideState = false;
         }
-        fromGain = m_fromSettings == null ? Vector4.zero : m_fromSettings.gain.value;
-        toGain = m_toSettings == null ? Vector4.zero : m_toSettings.gain.value;
+        fromGain = m_fromSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_fromSettings.gain.value;
+        toGain = m_toSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_toSettings.gain.value;
     }
 
     public override void Lerp(float value)
@@ -412,12 +412,20 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 {
                     m_tempSettings.gradingMode.value = m_fromSettings.gradingMode.value;
                 }
+                else
+                {
+                    m_tempSettings.gradingMode.value = GradingMode.HighDefinitionRange;
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.gradingMode.value = m_toSettings.gradingMode.value;
+                }
+                else
+                {
+                    m_tempSettings.gradingMode.value = GradingMode.HighDefinitionRange;
                 }
             }
         }
@@ -438,12 +446,20 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 {
                     m_tempSettings.externalLut.value = m_fromSettings.externalLut.value;
                 }
+                else
+                {
+                    m_tempSettings.externalLut.value = null;
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.externalLut.value = m_toSettings.externalLut.value;
+                }
+                else
+                {
+                    m_tempSettings.externalLut.value = null;
                 }
             }
         }
@@ -464,12 +480,20 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 {
                     m_tempSettings.tonemapper.value = m_fromSettings.tonemapper.value;
                 }
+                else
+                {
+                    m_tempSettings.tonemapper.value = Tonemapper.None;
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.tonemapper.value = m_toSettings.tonemapper.value;
+                }
+                else
+                {
+                    m_tempSettings.tonemapper.value = Tonemapper.None;
                 }
             }
         }
@@ -508,12 +532,20 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 {
                     m_tempSettings.ldrLut.value = m_fromSettings.ldrLut.value;
                 }
+                else
+                {
+                    m_tempSettings.ldrLut.value = null;
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.ldrLut.value = m_toSettings.ldrLut.value;
+                }
+                else
+                {
+                    m_tempSettings.ldrLut.value = null;
                 }
             }
         }
@@ -597,12 +629,26 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 {
                     m_tempSettings.masterCurve.value = m_fromSettings.masterCurve.value;
                 }
+                else
+                {
+                    m_tempSettings.masterCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
+                    new Keyframe (0f, 0f, 1f, 1f),
+                    new Keyframe (1f, 1f, 1f, 1f)
+                    }), 0f, false, new Vector2(0f, 1f));
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.masterCurve.value = m_toSettings.masterCurve.value;
+                }
+                else
+                {
+                    m_tempSettings.masterCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
+                    new Keyframe (0f, 0f, 1f, 1f),
+                    new Keyframe (1f, 1f, 1f, 1f)
+                    }), 0f, false, new Vector2(0f, 1f));
                 }
             }
         }
@@ -623,12 +669,26 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 {
                     m_tempSettings.redCurve.value = m_fromSettings.redCurve.value;
                 }
+                else
+                {
+                    m_tempSettings.masterCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
+                    new Keyframe (0f, 0f, 1f, 1f),
+                    new Keyframe (1f, 1f, 1f, 1f)
+                    }), 0f, false, new Vector2(0f, 1f));
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.redCurve.value = m_toSettings.redCurve.value;
+                }
+                else
+                {
+                    m_tempSettings.masterCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
+                    new Keyframe (0f, 0f, 1f, 1f),
+                    new Keyframe (1f, 1f, 1f, 1f)
+                    }), 0f, false, new Vector2(0f, 1f));
                 }
             }
         }
@@ -649,12 +709,26 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 {
                     m_tempSettings.greenCurve.value = m_fromSettings.greenCurve.value;
                 }
+                else
+                {
+                    m_tempSettings.greenCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
+                        new Keyframe (0f, 0f, 1f, 1f),
+                        new Keyframe (1f, 1f, 1f, 1f)
+                    }), 0f, false, new Vector2(0f, 1f));
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.greenCurve.value = m_toSettings.greenCurve.value;
+                }
+                else
+                {
+                    m_tempSettings.greenCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
+                        new Keyframe (0f, 0f, 1f, 1f),
+                        new Keyframe (1f, 1f, 1f, 1f)
+                    }), 0f, false, new Vector2(0f, 1f));
                 }
             }
         }
@@ -675,12 +749,26 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 {
                     m_tempSettings.blueCurve.value = m_fromSettings.blueCurve.value;
                 }
+                else
+                {
+                    m_tempSettings.blueCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
+                        new Keyframe (0f, 0f, 1f, 1f),
+                        new Keyframe (1f, 1f, 1f, 1f)
+                    }), 0f, false, new Vector2(0f, 1f));
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.blueCurve.value = m_toSettings.blueCurve.value;
+                }
+                else
+                {
+                    m_tempSettings.blueCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
+                        new Keyframe (0f, 0f, 1f, 1f),
+                        new Keyframe (1f, 1f, 1f, 1f)
+                    }), 0f, false, new Vector2(0f, 1f));
                 }
             }
         }
@@ -727,12 +815,20 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 {
                     m_tempSettings.hueVsSatCurve.value = m_fromSettings.hueVsSatCurve.value;
                 }
+                else
+                {
+                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.hueVsSatCurve.value = m_toSettings.hueVsSatCurve.value;
+                }
+                else
+                {
+                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
                 }
             }
         }
@@ -753,12 +849,20 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 {
                     m_tempSettings.satVsSatCurve.value = m_fromSettings.satVsSatCurve.value;
                 }
+                else
+                {
+                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.satVsSatCurve.value = m_toSettings.satVsSatCurve.value;
+                }
+                else
+                {
+                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
                 }
             }
         }
@@ -779,12 +883,20 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 {
                     m_tempSettings.lumVsSatCurve.value = m_fromSettings.lumVsSatCurve.value;
                 }
+                else
+                {
+                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
+                }
             }
             else
             {
                 if (m_toSettings != null)
                 {
                     m_tempSettings.lumVsSatCurve.value = m_toSettings.lumVsSatCurve.value;
+                }
+                else
+                {
+                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
                 }
             }
         }
