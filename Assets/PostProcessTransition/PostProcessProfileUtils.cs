@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class PostProcessProfileUtils
+public static class PostProcessProfileUtils
 {
     public static PostProcessProfile Lerp(PostProcessProfile postProcessProfileA, PostProcessProfile postProcessProfileB, float lerp)
     {
@@ -14,4 +14,6 @@ public class PostProcessProfileUtils
 
         return postProcessProfile;
     }
+
+    public static void Transition(this PostProcessVolume postProcessVolume, PostProcessProfile postProcessProfile, float duration) => new PostProcessTransition(postProcessVolume, postProcessProfile, duration);
 }

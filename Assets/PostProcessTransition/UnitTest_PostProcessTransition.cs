@@ -5,8 +5,8 @@ public class UnitTest_PostProcessTransition : MonoBehaviour
 {
     public PostProcessProfile postProcessProfileA;
     public PostProcessProfile postProcessProfileB;
-    [Range(0f, 1f)]
     public float lerp;
+    public float duration;
 
     private PostProcessVolume m_postProcessVolume;
 
@@ -17,21 +17,17 @@ public class UnitTest_PostProcessTransition : MonoBehaviour
 
     private void OnValidate()
     {
-        if(m_postProcessVolume == null)
-        {
-            m_postProcessVolume = GetComponent<PostProcessVolume>();
-        }
-
-        if(m_postProcessVolume == null)
-        {
-            return;
-        }
-
-        if(postProcessProfileA == null || postProcessProfileB == null)
-        {
-            return;
-        }
-
         m_postProcessVolume.profile = PostProcessProfileUtils.Lerp(postProcessProfileA, postProcessProfileB, lerp);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if(m_postProcessVolume != null)
+            {
+                m_postProcessVolume.Transition(postProcessProfileA, duration);
+            }
+        }
     }
 }

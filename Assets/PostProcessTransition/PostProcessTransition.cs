@@ -5,24 +5,23 @@ using System;
 public class PostProcessTransition
 {
     private Action m_onComplete;
-    private PostProcessProfile m_tempProfile;
-    private BloomTransition m_bloomTransition;
     private AmbientOcclusionTransition m_ambientOcclusionTransition;
     private AutoExposureTransition m_autoExposureTransition;
+    private BloomTransition m_bloomTransition;
     private ChromaticAberrationTransition m_chromaticAberrationTransition;
     private ColorGradingTransition m_colorGradingTransition;
     private Tweener m_tweener;
 
-    public PostProcessTransition(PostProcessVolume postProcessVolume, PostProcessProfile postProcessProfile, float duration, Action onComplete)
+    public PostProcessTransition(PostProcessVolume postProcessVolume, PostProcessProfile postProcessProfile, float duration)
     {
-        m_onComplete = onComplete;
-        m_tempProfile = UnityEngine.Object.Instantiate(postProcessVolume.profile);
-        m_bloomTransition = new BloomTransition(postProcessVolume.profile, postProcessProfile, m_tempProfile);
-        m_ambientOcclusionTransition = new AmbientOcclusionTransition(postProcessVolume.profile, postProcessProfile, m_tempProfile);
-        m_autoExposureTransition = new AutoExposureTransition(postProcessVolume.profile, postProcessProfile, m_tempProfile);
-        m_chromaticAberrationTransition = new ChromaticAberrationTransition(postProcessVolume.profile, postProcessProfile, m_tempProfile);
-        m_colorGradingTransition = new ColorGradingTransition(postProcessVolume.profile, postProcessProfile, m_tempProfile);
-        postProcessVolume.profile = m_tempProfile;
+        PostProcessProfile from = postProcessVolume.profile;
+        postProcessVolume.profile = UnityEngine.Object.Instantiate(from);
+
+        m_ambientOcclusionTransition = new AmbientOcclusionTransition(from, postProcessProfile, postProcessVolume.profile);
+        m_autoExposureTransition = new AutoExposureTransition(from, postProcessProfile, postProcessVolume.profile);
+        m_bloomTransition = new BloomTransition(from, postProcessProfile, postProcessVolume.profile);
+        m_chromaticAberrationTransition = new ChromaticAberrationTransition(from, postProcessProfile, postProcessVolume.profile);
+        m_colorGradingTransition = new ColorGradingTransition(from, postProcessProfile, postProcessVolume.profile);
 
         m_tweener = DOTween.To(OnTransitionUpdate, 0f, 1f, duration).OnComplete(OnTransitionComplete);
     }
@@ -48,9 +47,35 @@ public class PostProcessTransition
     private void OnTransitionComplete()
     {
         m_tweener = null;
-        if(m_onComplete != null)
+
+        if(m_bloomTransition != null)
         {
-            m_onComplete();
+            m_bloomTransition.Destroy();
+            m_bloomTransition = null;
+        }
+
+        if (m_ambientOcclusionTransition != null)
+        {
+            m_ambientOcclusionTransition.Destroy();
+            m_ambientOcclusionTransition = null;
+        }
+
+        if (m_autoExposureTransition != null)
+        {
+            m_autoExposureTransition.Destroy();
+            m_autoExposureTransition = null;
+        }
+
+        if (m_chromaticAberrationTransition != null)
+        {
+            m_chromaticAberrationTransition.Destroy();
+            m_chromaticAberrationTransition = null;
+        }
+
+        if (m_colorGradingTransition != null)
+        {
+            m_colorGradingTransition.Destroy();
+            m_colorGradingTransition = null;
         }
     }
 }

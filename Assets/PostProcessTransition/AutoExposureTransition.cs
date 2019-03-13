@@ -3,13 +3,13 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class AutoExposureTransition : BaseTransition<AutoExposure>
 {
-    private Vector2 m_fromFiltering;
-    private Vector2 m_toFiltering;
-    private Vector2 m_minLuminance;
-    private Vector2 m_maxLuminance;
-    private Vector2 m_keyValue;
-    private Vector2 m_speedUp;
-    private Vector2 m_speedDown;
+    public Vector2 fromFiltering;
+    public Vector2 toFiltering;
+    public Vector2 minLuminance;
+    public Vector2 maxLuminance;
+    public Vector2 keyValue;
+    public Vector2 speedUp;
+    public Vector2 speedDown;
 
     public AutoExposureTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
@@ -27,8 +27,8 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.filtering.overrideState = false;
         }
-        m_fromFiltering = m_fromSettings == null ? Vector2.zero : m_fromSettings.filtering.value;
-        m_toFiltering = m_toSettings == null ? Vector2.zero : m_toSettings.filtering.value;
+        fromFiltering = m_fromSettings == null ? Vector2.zero : m_fromSettings.filtering.value;
+        toFiltering = m_toSettings == null ? Vector2.zero : m_toSettings.filtering.value;
 
         //minLuminance
         if ((m_fromSettings != null && m_fromSettings.minLuminance.overrideState) ||
@@ -40,8 +40,8 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.minLuminance.overrideState = false;
         }
-        m_minLuminance.x = m_fromSettings == null ? 0f : m_fromSettings.minLuminance.value;
-        m_minLuminance.y = m_toSettings == null ? 0f : m_toSettings.minLuminance.value;
+        minLuminance.x = m_fromSettings == null ? 0f : m_fromSettings.minLuminance.value;
+        minLuminance.y = m_toSettings == null ? 0f : m_toSettings.minLuminance.value;
 
         //maxLuminance
         if ((m_fromSettings != null && m_fromSettings.maxLuminance.overrideState) ||
@@ -53,8 +53,8 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.maxLuminance.overrideState = false;
         }
-        m_maxLuminance.x = m_fromSettings == null ? 0f : m_fromSettings.maxLuminance.value;
-        m_maxLuminance.y = m_toSettings == null ? 0f : m_toSettings.maxLuminance.value;
+        maxLuminance.x = m_fromSettings == null ? 0f : m_fromSettings.maxLuminance.value;
+        maxLuminance.y = m_toSettings == null ? 0f : m_toSettings.maxLuminance.value;
 
         //keyValue
         if ((m_fromSettings != null && m_fromSettings.keyValue.overrideState) ||
@@ -66,28 +66,8 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.keyValue.overrideState = false;
         }
-        m_keyValue.x = m_fromSettings == null ? 0f : m_fromSettings.keyValue.value;
-        m_keyValue.y = m_toSettings == null ? 0f : m_toSettings.keyValue.value;
-
-        //eyeAdaptation
-        if ((m_fromSettings != null && m_fromSettings.eyeAdaptation.overrideState) ||
-            (m_toSettings != null && m_toSettings.eyeAdaptation.overrideState))
-        {
-            m_tempSettings.eyeAdaptation.overrideState = true;
-
-            if (m_toSettings != null)
-            {
-                m_tempSettings.eyeAdaptation.value = m_toSettings.eyeAdaptation.value;
-            }
-            else if (m_fromSettings != null)
-            {
-                m_tempSettings.eyeAdaptation.value = m_fromSettings.eyeAdaptation.value;
-            }
-        }
-        else
-        {
-            m_tempSettings.eyeAdaptation.overrideState = false;
-        }
+        keyValue.x = m_fromSettings == null ? 0f : m_fromSettings.keyValue.value;
+        keyValue.y = m_toSettings == null ? 0f : m_toSettings.keyValue.value;
 
         //speedUp
         if ((m_fromSettings != null && m_fromSettings.speedUp.overrideState) ||
@@ -99,8 +79,8 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.speedUp.overrideState = false;
         }
-        m_speedUp.x = m_fromSettings == null ? 0f : m_fromSettings.speedUp.value;
-        m_speedUp.y = m_toSettings == null ? 0f : m_toSettings.speedUp.value;
+        speedUp.x = m_fromSettings == null ? 0f : m_fromSettings.speedUp.value;
+        speedUp.y = m_toSettings == null ? 0f : m_toSettings.speedUp.value;
 
         //speedDown
         if ((m_fromSettings != null && m_fromSettings.speedDown.overrideState) ||
@@ -112,17 +92,44 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.speedDown.overrideState = false;
         }
-        m_speedDown.x = m_fromSettings == null ? 0f : m_fromSettings.speedDown.value;
-        m_speedDown.y = m_toSettings == null ? 0f : m_toSettings.speedDown.value;
+        speedDown.x = m_fromSettings == null ? 0f : m_fromSettings.speedDown.value;
+        speedDown.y = m_toSettings == null ? 0f : m_toSettings.speedDown.value;
     }
 
     public override void Lerp(float value)
     {
-        m_tempSettings.filtering.value = Vector2.Lerp(m_fromFiltering, m_toFiltering, value);
-        m_tempSettings.minLuminance.value = Mathf.Lerp(m_minLuminance.x, m_minLuminance.y, value);
-        m_tempSettings.maxLuminance.value = Mathf.Lerp(m_maxLuminance.x, m_minLuminance.y, value);
-        m_tempSettings.keyValue.value = Mathf.Lerp(m_keyValue.x, m_keyValue.y, value);
-        m_tempSettings.speedUp.value = Mathf.Lerp(m_speedUp.x, m_speedUp.y, value);
-        m_tempSettings.speedDown.value = Mathf.Lerp(m_speedDown.x, m_speedDown.y, value);
+        m_tempSettings.filtering.value = Vector2.Lerp(fromFiltering, toFiltering, value);
+        m_tempSettings.minLuminance.value = Mathf.Lerp(minLuminance.x, minLuminance.y, value);
+        m_tempSettings.maxLuminance.value = Mathf.Lerp(maxLuminance.x, minLuminance.y, value);
+        m_tempSettings.keyValue.value = Mathf.Lerp(keyValue.x, keyValue.y, value);
+
+        //eyeAdaptation
+        if ((m_fromSettings != null && m_fromSettings.eyeAdaptation.overrideState) ||
+            (m_toSettings != null && m_toSettings.eyeAdaptation.overrideState))
+        {
+            m_tempSettings.eyeAdaptation.overrideState = true;
+
+            if(value < 0.5f)
+            {
+                if (m_fromSettings != null)
+                {
+                    m_tempSettings.eyeAdaptation.value = m_fromSettings.eyeAdaptation.value;
+                }
+            }
+            else
+            {
+                if (m_toSettings != null)
+                {
+                    m_tempSettings.eyeAdaptation.value = m_toSettings.eyeAdaptation.value;
+                }
+            }
+        }
+        else
+        {
+            m_tempSettings.eyeAdaptation.overrideState = false;
+        }
+
+        m_tempSettings.speedUp.value = Mathf.Lerp(speedUp.x, speedUp.y, value);
+        m_tempSettings.speedDown.value = Mathf.Lerp(speedDown.x, speedDown.y, value);
     }
 }

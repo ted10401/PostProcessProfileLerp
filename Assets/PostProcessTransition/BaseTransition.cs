@@ -26,7 +26,7 @@ public abstract class BaseTransition<T> where T : PostProcessEffectSettings
         InitializeParameters();
     }
 
-    ~BaseTransition()
+    public void Destroy()
     {
         m_fromSettings = null;
         m_toSettings = null;

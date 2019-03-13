@@ -3,7 +3,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
 {
-    public Vector2 m_intensity;
+    public Vector2 intensity;
 
     public ChromaticAberrationTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
@@ -21,8 +21,13 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
         {
             m_tempSettings.intensity.overrideState = false;
         }
-        m_intensity.x = m_fromSettings == null ? 0f : m_fromSettings.intensity.value;
-        m_intensity.y = m_toSettings == null ? 0f : m_toSettings.intensity.value;
+        intensity.x = m_fromSettings == null ? 0f : m_fromSettings.intensity.value;
+        intensity.y = m_toSettings == null ? 0f : m_toSettings.intensity.value;
+    }
+
+    public override void Lerp(float value)
+    {
+        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
 
         //fastMode
         if ((m_fromSettings != null && m_fromSettings.fastMode.overrideState) ||
@@ -30,23 +35,24 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
         {
             m_tempSettings.fastMode.overrideState = true;
 
-            if (m_toSettings != null)
+            if(value < 0.5f)
             {
-                m_tempSettings.fastMode.value = m_toSettings.fastMode.value;
+                if (m_fromSettings != null)
+                {
+                    m_tempSettings.fastMode.value = m_fromSettings.fastMode.value;
+                }
             }
-            else if (m_fromSettings != null)
+            else
             {
-                m_tempSettings.fastMode.value = m_fromSettings.fastMode.value;
+                if (m_toSettings != null)
+                {
+                    m_tempSettings.fastMode.value = m_toSettings.fastMode.value;
+                }
             }
         }
         else
         {
             m_tempSettings.fastMode.overrideState = false;
         }
-    }
-
-    public override void Lerp(float value)
-    {
-        m_tempSettings.intensity.value = Mathf.Lerp(m_intensity.x, m_intensity.y, value);
     }
 }

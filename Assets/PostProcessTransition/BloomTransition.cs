@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class BloomTransition : BaseTransition<Bloom>
 {
-    private Vector2 m_intensity;
-    private Vector2 m_threshold;
-    private Vector2 m_softKnee;
-    private Vector2 m_clamp;
-    private Vector2 m_diffusion;
-    private Vector2 m_anamorphicRatio;
-    private Color m_fromColor;
-    private Color m_toColor;
-    private Vector2 m_dirtIntensity;
+    public Vector2 intensity;
+    public Vector2 threshold;
+    public Vector2 softKnee;
+    public Vector2 clamp;
+    public Vector2 diffusion;
+    public Vector2 anamorphicRatio;
+    public Color fromColor;
+    public Color toColor;
+    public Vector2 dirtIntensity;
 
     public BloomTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
@@ -29,8 +29,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.intensity.overrideState = false;
         }
-        m_intensity.x = m_fromSettings == null ? 0f : m_fromSettings.intensity.value;
-        m_intensity.y = m_toSettings == null ? 0f : m_toSettings.intensity.value;
+        intensity.x = m_fromSettings == null ? 0f : m_fromSettings.intensity.value;
+        intensity.y = m_toSettings == null ? 0f : m_toSettings.intensity.value;
 
         //threshold
         if ((m_fromSettings != null && m_fromSettings.threshold.overrideState) ||
@@ -42,8 +42,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.threshold.overrideState = false;
         }
-        m_threshold.x = m_fromSettings == null ? 0f : m_fromSettings.threshold.value;
-        m_threshold.y = m_toSettings == null ? 0f : m_toSettings.threshold.value;
+        threshold.x = m_fromSettings == null ? 0f : m_fromSettings.threshold.value;
+        threshold.y = m_toSettings == null ? 0f : m_toSettings.threshold.value;
 
         //softKnee
         if ((m_fromSettings != null && m_fromSettings.softKnee.overrideState) ||
@@ -55,8 +55,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.softKnee.overrideState = false;
         }
-        m_softKnee.x = m_fromSettings == null ? 0f : m_fromSettings.softKnee.value;
-        m_softKnee.y = m_toSettings == null ? 0f : m_toSettings.softKnee.value;
+        softKnee.x = m_fromSettings == null ? 0f : m_fromSettings.softKnee.value;
+        softKnee.y = m_toSettings == null ? 0f : m_toSettings.softKnee.value;
 
         //clamp
         if ((m_fromSettings != null && m_fromSettings.clamp.overrideState) ||
@@ -68,8 +68,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.clamp.overrideState = false;
         }
-        m_clamp.x = m_fromSettings == null ? 0f : m_fromSettings.clamp.value;
-        m_clamp.y = m_toSettings == null ? 0f : m_toSettings.clamp.value;
+        clamp.x = m_fromSettings == null ? 0f : m_fromSettings.clamp.value;
+        clamp.y = m_toSettings == null ? 0f : m_toSettings.clamp.value;
 
         //diffusion
         if ((m_fromSettings != null && m_fromSettings.diffusion.overrideState) ||
@@ -81,8 +81,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.diffusion.overrideState = false;
         }
-        m_diffusion.x = m_fromSettings == null ? 0f : m_fromSettings.diffusion.value;
-        m_diffusion.y = m_toSettings == null ? 0f : m_toSettings.diffusion.value;
+        diffusion.x = m_fromSettings == null ? 0f : m_fromSettings.diffusion.value;
+        diffusion.y = m_toSettings == null ? 0f : m_toSettings.diffusion.value;
 
         //anamorphicRatio
         if ((m_fromSettings != null && m_fromSettings.anamorphicRatio.overrideState) ||
@@ -94,8 +94,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.anamorphicRatio.overrideState = false;
         }
-        m_anamorphicRatio.x = m_fromSettings == null ? 0f : m_fromSettings.anamorphicRatio.value;
-        m_anamorphicRatio.y = m_toSettings == null ? 0f : m_toSettings.anamorphicRatio.value;
+        anamorphicRatio.x = m_fromSettings == null ? 0f : m_fromSettings.anamorphicRatio.value;
+        anamorphicRatio.y = m_toSettings == null ? 0f : m_toSettings.anamorphicRatio.value;
 
         //color
         if ((m_fromSettings != null && m_fromSettings.color.overrideState) ||
@@ -107,8 +107,8 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.color.overrideState = false;
         }
-        m_fromColor = m_fromSettings == null ? Color.white : m_fromSettings.color.value;
-        m_toColor = m_toSettings == null ? Color.white : m_toSettings.color.value;
+        fromColor = m_fromSettings == null ? Color.white : m_fromSettings.color.value;
+        toColor = m_toSettings == null ? Color.white : m_toSettings.color.value;
 
         //dirtIntensity
         if ((m_fromSettings != null && m_fromSettings.dirtIntensity.overrideState) ||
@@ -120,8 +120,20 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.dirtIntensity.overrideState = false;
         }
-        m_dirtIntensity.x = m_fromSettings == null ? 0f : m_fromSettings.dirtIntensity.value;
-        m_dirtIntensity.y = m_toSettings == null ? 0f : m_toSettings.dirtIntensity.value;
+        dirtIntensity.x = m_fromSettings == null ? 0f : m_fromSettings.dirtIntensity.value;
+        dirtIntensity.y = m_toSettings == null ? 0f : m_toSettings.dirtIntensity.value;
+    }
+
+    public override void Lerp(float value)
+    {
+        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
+        m_tempSettings.threshold.value = Mathf.Lerp(threshold.x, threshold.y, value);
+        m_tempSettings.softKnee.value = Mathf.Lerp(softKnee.x, softKnee.y, value);
+        m_tempSettings.clamp.value = Mathf.Lerp(clamp.x, clamp.y, value);
+        m_tempSettings.diffusion.value = Mathf.Lerp(diffusion.x, diffusion.y, value);
+        m_tempSettings.anamorphicRatio.value = Mathf.Lerp(anamorphicRatio.x, anamorphicRatio.y, value);
+        m_tempSettings.color.value = Color.Lerp(fromColor, toColor, value);
+        m_tempSettings.dirtIntensity.value = Mathf.Lerp(dirtIntensity.x, dirtIntensity.y, value);
 
         //fastMode
         if ((m_fromSettings != null && m_fromSettings.fastMode.overrideState) ||
@@ -129,30 +141,24 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.fastMode.overrideState = true;
 
-            if(m_toSettings != null)
+            if(value < 0.5f)
             {
-                m_tempSettings.fastMode.value = m_toSettings.fastMode.value;
+                if (m_fromSettings != null)
+                {
+                    m_tempSettings.fastMode.value = m_fromSettings.fastMode.value;
+                }
             }
-            else if(m_fromSettings != null)
+            else
             {
-                m_tempSettings.fastMode.value = m_fromSettings.fastMode.value;
+                if (m_toSettings != null)
+                {
+                    m_tempSettings.fastMode.value = m_toSettings.fastMode.value;
+                }
             }
         }
         else
         {
             m_tempSettings.fastMode.overrideState = false;
         }
-    }
-
-    public override void Lerp(float value)
-    {
-        m_tempSettings.intensity.value = Mathf.Lerp(m_intensity.x, m_intensity.y, value);
-        m_tempSettings.threshold.value = Mathf.Lerp(m_threshold.x, m_threshold.y, value);
-        m_tempSettings.softKnee.value = Mathf.Lerp(m_softKnee.x, m_softKnee.y, value);
-        m_tempSettings.clamp.value = Mathf.Lerp(m_clamp.x, m_clamp.y, value);
-        m_tempSettings.diffusion.value = Mathf.Lerp(m_diffusion.x, m_diffusion.y, value);
-        m_tempSettings.anamorphicRatio.value = Mathf.Lerp(m_anamorphicRatio.x, m_anamorphicRatio.y, value);
-        m_tempSettings.color.value = Color.Lerp(m_fromColor, m_toColor, value);
-        m_tempSettings.dirtIntensity.value = Mathf.Lerp(m_dirtIntensity.x, m_dirtIntensity.y, value);
     }
 }
