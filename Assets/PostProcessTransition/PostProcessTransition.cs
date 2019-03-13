@@ -8,6 +8,7 @@ public class PostProcessTransition
     private Action m_onComplete;
     private PostProcessProfile m_tempProfile;
     private BloomTransition m_bloomTransition;
+    private AmbientOcclusionTransition m_ambientOcclusionTransition;
     private Tweener m_tweener;
 
     public PostProcessTransition(PostProcessVolume postProcessVolume, PostProcessProfile postProcessProfile, float duration, Action onComplete)
@@ -15,6 +16,7 @@ public class PostProcessTransition
         m_onComplete = onComplete;
         m_tempProfile = UnityEngine.Object.Instantiate(postProcessVolume.profile);
         m_bloomTransition = new BloomTransition(postProcessVolume.profile, postProcessProfile, m_tempProfile);
+        m_ambientOcclusionTransition = new AmbientOcclusionTransition(postProcessVolume.profile, postProcessProfile, m_tempProfile);
         postProcessVolume.profile = m_tempProfile;
 
         m_tweener = DOTween.To(OnTransitionUpdate, 0f, 1f, duration).OnComplete(OnTransitionComplete);

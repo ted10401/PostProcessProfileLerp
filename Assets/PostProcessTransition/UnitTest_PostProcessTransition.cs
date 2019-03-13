@@ -3,8 +3,8 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class UnitTest_PostProcessTransition : MonoBehaviour
 {
-    [SerializeField] private PostProcessProfile m_targetPostProcessProfile;
-    [SerializeField] private float m_duration;
+    public PostProcessProfile targetPostProcessProfile;
+    public float duration;
     private PostProcessVolume m_postProcessVolume;
     private PostProcessTransition m_postProcessTransition;
 
@@ -18,7 +18,7 @@ public class UnitTest_PostProcessTransition : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             OnTransitionComplete();
-            m_postProcessTransition = new PostProcessTransition(m_postProcessVolume, m_targetPostProcessProfile, m_duration, OnTransitionComplete);
+            m_postProcessTransition = new PostProcessTransition(m_postProcessVolume, targetPostProcessProfile, duration, OnTransitionComplete);
         }
     }
 

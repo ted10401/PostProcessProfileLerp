@@ -26,6 +26,13 @@ public abstract class BaseTransition<T> where T : PostProcessEffectSettings
         InitializeParameters();
     }
 
+    ~BaseTransition()
+    {
+        m_fromSettings = null;
+        m_toSettings = null;
+        m_tempSettings = null;
+    }
+
     public virtual void InitializeParameters()
     {
 
