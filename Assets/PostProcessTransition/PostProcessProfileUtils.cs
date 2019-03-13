@@ -6,9 +6,9 @@ public class PostProcessProfileUtils
     public PostProcessProfile Lerp(PostProcessProfile postProcessProfileA, PostProcessProfile postProcessProfileB, float lerp)
     {
         PostProcessProfile postProcessProfile = Object.Instantiate(postProcessProfileA);
-        new BloomTransition(postProcessProfileA, postProcessProfileB, postProcessProfile).Transition(lerp);
-        new AmbientOcclusionTransition(postProcessProfileA, postProcessProfileB, postProcessProfile).Transition(lerp);
-        new AutoExposureTransition(postProcessProfileA, postProcessProfileB, postProcessProfile).Transition(lerp);
+        new BloomTransition(postProcessProfileA, postProcessProfileB, postProcessProfile).Lerp(lerp);
+        new AmbientOcclusionTransition(postProcessProfileA, postProcessProfileB, postProcessProfile).Lerp(lerp);
+        new AutoExposureTransition(postProcessProfileA, postProcessProfileB, postProcessProfile).Lerp(lerp);
 
         return postProcessProfile;
     }
