@@ -27,6 +27,11 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
 
     public override void Lerp(float value)
     {
+        if (!IsValid())
+        {
+            return;
+        }
+
         m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
 
         //fastMode

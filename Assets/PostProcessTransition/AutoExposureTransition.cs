@@ -98,6 +98,11 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
 
     public override void Lerp(float value)
     {
+        if (!IsValid())
+        {
+            return;
+        }
+
         m_tempSettings.filtering.value = Vector2.Lerp(fromFiltering, toFiltering, value);
         m_tempSettings.minLuminance.value = Mathf.Lerp(minLuminance.x, minLuminance.y, value);
         m_tempSettings.maxLuminance.value = Mathf.Lerp(maxLuminance.x, minLuminance.y, value);

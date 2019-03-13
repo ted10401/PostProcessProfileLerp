@@ -395,6 +395,11 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
 
     public override void Lerp(float value)
     {
+        if (!IsValid())
+        {
+            return;
+        }
+
         //gradingMode
         if ((m_fromSettings != null && m_fromSettings.gradingMode.overrideState) ||
             (m_toSettings != null && m_toSettings.gradingMode.overrideState))

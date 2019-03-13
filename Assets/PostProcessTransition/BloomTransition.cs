@@ -126,6 +126,11 @@ public class BloomTransition : BaseTransition<Bloom>
 
     public override void Lerp(float value)
     {
+        if (!IsValid())
+        {
+            return;
+        }
+
         m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
         m_tempSettings.threshold.value = Mathf.Lerp(threshold.x, threshold.y, value);
         m_tempSettings.softKnee.value = Mathf.Lerp(softKnee.x, softKnee.y, value);

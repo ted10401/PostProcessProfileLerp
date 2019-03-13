@@ -126,6 +126,11 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
 
     public override void Lerp(float value)
     {
+        if (!IsValid())
+        {
+            return;
+        }
+
         //mode
         if ((m_fromSettings != null && m_fromSettings.mode.overrideState) ||
             (m_toSettings != null && m_toSettings.mode.overrideState))

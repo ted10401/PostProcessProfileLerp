@@ -23,7 +23,10 @@ public abstract class BaseTransition<T> where T : PostProcessEffectSettings
             m_tempSettings.enabled.value = true;
         }
 
-        InitializeParameters();
+        if(m_tempSettings != null)
+        {
+            InitializeParameters();
+        }
     }
 
     public void Destroy()
@@ -40,6 +43,14 @@ public abstract class BaseTransition<T> where T : PostProcessEffectSettings
 
     public virtual void Lerp(float value)
     {
+        if(!IsValid())
+        {
+            return;
+        }
+    }
 
+    protected bool IsValid()
+    {
+        return m_fromSettings != null || m_toSettings != null;
     }
 }
