@@ -19,7 +19,8 @@ public class BloomTransition : BaseTransition<Bloom>
 
     public override void InitializeParameters()
     {
-        if((m_fromSettings != null && m_fromSettings.intensity.overrideState) ||
+        //intensity
+        if ((m_fromSettings != null && m_fromSettings.intensity.overrideState) ||
             (m_toSettings != null && m_toSettings.intensity.overrideState))
         {
             m_tempSettings.intensity.overrideState = true;
@@ -31,6 +32,7 @@ public class BloomTransition : BaseTransition<Bloom>
         m_intensity.x = m_fromSettings == null ? 0f : m_fromSettings.intensity.value;
         m_intensity.y = m_toSettings == null ? 0f : m_toSettings.intensity.value;
 
+        //threshold
         if ((m_fromSettings != null && m_fromSettings.threshold.overrideState) ||
             (m_toSettings != null && m_toSettings.threshold.overrideState))
         {
@@ -43,6 +45,7 @@ public class BloomTransition : BaseTransition<Bloom>
         m_threshold.x = m_fromSettings == null ? 0f : m_fromSettings.threshold.value;
         m_threshold.y = m_toSettings == null ? 0f : m_toSettings.threshold.value;
 
+        //softKnee
         if ((m_fromSettings != null && m_fromSettings.softKnee.overrideState) ||
             (m_toSettings != null && m_toSettings.softKnee.overrideState))
         {
@@ -55,6 +58,7 @@ public class BloomTransition : BaseTransition<Bloom>
         m_softKnee.x = m_fromSettings == null ? 0f : m_fromSettings.softKnee.value;
         m_softKnee.y = m_toSettings == null ? 0f : m_toSettings.softKnee.value;
 
+        //clamp
         if ((m_fromSettings != null && m_fromSettings.clamp.overrideState) ||
             (m_toSettings != null && m_toSettings.clamp.overrideState))
         {
@@ -67,6 +71,7 @@ public class BloomTransition : BaseTransition<Bloom>
         m_clamp.x = m_fromSettings == null ? 0f : m_fromSettings.clamp.value;
         m_clamp.y = m_toSettings == null ? 0f : m_toSettings.clamp.value;
 
+        //diffusion
         if ((m_fromSettings != null && m_fromSettings.diffusion.overrideState) ||
             (m_toSettings != null && m_toSettings.diffusion.overrideState))
         {
@@ -79,6 +84,7 @@ public class BloomTransition : BaseTransition<Bloom>
         m_diffusion.x = m_fromSettings == null ? 0f : m_fromSettings.diffusion.value;
         m_diffusion.y = m_toSettings == null ? 0f : m_toSettings.diffusion.value;
 
+        //anamorphicRatio
         if ((m_fromSettings != null && m_fromSettings.anamorphicRatio.overrideState) ||
             (m_toSettings != null && m_toSettings.anamorphicRatio.overrideState))
         {
@@ -91,6 +97,7 @@ public class BloomTransition : BaseTransition<Bloom>
         m_anamorphicRatio.x = m_fromSettings == null ? 0f : m_fromSettings.anamorphicRatio.value;
         m_anamorphicRatio.y = m_toSettings == null ? 0f : m_toSettings.anamorphicRatio.value;
 
+        //color
         if ((m_fromSettings != null && m_fromSettings.color.overrideState) ||
             (m_toSettings != null && m_toSettings.color.overrideState))
         {
@@ -103,6 +110,7 @@ public class BloomTransition : BaseTransition<Bloom>
         m_fromColor = m_fromSettings == null ? Color.white : m_fromSettings.color.value;
         m_toColor = m_toSettings == null ? Color.white : m_toSettings.color.value;
 
+        //dirtIntensity
         if ((m_fromSettings != null && m_fromSettings.dirtIntensity.overrideState) ||
             (m_toSettings != null && m_toSettings.dirtIntensity.overrideState))
         {
@@ -115,6 +123,7 @@ public class BloomTransition : BaseTransition<Bloom>
         m_dirtIntensity.x = m_fromSettings == null ? 0f : m_fromSettings.dirtIntensity.value;
         m_dirtIntensity.y = m_toSettings == null ? 0f : m_toSettings.dirtIntensity.value;
 
+        //fastMode
         if ((m_fromSettings != null && m_fromSettings.fastMode.overrideState) ||
             (m_toSettings != null && m_toSettings.fastMode.overrideState))
         {
