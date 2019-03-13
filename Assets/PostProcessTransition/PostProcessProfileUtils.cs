@@ -10,6 +10,7 @@ public class PostProcessProfileUtils
         new AmbientOcclusionTransition(postProcessProfileA, postProcessProfileB, postProcessProfile).Lerp(lerp);
         new AutoExposureTransition(postProcessProfileA, postProcessProfileB, postProcessProfile).Lerp(lerp);
         new ChromaticAberrationTransition(postProcessProfileA, postProcessProfileB, postProcessProfile).Lerp(lerp);
+        new ColorGradingTransition(postProcessProfileA, postProcessProfileB, postProcessProfile).Lerp(lerp);
 
         return postProcessProfile;
     }
