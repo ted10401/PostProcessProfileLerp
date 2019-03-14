@@ -11,6 +11,7 @@ public class PostProcessTransition
     private ChromaticAberrationTransition m_chromaticAberrationTransition;
     private ColorGradingTransition m_colorGradingTransition;
     private DepthOfFieldTransition m_depthOfFieldTransition;
+    private GrainTransition m_grainTransition;
     private Tweener m_tweener;
 
     public PostProcessTransition(PostProcessVolume postProcessVolume, PostProcessProfile postProcessProfile, float duration)
@@ -24,6 +25,7 @@ public class PostProcessTransition
         m_chromaticAberrationTransition = new ChromaticAberrationTransition(from, postProcessProfile, postProcessVolume.profile);
         m_colorGradingTransition = new ColorGradingTransition(from, postProcessProfile, postProcessVolume.profile);
         m_depthOfFieldTransition = new DepthOfFieldTransition(from, postProcessProfile, postProcessVolume.profile);
+        m_grainTransition = new GrainTransition(from, postProcessProfile, postProcessVolume.profile);
 
         m_tweener = DOTween.To(OnTransitionUpdate, 0f, 1f, duration).OnComplete(OnTransitionComplete);
     }
@@ -45,6 +47,7 @@ public class PostProcessTransition
         m_chromaticAberrationTransition.Lerp(value);
         m_colorGradingTransition.Lerp(value);
         m_depthOfFieldTransition.Lerp(value);
+        m_grainTransition.Lerp(value);
     }
 
     private void OnTransitionComplete()
@@ -79,6 +82,18 @@ public class PostProcessTransition
         {
             m_colorGradingTransition.Destroy();
             m_colorGradingTransition = null;
+        }
+
+        if(m_depthOfFieldTransition != null)
+        {
+            m_depthOfFieldTransition.Destroy();
+            m_depthOfFieldTransition = null;
+        }
+
+        if(m_grainTransition != null)
+        {
+            m_grainTransition.Destroy();
+            m_grainTransition = null;
         }
     }
 }
