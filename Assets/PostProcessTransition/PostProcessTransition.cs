@@ -20,7 +20,7 @@ public class PostProcessTransition
     private DepthOfFieldTransition m_depthOfFieldTransition;
     private GrainTransition m_grainTransition;
     private LensDistortionTransition m_lensDisstortionTransition;
-    //private MotionBlurTransition m_motionBlurTransition;
+    private MotionBlurTransition m_motionBlurTransition;
     //private ScreenSpaceReflectionsTransition m_screenSpaceReflectionsTransition;
     //private VignetteTransition m_vignetteTransition;
     private Tweener m_tweener;
@@ -43,7 +43,7 @@ public class PostProcessTransition
         m_depthOfFieldTransition = new DepthOfFieldTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
         m_grainTransition = new GrainTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
         m_lensDisstortionTransition = new LensDistortionTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        //m_motionBlurTransition = new MotionBlurTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_motionBlurTransition = new MotionBlurTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
         //m_screenSpaceReflectionsTransition = new ScreenSpaceReflectionsTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
         //m_vignetteTransition = new VignetteTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
 
@@ -62,7 +62,7 @@ public class PostProcessTransition
         m_depthOfFieldTransition.Lerp(value);
         m_grainTransition.Lerp(value);
         m_lensDisstortionTransition.Lerp(value);
-        //m_motionBlurTransition.Lerp(value);
+        m_motionBlurTransition.Lerp(value);
         //m_screenSpaceReflectionsTransition.Lerp(value);
         //m_vignetteTransition.Lerp(value);
     }
@@ -140,11 +140,11 @@ public class PostProcessTransition
             m_lensDisstortionTransition = null;
         }
 
-        //if (m_motionBlurTransition != null)
-        //{
-        //    m_motionBlurTransition.Destroy();
-        //    m_motionBlurTransition = null;
-        //}
+        if (m_motionBlurTransition != null)
+        {
+            m_motionBlurTransition.Destroy();
+            m_motionBlurTransition = null;
+        }
 
         //if(m_screenSpaceReflectionsTransition != null)
         //{

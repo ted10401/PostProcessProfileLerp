@@ -22,8 +22,8 @@ public class MotionBlurTransition : BaseTransition<MotionBlur>
         {
             m_tempSettings.shutterAngle.overrideState = false;
         }
-        shutterAngle.x = m_fromSettings == null ? 0f : m_fromSettings.shutterAngle.value;
-        shutterAngle.y = m_toSettings == null ? 0f : m_toSettings.shutterAngle.value;
+        shutterAngle.x = m_fromSettings == null ? m_tempSettings.shutterAngle.value : m_fromSettings.shutterAngle.value;
+        shutterAngle.y = m_toSettings == null ? m_tempSettings.shutterAngle.value : m_toSettings.shutterAngle.value;
 
         //sampleCount
         if ((m_fromSettings != null && m_fromSettings.sampleCount.overrideState) ||
@@ -35,8 +35,8 @@ public class MotionBlurTransition : BaseTransition<MotionBlur>
         {
             m_tempSettings.sampleCount.overrideState = false;
         }
-        sampleCount.x = m_fromSettings == null ? 0f : m_fromSettings.sampleCount.value;
-        sampleCount.y = m_toSettings == null ? 0f : m_toSettings.sampleCount.value;
+        sampleCount.x = m_fromSettings == null ? m_tempSettings.sampleCount.value : m_fromSettings.sampleCount.value;
+        sampleCount.y = m_toSettings == null ? m_tempSettings.sampleCount.value : m_toSettings.sampleCount.value;
     }
 
     public override void Lerp(float value)

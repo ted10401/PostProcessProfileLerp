@@ -3,15 +3,18 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
 {
+    public AmbientOcclusionMode defaultMode;
     public Vector2 intensity;
     public Color fromColor;
     public Color toColor;
+    public bool defaultAmbientOnly;
     public Vector2 noiseFilterTolerance;
     public Vector2 blurTolerance;
     public Vector2 upsampleTolerance;
     public Vector2 thicknessModifier;
     public Vector2 directLightingStrength;
     public Vector2 radius;
+    public AmbientOcclusionQuality defaultQuality;
 
     public AmbientOcclusionTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
@@ -19,6 +22,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
 
     public override void InitializeParameters()
     {
+        defaultMode = m_tempSettings.mode.value;
+
         //intensity
         if ((m_fromSettings != null && m_fromSettings.intensity.overrideState) ||
             (m_toSettings != null && m_toSettings.intensity.overrideState))
@@ -29,8 +34,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.intensity.overrideState = false;
         }
-        intensity.x = m_fromSettings == null ? 0f : m_fromSettings.intensity.value;
-        intensity.y = m_toSettings == null ? 0f : m_toSettings.intensity.value;
+        intensity.x = m_fromSettings == null ? m_tempSettings.intensity.value : m_fromSettings.intensity.value;
+        intensity.y = m_toSettings == null ? m_tempSettings.intensity.value : m_toSettings.intensity.value;
 
         //color
         if ((m_fromSettings != null && m_fromSettings.color.overrideState) ||
@@ -42,8 +47,10 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.color.overrideState = false;
         }
-        fromColor = m_fromSettings == null ? Color.black : m_fromSettings.color.value;
-        toColor = m_toSettings == null ? Color.black : m_toSettings.color.value;
+        fromColor = m_fromSettings == null ? m_tempSettings.color.value : m_fromSettings.color.value;
+        toColor = m_toSettings == null ? m_tempSettings.color.value : m_toSettings.color.value;
+
+        defaultAmbientOnly = m_tempSettings.ambientOnly;
 
         //noiseFilterTolerance
         if ((m_fromSettings != null && m_fromSettings.noiseFilterTolerance.overrideState) ||
@@ -55,8 +62,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.noiseFilterTolerance.overrideState = false;
         }
-        noiseFilterTolerance.x = m_fromSettings == null ? 0f : m_fromSettings.noiseFilterTolerance.value;
-        noiseFilterTolerance.y = m_toSettings == null ? 0f : m_toSettings.noiseFilterTolerance.value;
+        noiseFilterTolerance.x = m_fromSettings == null ? m_tempSettings.noiseFilterTolerance.value : m_fromSettings.noiseFilterTolerance.value;
+        noiseFilterTolerance.y = m_toSettings == null ? m_tempSettings.noiseFilterTolerance.value : m_toSettings.noiseFilterTolerance.value;
 
         //blurTolerance
         if ((m_fromSettings != null && m_fromSettings.blurTolerance.overrideState) ||
@@ -68,8 +75,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.blurTolerance.overrideState = false;
         }
-        blurTolerance.x = m_fromSettings == null ? -4.6f : m_fromSettings.blurTolerance.value;
-        blurTolerance.y = m_toSettings == null ? -4.6f : m_toSettings.blurTolerance.value;
+        blurTolerance.x = m_fromSettings == null ? m_tempSettings.blurTolerance.value : m_fromSettings.blurTolerance.value;
+        blurTolerance.y = m_toSettings == null ? m_tempSettings.blurTolerance.value : m_toSettings.blurTolerance.value;
 
         //upsampleTolerance
         if ((m_fromSettings != null && m_fromSettings.upsampleTolerance.overrideState) ||
@@ -81,8 +88,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.upsampleTolerance.overrideState = false;
         }
-        upsampleTolerance.x = m_fromSettings == null ? -12f : m_fromSettings.upsampleTolerance.value;
-        upsampleTolerance.y = m_toSettings == null ? -12f : m_toSettings.upsampleTolerance.value;
+        upsampleTolerance.x = m_fromSettings == null ? m_tempSettings.upsampleTolerance.value : m_fromSettings.upsampleTolerance.value;
+        upsampleTolerance.y = m_toSettings == null ? m_tempSettings.upsampleTolerance.value : m_toSettings.upsampleTolerance.value;
 
         //thicknessModifier
         if ((m_fromSettings != null && m_fromSettings.thicknessModifier.overrideState) ||
@@ -94,8 +101,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.thicknessModifier.overrideState = false;
         }
-        thicknessModifier.x = m_fromSettings == null ? 1f : m_fromSettings.thicknessModifier.value;
-        thicknessModifier.y = m_toSettings == null ? 1f : m_toSettings.thicknessModifier.value;
+        thicknessModifier.x = m_fromSettings == null ? m_tempSettings.thicknessModifier.value : m_fromSettings.thicknessModifier.value;
+        thicknessModifier.y = m_toSettings == null ? m_tempSettings.thicknessModifier.value : m_toSettings.thicknessModifier.value;
 
         //directLightingStrength
         if ((m_fromSettings != null && m_fromSettings.directLightingStrength.overrideState) ||
@@ -107,8 +114,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.directLightingStrength.overrideState = false;
         }
-        directLightingStrength.x = m_fromSettings == null ? 0f : m_fromSettings.directLightingStrength.value;
-        directLightingStrength.y = m_toSettings == null ? 0f : m_toSettings.directLightingStrength.value;
+        directLightingStrength.x = m_fromSettings == null ? m_tempSettings.directLightingStrength.value : m_fromSettings.directLightingStrength.value;
+        directLightingStrength.y = m_toSettings == null ? m_tempSettings.directLightingStrength.value : m_toSettings.directLightingStrength.value;
 
         //radius
         if ((m_fromSettings != null && m_fromSettings.radius.overrideState) ||
@@ -120,8 +127,10 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.radius.overrideState = false;
         }
-        radius.x = m_fromSettings == null ? 0.25f : m_fromSettings.radius.value;
-        radius.y = m_toSettings == null ? 0.25f : m_toSettings.radius.value;
+        radius.x = m_fromSettings == null ? m_tempSettings.radius.value : m_fromSettings.radius.value;
+        radius.y = m_toSettings == null ? m_tempSettings.radius.value : m_toSettings.radius.value;
+
+        defaultQuality = m_tempSettings.quality.value;
     }
 
     public override void Lerp(float value)
@@ -145,7 +154,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
                 }
                 else
                 {
-                    m_tempSettings.mode.value = AmbientOcclusionMode.MultiScaleVolumetricObscurance;
+                    m_tempSettings.mode.value = defaultMode;
                 }
             }
             else
@@ -156,7 +165,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
                 }
                 else
                 {
-                    m_tempSettings.mode.value = AmbientOcclusionMode.MultiScaleVolumetricObscurance;
+                    m_tempSettings.mode.value = defaultMode;
                 }
             }
         }
@@ -182,7 +191,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
                 }
                 else
                 {
-                    m_tempSettings.ambientOnly.value = true;
+                    m_tempSettings.ambientOnly.value = defaultAmbientOnly;
                 }
             }
             else
@@ -193,7 +202,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
                 }
                 else
                 {
-                    m_tempSettings.ambientOnly.value = true;
+                    m_tempSettings.ambientOnly.value = defaultAmbientOnly;
                 }
             }
         }
@@ -223,7 +232,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
                 }
                 else
                 {
-                    m_tempSettings.quality.value = AmbientOcclusionQuality.Medium;
+                    m_tempSettings.quality.value = defaultQuality;
                 }
             }
             else
@@ -234,7 +243,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
                 }
                 else
                 {
-                    m_tempSettings.quality.value = AmbientOcclusionQuality.Medium;
+                    m_tempSettings.quality.value = defaultQuality;
                 }
             }
         }

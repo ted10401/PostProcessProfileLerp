@@ -3,6 +3,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class GrainTransition : BaseTransition<Grain>
 {
+    public bool defaultColored;
     public Vector2 intensity;
     public Vector2 size;
     public Vector2 lumContrib;
@@ -13,6 +14,8 @@ public class GrainTransition : BaseTransition<Grain>
 
     public override void InitializeParameters()
     {
+        defaultColored = m_tempSettings.colored.value;
+
         //intensity
         if ((m_fromSettings != null && m_fromSettings.intensity.overrideState) ||
             (m_toSettings != null && m_toSettings.intensity.overrideState))
@@ -23,8 +26,8 @@ public class GrainTransition : BaseTransition<Grain>
         {
             m_tempSettings.intensity.overrideState = false;
         }
-        intensity.x = m_fromSettings == null ? 0f : m_fromSettings.intensity.value;
-        intensity.y = m_toSettings == null ? 0f : m_toSettings.intensity.value;
+        intensity.x = m_fromSettings == null ? m_tempSettings.intensity.value : m_fromSettings.intensity.value;
+        intensity.y = m_toSettings == null ? m_tempSettings.intensity.value : m_toSettings.intensity.value;
 
         //size
         if ((m_fromSettings != null && m_fromSettings.size.overrideState) ||
@@ -36,8 +39,8 @@ public class GrainTransition : BaseTransition<Grain>
         {
             m_tempSettings.size.overrideState = false;
         }
-        size.x = m_fromSettings == null ? 0f : m_fromSettings.size.value;
-        size.y = m_toSettings == null ? 0f : m_toSettings.size.value;
+        size.x = m_fromSettings == null ? m_tempSettings.size.value : m_fromSettings.size.value;
+        size.y = m_toSettings == null ? m_tempSettings.size.value : m_toSettings.size.value;
 
         //lumContrib
         if ((m_fromSettings != null && m_fromSettings.lumContrib.overrideState) ||
@@ -49,8 +52,8 @@ public class GrainTransition : BaseTransition<Grain>
         {
             m_tempSettings.lumContrib.overrideState = false;
         }
-        lumContrib.x = m_fromSettings == null ? 0f : m_fromSettings.lumContrib.value;
-        lumContrib.y = m_toSettings == null ? 0f : m_toSettings.lumContrib.value;
+        lumContrib.x = m_fromSettings == null ? m_tempSettings.lumContrib.value : m_fromSettings.lumContrib.value;
+        lumContrib.y = m_toSettings == null ? m_tempSettings.lumContrib.value : m_toSettings.lumContrib.value;
     }
 
     public override void Lerp(float value)
@@ -74,7 +77,7 @@ public class GrainTransition : BaseTransition<Grain>
                 }
                 else
                 {
-                    //m_tempSettings.colored.value = false;
+                    m_tempSettings.colored.value = defaultColored;
                 }
             }
             else
@@ -85,7 +88,7 @@ public class GrainTransition : BaseTransition<Grain>
                 }
                 else
                 {
-                    //m_tempSettings.colored.value = false;
+                    m_tempSettings.colored.value = defaultColored;
                 }
             }
         }
