@@ -3,7 +3,9 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflections>
 {
+    public ScreenSpaceReflectionPreset defaultPresent;
     public Vector2 maximumIterationCount;
+    public ScreenSpaceReflectionResolution defaultResolution;
     public Vector2 thickness;
     public Vector2 maximumMarchDistance;
     public Vector2 distanceFade;
@@ -15,6 +17,8 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
 
     public override void InitializeParameters()
     {
+        defaultPresent = m_tempSettings.preset.value;
+
         //maximumIterationCount
         if ((m_fromSettings != null && m_fromSettings.maximumIterationCount.overrideState) ||
             (m_toSettings != null && m_toSettings.maximumIterationCount.overrideState))
@@ -25,8 +29,10 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.maximumIterationCount.overrideState = false;
         }
-        maximumIterationCount.x = m_fromSettings == null ? 0f : m_fromSettings.maximumIterationCount.value;
-        maximumIterationCount.y = m_toSettings == null ? 0f : m_toSettings.maximumIterationCount.value;
+        maximumIterationCount.x = m_fromSettings == null ? m_tempSettings.maximumIterationCount.value : m_fromSettings.maximumIterationCount.value;
+        maximumIterationCount.y = m_toSettings == null ? m_tempSettings.maximumIterationCount.value : m_toSettings.maximumIterationCount.value;
+
+        defaultResolution = m_tempSettings.resolution.value;
 
         //thickness
         if ((m_fromSettings != null && m_fromSettings.thickness.overrideState) ||
@@ -38,8 +44,8 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.thickness.overrideState = false;
         }
-        thickness.x = m_fromSettings == null ? 0f : m_fromSettings.thickness.value;
-        thickness.y = m_toSettings == null ? 0f : m_toSettings.thickness.value;
+        thickness.x = m_fromSettings == null ? m_tempSettings.thickness.value : m_fromSettings.thickness.value;
+        thickness.y = m_toSettings == null ? m_tempSettings.thickness.value : m_toSettings.thickness.value;
 
         //maximumMarchDistance
         if ((m_fromSettings != null && m_fromSettings.maximumMarchDistance.overrideState) ||
@@ -51,8 +57,8 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.maximumMarchDistance.overrideState = false;
         }
-        maximumMarchDistance.x = m_fromSettings == null ? 0f : m_fromSettings.maximumMarchDistance.value;
-        maximumMarchDistance.y = m_toSettings == null ? 0f : m_toSettings.maximumMarchDistance.value;
+        maximumMarchDistance.x = m_fromSettings == null ? m_tempSettings.maximumMarchDistance.value : m_fromSettings.maximumMarchDistance.value;
+        maximumMarchDistance.y = m_toSettings == null ? m_tempSettings.maximumMarchDistance.value : m_toSettings.maximumMarchDistance.value;
 
         //distanceFade
         if ((m_fromSettings != null && m_fromSettings.distanceFade.overrideState) ||
@@ -64,8 +70,8 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.distanceFade.overrideState = false;
         }
-        distanceFade.x = m_fromSettings == null ? 0f : m_fromSettings.distanceFade.value;
-        distanceFade.y = m_toSettings == null ? 0f : m_toSettings.distanceFade.value;
+        distanceFade.x = m_fromSettings == null ? m_tempSettings.distanceFade.value : m_fromSettings.distanceFade.value;
+        distanceFade.y = m_toSettings == null ? m_tempSettings.distanceFade.value : m_toSettings.distanceFade.value;
 
         //vignette
         if ((m_fromSettings != null && m_fromSettings.vignette.overrideState) ||
@@ -77,8 +83,8 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.vignette.overrideState = false;
         }
-        vignette.x = m_fromSettings == null ? 0f : m_fromSettings.vignette.value;
-        vignette.y = m_toSettings == null ? 0f : m_toSettings.vignette.value;
+        vignette.x = m_fromSettings == null ? m_tempSettings.vignette.value : m_fromSettings.vignette.value;
+        vignette.y = m_toSettings == null ? m_tempSettings.vignette.value : m_toSettings.vignette.value;
     }
 
     public override void Lerp(float value)
@@ -102,7 +108,7 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
                 }
                 else
                 {
-                    //m_tempSettings.preset.value = false;
+                    m_tempSettings.preset.value = defaultPresent;
                 }
             }
             else
@@ -113,7 +119,7 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
                 }
                 else
                 {
-                    //m_tempSettings.preset.value = false;
+                    m_tempSettings.preset.value = defaultPresent;
                 }
             }
         }
@@ -138,7 +144,7 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
                 }
                 else
                 {
-                    //m_tempSettings.resolution.value = false;
+                    m_tempSettings.resolution.value = defaultResolution;
                 }
             }
             else
@@ -149,7 +155,7 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
                 }
                 else
                 {
-                    //m_tempSettings.resolution.value = false;
+                    m_tempSettings.resolution.value = defaultResolution;
                 }
             }
         }

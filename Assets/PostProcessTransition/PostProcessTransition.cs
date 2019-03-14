@@ -21,7 +21,7 @@ public class PostProcessTransition
     private GrainTransition m_grainTransition;
     private LensDistortionTransition m_lensDisstortionTransition;
     private MotionBlurTransition m_motionBlurTransition;
-    //private ScreenSpaceReflectionsTransition m_screenSpaceReflectionsTransition;
+    private ScreenSpaceReflectionsTransition m_screenSpaceReflectionsTransition;
     //private VignetteTransition m_vignetteTransition;
     private Tweener m_tweener;
 
@@ -44,7 +44,7 @@ public class PostProcessTransition
         m_grainTransition = new GrainTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
         m_lensDisstortionTransition = new LensDistortionTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
         m_motionBlurTransition = new MotionBlurTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        //m_screenSpaceReflectionsTransition = new ScreenSpaceReflectionsTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_screenSpaceReflectionsTransition = new ScreenSpaceReflectionsTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
         //m_vignetteTransition = new VignetteTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
 
         m_tweener = DOTween.To(Lerp, 0f, 1f, duration).OnComplete(OnComplete);
@@ -63,7 +63,7 @@ public class PostProcessTransition
         m_grainTransition.Lerp(value);
         m_lensDisstortionTransition.Lerp(value);
         m_motionBlurTransition.Lerp(value);
-        //m_screenSpaceReflectionsTransition.Lerp(value);
+        m_screenSpaceReflectionsTransition.Lerp(value);
         //m_vignetteTransition.Lerp(value);
     }
 
@@ -146,11 +146,11 @@ public class PostProcessTransition
             m_motionBlurTransition = null;
         }
 
-        //if(m_screenSpaceReflectionsTransition != null)
-        //{
-        //    m_screenSpaceReflectionsTransition.Destroy();
-        //    m_screenSpaceReflectionsTransition = null;
-        //}
+        if (m_screenSpaceReflectionsTransition != null)
+        {
+            m_screenSpaceReflectionsTransition.Destroy();
+            m_screenSpaceReflectionsTransition = null;
+        }
 
         //if(m_vignetteTransition != null)
         //{
