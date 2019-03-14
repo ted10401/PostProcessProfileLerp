@@ -15,6 +15,7 @@ public class PostProcessTransition
     private LensDistortionTransition m_lensDisstortionTransition;
     private MotionBlurTransition m_motionBlurTransition;
     private ScreenSpaceReflectionsTransition m_screenSpaceReflectionsTransition;
+    private VignetteTransition m_vignetteTransition;
     private Tweener m_tweener;
 
     public PostProcessTransition(PostProcessVolume postProcessVolume, PostProcessProfile postProcessProfile, float duration)
@@ -32,6 +33,7 @@ public class PostProcessTransition
         m_lensDisstortionTransition = new LensDistortionTransition(from, postProcessProfile, postProcessVolume.profile);
         m_motionBlurTransition = new MotionBlurTransition(from, postProcessProfile, postProcessVolume.profile);
         m_screenSpaceReflectionsTransition = new ScreenSpaceReflectionsTransition(from, postProcessProfile, postProcessVolume.profile);
+        m_vignetteTransition = new VignetteTransition(from, postProcessProfile, postProcessVolume.profile);
 
         m_tweener = DOTween.To(OnTransitionUpdate, 0f, 1f, duration).OnComplete(OnTransitionComplete);
     }
@@ -57,6 +59,7 @@ public class PostProcessTransition
         m_lensDisstortionTransition.Lerp(value);
         m_motionBlurTransition.Lerp(value);
         m_screenSpaceReflectionsTransition.Lerp(value);
+        m_vignetteTransition.Lerp(value);
     }
 
     private void OnTransitionComplete()
@@ -121,6 +124,12 @@ public class PostProcessTransition
         {
             m_screenSpaceReflectionsTransition.Destroy();
             m_screenSpaceReflectionsTransition = null;
+        }
+
+        if(m_vignetteTransition != null)
+        {
+            m_vignetteTransition.Destroy();
+            m_vignetteTransition = null;
         }
     }
 }
