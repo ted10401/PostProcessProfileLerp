@@ -3,6 +3,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class VignetteTransition : BaseTransition<Vignette>
 {
+    public VignetteMode defaultMode;
     public Color fromColor;
     public Color toColor;
     public Vector2 fromCenter;
@@ -10,6 +11,7 @@ public class VignetteTransition : BaseTransition<Vignette>
     public Vector2 intensity;
     public Vector2 smoothness;
     public Vector2 roundness;
+    public bool defaultRounded;
     public Vector2 opacity;
 
     public VignetteTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
@@ -18,6 +20,8 @@ public class VignetteTransition : BaseTransition<Vignette>
 
     public override void InitializeParameters()
     {
+        defaultMode = m_tempSettings.mode.value;
+
         //color
         if ((m_fromSettings != null && m_fromSettings.color.overrideState) ||
             (m_toSettings != null && m_toSettings.color.overrideState))
@@ -28,8 +32,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         {
             m_tempSettings.color.overrideState = false;
         }
-        fromColor = m_fromSettings == null ? Color.black : m_fromSettings.color.value;
-        toColor = m_toSettings == null ? Color.black : m_toSettings.color.value;
+        fromColor = m_fromSettings == null ? m_tempSettings.color.value : m_fromSettings.color.value;
+        toColor = m_toSettings == null ? m_tempSettings.color.value : m_toSettings.color.value;
 
         //center
         if ((m_fromSettings != null && m_fromSettings.center.overrideState) ||
@@ -41,8 +45,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         {
             m_tempSettings.center.overrideState = false;
         }
-        fromCenter = m_fromSettings == null ? Vector2.zero : m_fromSettings.center.value;
-        toCenter = m_toSettings == null ? Vector2.zero : m_toSettings.center.value;
+        fromCenter = m_fromSettings == null ? m_tempSettings.center.value : m_fromSettings.center.value;
+        toCenter = m_toSettings == null ? m_tempSettings.center.value : m_toSettings.center.value;
 
         //intensity
         if ((m_fromSettings != null && m_fromSettings.intensity.overrideState) ||
@@ -54,8 +58,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         {
             m_tempSettings.intensity.overrideState = false;
         }
-        intensity.x = m_fromSettings == null ? 0f : m_fromSettings.intensity.value;
-        intensity.y = m_toSettings == null ? 0f : m_toSettings.intensity.value;
+        intensity.x = m_fromSettings == null ? m_tempSettings.intensity.value : m_fromSettings.intensity.value;
+        intensity.y = m_toSettings == null ? m_tempSettings.intensity.value : m_toSettings.intensity.value;
 
         //smoothness
         if ((m_fromSettings != null && m_fromSettings.smoothness.overrideState) ||
@@ -67,8 +71,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         {
             m_tempSettings.smoothness.overrideState = false;
         }
-        smoothness.x = m_fromSettings == null ? 0f : m_fromSettings.smoothness.value;
-        smoothness.y = m_toSettings == null ? 0f : m_toSettings.smoothness.value;
+        smoothness.x = m_fromSettings == null ? m_tempSettings.smoothness.value : m_fromSettings.smoothness.value;
+        smoothness.y = m_toSettings == null ? m_tempSettings.smoothness.value : m_toSettings.smoothness.value;
 
         //roundness
         if ((m_fromSettings != null && m_fromSettings.roundness.overrideState) ||
@@ -80,8 +84,10 @@ public class VignetteTransition : BaseTransition<Vignette>
         {
             m_tempSettings.roundness.overrideState = false;
         }
-        roundness.x = m_fromSettings == null ? 0f : m_fromSettings.roundness.value;
-        roundness.y = m_toSettings == null ? 0f : m_toSettings.roundness.value;
+        roundness.x = m_fromSettings == null ? m_tempSettings.roundness.value : m_fromSettings.roundness.value;
+        roundness.y = m_toSettings == null ? m_tempSettings.roundness.value : m_toSettings.roundness.value;
+
+        defaultRounded = m_tempSettings.rounded.value;
 
         //opacity
         if ((m_fromSettings != null && m_fromSettings.opacity.overrideState) ||
@@ -93,8 +99,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         {
             m_tempSettings.opacity.overrideState = false;
         }
-        opacity.x = m_fromSettings == null ? 0f : m_fromSettings.opacity.value;
-        opacity.y = m_toSettings == null ? 0f : m_toSettings.opacity.value;
+        opacity.x = m_fromSettings == null ? m_tempSettings.opacity.value : m_fromSettings.opacity.value;
+        opacity.y = m_toSettings == null ? m_tempSettings.opacity.value : m_toSettings.opacity.value;
     }
 
     public override void Lerp(float value)
@@ -118,7 +124,7 @@ public class VignetteTransition : BaseTransition<Vignette>
                 }
                 else
                 {
-                    //m_tempSettings.mode.value = false;
+                    m_tempSettings.mode.value = defaultMode;
                 }
             }
             else
@@ -129,7 +135,7 @@ public class VignetteTransition : BaseTransition<Vignette>
                 }
                 else
                 {
-                    //m_tempSettings.mode.value = false;
+                    m_tempSettings.mode.value = defaultMode;
                 }
             }
         }
@@ -158,7 +164,7 @@ public class VignetteTransition : BaseTransition<Vignette>
                 }
                 else
                 {
-                    //m_tempSettings.rounded.value = false;
+                    m_tempSettings.rounded.value = defaultRounded;
                 }
             }
             else
@@ -169,7 +175,7 @@ public class VignetteTransition : BaseTransition<Vignette>
                 }
                 else
                 {
-                    //m_tempSettings.rounded.value = false;
+                    m_tempSettings.rounded.value = defaultRounded;
                 }
             }
         }
@@ -192,7 +198,7 @@ public class VignetteTransition : BaseTransition<Vignette>
                 }
                 else
                 {
-                    //m_tempSettings.mask.value = false;
+                    m_tempSettings.mask.value = null;
                 }
             }
             else
@@ -203,7 +209,7 @@ public class VignetteTransition : BaseTransition<Vignette>
                 }
                 else
                 {
-                    //m_tempSettings.mask.value = false;
+                    m_tempSettings.mask.value = null;
                 }
             }
         }
