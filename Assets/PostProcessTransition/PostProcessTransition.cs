@@ -13,6 +13,7 @@ public class PostProcessTransition
     private DepthOfFieldTransition m_depthOfFieldTransition;
     private GrainTransition m_grainTransition;
     private LensDistortionTransition m_lensDisstortionTransition;
+    private MotionBlurTransition m_motionBlurTransition;
     private Tweener m_tweener;
 
     public PostProcessTransition(PostProcessVolume postProcessVolume, PostProcessProfile postProcessProfile, float duration)
@@ -28,6 +29,7 @@ public class PostProcessTransition
         m_depthOfFieldTransition = new DepthOfFieldTransition(from, postProcessProfile, postProcessVolume.profile);
         m_grainTransition = new GrainTransition(from, postProcessProfile, postProcessVolume.profile);
         m_lensDisstortionTransition = new LensDistortionTransition(from, postProcessProfile, postProcessVolume.profile);
+        m_motionBlurTransition = new MotionBlurTransition(from, postProcessProfile, postProcessVolume.profile);
 
         m_tweener = DOTween.To(OnTransitionUpdate, 0f, 1f, duration).OnComplete(OnTransitionComplete);
     }
@@ -51,6 +53,7 @@ public class PostProcessTransition
         m_depthOfFieldTransition.Lerp(value);
         m_grainTransition.Lerp(value);
         m_lensDisstortionTransition.Lerp(value);
+        m_motionBlurTransition.Lerp(value);
     }
 
     private void OnTransitionComplete()
@@ -103,6 +106,12 @@ public class PostProcessTransition
         {
             m_lensDisstortionTransition.Destroy();
             m_lensDisstortionTransition = null;
+        }
+
+        if(m_motionBlurTransition != null)
+        {
+            m_motionBlurTransition.Destroy();
+            m_motionBlurTransition = null;
         }
     }
 }
