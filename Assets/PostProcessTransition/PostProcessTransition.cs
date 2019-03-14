@@ -1,10 +1,9 @@
 ﻿using UnityEngine.Rendering.PostProcessing;
-using DG.Tweening;
-using System;
 
 public class PostProcessTransition
 {
-    private Action m_onComplete;
+    private const string TEMP_NAME = "PostProcessTransition";
+    
     private AmbientOcclusionTransition m_ambientOcclusionTransition;
     private AutoExposureTransition m_autoExposureTransition;
     private BloomTransition m_bloomTransition;
@@ -16,12 +15,12 @@ public class PostProcessTransition
     private MotionBlurTransition m_motionBlurTransition;
     private ScreenSpaceReflectionsTransition m_screenSpaceReflectionsTransition;
     private VignetteTransition m_vignetteTransition;
-    private Tweener m_tweener;
 
     public PostProcessTransition(PostProcessVolume postProcessVolume, PostProcessProfile postProcessProfile, float duration)
     {
         PostProcessProfile from = postProcessVolume.profile;
         postProcessVolume.profile = UnityEngine.Object.Instantiate(from);
+        postProcessVolume.profile.name = TEMP_NAME;
 
         m_ambientOcclusionTransition = new AmbientOcclusionTransition(from, postProcessProfile, postProcessVolume.profile);
         m_autoExposureTransition = new AutoExposureTransition(from, postProcessProfile, postProcessVolume.profile);
@@ -34,24 +33,13 @@ public class PostProcessTransition
         m_motionBlurTransition = new MotionBlurTransition(from, postProcessProfile, postProcessVolume.profile);
         m_screenSpaceReflectionsTransition = new ScreenSpaceReflectionsTransition(from, postProcessProfile, postProcessVolume.profile);
         m_vignetteTransition = new VignetteTransition(from, postProcessProfile, postProcessVolume.profile);
-
-        m_tweener = DOTween.To(OnTransitionUpdate, 0f, 1f, duration).OnComplete(OnTransitionComplete);
     }
 
-    public void Destroy()
+    public void Lerp(float value)
     {
-        if(m_tweener != null)
-        {
-            m_tweener.Kill();
-            m_tweener = null;
-        }
-    }
-
-    private void OnTransitionUpdate(float value)
-    {
-        m_bloomTransition.Lerp(value);
         m_ambientOcclusionTransition.Lerp(value);
         m_autoExposureTransition.Lerp(value);
+        m_bloomTransition.Lerp(value);
         m_chromaticAberrationTransition.Lerp(value);
         m_colorGradingTransition.Lerp(value);
         m_depthOfFieldTransition.Lerp(value);
@@ -62,10 +50,8 @@ public class PostProcessTransition
         m_vignetteTransition.Lerp(value);
     }
 
-    private void OnTransitionComplete()
+    public void Destroy()
     {
-        m_tweener = null;
-
         if(m_bloomTransition != null)
         {
             m_bloomTransition.Destroy();
