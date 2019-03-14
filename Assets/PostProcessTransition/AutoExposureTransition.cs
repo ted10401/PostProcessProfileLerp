@@ -105,7 +105,7 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
 
         m_tempSettings.filtering.value = Vector2.Lerp(fromFiltering, toFiltering, value);
         m_tempSettings.minLuminance.value = Mathf.Lerp(minLuminance.x, minLuminance.y, value);
-        m_tempSettings.maxLuminance.value = Mathf.Lerp(maxLuminance.x, minLuminance.y, value);
+        m_tempSettings.maxLuminance.value = Mathf.Lerp(maxLuminance.x, maxLuminance.y, value);
         m_tempSettings.keyValue.value = Mathf.Lerp(keyValue.x, keyValue.y, value);
 
         //eyeAdaptation
