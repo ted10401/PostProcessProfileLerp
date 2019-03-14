@@ -15,8 +15,8 @@ public class DepthOfFieldTransition : BaseTransition<DepthOfField>
     public override void InitializeParameters()
     {
         //focusDistance
-        if ((m_fromSettings != null && m_fromSettings.focusDistance.overrideState) ||
-            (m_toSettings != null && m_toSettings.focusDistance.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.focusDistance.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.focusDistance.overrideState))
         {
             m_tempSettings.focusDistance.overrideState = true;
         }
@@ -24,12 +24,12 @@ public class DepthOfFieldTransition : BaseTransition<DepthOfField>
         {
             m_tempSettings.focusDistance.overrideState = false;
         }
-        focusDistance.x = m_fromSettings == null ? 0f : m_fromSettings.focusDistance.value;
-        focusDistance.y = m_toSettings == null ? 0f : m_toSettings.focusDistance.value;
+        focusDistance.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.focusDistance.overrideState ? m_fromSettings.focusDistance.value : m_tempSettings.focusDistance.value;
+        focusDistance.y = m_toSettings != null && m_toSettings.active && m_toSettings.focusDistance.overrideState ? m_toSettings.focusDistance.value : m_tempSettings.focusDistance.value;
 
         //aperture
-        if ((m_fromSettings != null && m_fromSettings.aperture.overrideState) ||
-            (m_toSettings != null && m_toSettings.aperture.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.aperture.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.aperture.overrideState))
         {
             m_tempSettings.aperture.overrideState = true;
         }
@@ -37,12 +37,12 @@ public class DepthOfFieldTransition : BaseTransition<DepthOfField>
         {
             m_tempSettings.aperture.overrideState = false;
         }
-        aperture.x = m_fromSettings == null ? 0f : m_fromSettings.aperture.value;
-        aperture.y = m_toSettings == null ? 0f : m_toSettings.aperture.value;
+        aperture.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.aperture.overrideState ? m_fromSettings.aperture.value : m_tempSettings.aperture.value;
+        aperture.y = m_toSettings != null && m_toSettings.active && m_toSettings.aperture.overrideState ? m_toSettings.aperture.value : m_tempSettings.aperture.value;
 
         //focalLength
-        if ((m_fromSettings != null && m_fromSettings.focalLength.overrideState) ||
-            (m_toSettings != null && m_toSettings.focalLength.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.focalLength.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.focalLength.overrideState))
         {
             m_tempSettings.focalLength.overrideState = true;
         }
@@ -50,8 +50,8 @@ public class DepthOfFieldTransition : BaseTransition<DepthOfField>
         {
             m_tempSettings.focalLength.overrideState = false;
         }
-        focalLength.x = m_fromSettings == null ? 0f : m_fromSettings.focalLength.value;
-        focalLength.y = m_toSettings == null ? 0f : m_toSettings.focalLength.value;
+        focalLength.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.focalLength.overrideState ? m_fromSettings.focalLength.value : m_tempSettings.focalLength.value;
+        focalLength.y = m_toSettings != null && m_toSettings.active && m_toSettings.focalLength.overrideState ? m_toSettings.focalLength.value : m_tempSettings.focalLength.value;
     }
 
     public override void Lerp(float value)
@@ -66,8 +66,8 @@ public class DepthOfFieldTransition : BaseTransition<DepthOfField>
         m_tempSettings.focalLength.value = Mathf.Lerp(focalLength.x, focalLength.y, value);
 
         //kernelSize
-        if ((m_fromSettings != null && m_fromSettings.kernelSize.overrideState) ||
-            (m_toSettings != null && m_toSettings.kernelSize.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.kernelSize.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.kernelSize.overrideState))
         {
             m_tempSettings.kernelSize.overrideState = true;
 

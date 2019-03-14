@@ -17,8 +17,8 @@ public class GrainTransition : BaseTransition<Grain>
         defaultColored = m_tempSettings.colored.value;
 
         //intensity
-        if ((m_fromSettings != null && m_fromSettings.intensity.overrideState) ||
-            (m_toSettings != null && m_toSettings.intensity.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensity.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.intensity.overrideState))
         {
             m_tempSettings.intensity.overrideState = true;
         }
@@ -26,12 +26,12 @@ public class GrainTransition : BaseTransition<Grain>
         {
             m_tempSettings.intensity.overrideState = false;
         }
-        intensity.x = m_fromSettings == null ? m_tempSettings.intensity.value : m_fromSettings.intensity.value;
-        intensity.y = m_toSettings == null ? m_tempSettings.intensity.value : m_toSettings.intensity.value;
+        intensity.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensity.overrideState ? m_fromSettings.intensity.value : m_tempSettings.intensity.value;
+        intensity.y = m_toSettings != null && m_toSettings.active && m_toSettings.intensity.overrideState ? m_toSettings.intensity.value : m_tempSettings.intensity.value;
 
         //size
-        if ((m_fromSettings != null && m_fromSettings.size.overrideState) ||
-            (m_toSettings != null && m_toSettings.size.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.size.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.size.overrideState))
         {
             m_tempSettings.size.overrideState = true;
         }
@@ -39,12 +39,12 @@ public class GrainTransition : BaseTransition<Grain>
         {
             m_tempSettings.size.overrideState = false;
         }
-        size.x = m_fromSettings == null ? m_tempSettings.size.value : m_fromSettings.size.value;
-        size.y = m_toSettings == null ? m_tempSettings.size.value : m_toSettings.size.value;
+        size.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.size.overrideState ? m_fromSettings.size.value : m_tempSettings.size.value;
+        size.y = m_toSettings != null && m_toSettings.active && m_toSettings.size.overrideState ? m_toSettings.size.value : m_tempSettings.size.value;
 
         //lumContrib
-        if ((m_fromSettings != null && m_fromSettings.lumContrib.overrideState) ||
-            (m_toSettings != null && m_toSettings.lumContrib.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.lumContrib.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.lumContrib.overrideState))
         {
             m_tempSettings.lumContrib.overrideState = true;
         }
@@ -52,8 +52,8 @@ public class GrainTransition : BaseTransition<Grain>
         {
             m_tempSettings.lumContrib.overrideState = false;
         }
-        lumContrib.x = m_fromSettings == null ? m_tempSettings.lumContrib.value : m_fromSettings.lumContrib.value;
-        lumContrib.y = m_toSettings == null ? m_tempSettings.lumContrib.value : m_toSettings.lumContrib.value;
+        lumContrib.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.lumContrib.overrideState ? m_fromSettings.lumContrib.value : m_tempSettings.lumContrib.value;
+        lumContrib.y = m_toSettings != null && m_toSettings.active && m_toSettings.lumContrib.overrideState ? m_toSettings.lumContrib.value : m_tempSettings.lumContrib.value;
     }
 
     public override void Lerp(float value)
@@ -64,8 +64,8 @@ public class GrainTransition : BaseTransition<Grain>
         }
 
         //colored
-        if ((m_fromSettings != null && m_fromSettings.colored.overrideState) ||
-            (m_toSettings != null && m_toSettings.colored.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.colored.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.colored.overrideState))
         {
             m_tempSettings.colored.overrideState = true;
 

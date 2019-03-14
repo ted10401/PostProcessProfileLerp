@@ -42,8 +42,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
     public override void InitializeParameters()
     {
         //toneCurveToeStrength
-        if ((m_fromSettings != null && m_fromSettings.toneCurveToeStrength.overrideState) ||
-            (m_toSettings != null && m_toSettings.toneCurveToeStrength.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveToeStrength.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveToeStrength.overrideState))
         {
             m_tempSettings.toneCurveToeStrength.overrideState = true;
         }
@@ -51,12 +51,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.toneCurveToeStrength.overrideState = false;
         }
-        toneCurveToeStrength.x = m_fromSettings == null ? 0f : m_fromSettings.toneCurveToeStrength.value;
-        toneCurveToeStrength.y = m_toSettings == null ? 0f : m_toSettings.toneCurveToeStrength.value;
+        toneCurveToeStrength.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveToeStrength.overrideState ? m_fromSettings.toneCurveToeStrength.value : m_tempSettings.toneCurveToeStrength.value;
+        toneCurveToeStrength.y = m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveToeStrength.overrideState ? m_toSettings.toneCurveToeStrength.value : m_tempSettings.toneCurveToeStrength.value;
 
         //toneCurveToeLength
-        if ((m_fromSettings != null && m_fromSettings.toneCurveToeLength.overrideState) ||
-            (m_toSettings != null && m_toSettings.toneCurveToeLength.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveToeLength.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveToeLength.overrideState))
         {
             m_tempSettings.toneCurveToeLength.overrideState = true;
         }
@@ -64,12 +64,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.toneCurveToeLength.overrideState = false;
         }
-        toneCurveToeLength.x = m_fromSettings == null ? 0.5f : m_fromSettings.toneCurveToeLength.value;
-        toneCurveToeLength.y = m_toSettings == null ? 0.5f : m_toSettings.toneCurveToeLength.value;
+        toneCurveToeLength.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveToeLength.overrideState ? m_fromSettings.toneCurveToeLength.value : m_tempSettings.toneCurveToeLength.value;
+        toneCurveToeLength.y = m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveToeLength.overrideState ? m_toSettings.toneCurveToeLength.value : m_tempSettings.toneCurveToeLength.value;
 
         //toneCurveShoulderStrength
-        if ((m_fromSettings != null && m_fromSettings.toneCurveShoulderStrength.overrideState) ||
-            (m_toSettings != null && m_toSettings.toneCurveShoulderStrength.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveShoulderStrength.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveShoulderStrength.overrideState))
         {
             m_tempSettings.toneCurveShoulderStrength.overrideState = true;
         }
@@ -77,12 +77,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.toneCurveShoulderStrength.overrideState = false;
         }
-        toneCurveShoulderStrength.x = m_fromSettings == null ? 0f : m_fromSettings.toneCurveShoulderStrength.value;
-        toneCurveShoulderStrength.y = m_toSettings == null ? 0f : m_toSettings.toneCurveShoulderStrength.value;
+        toneCurveShoulderStrength.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveShoulderStrength.overrideState ? m_fromSettings.toneCurveShoulderStrength.value : m_tempSettings.toneCurveShoulderStrength.value;
+        toneCurveShoulderStrength.y = m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveShoulderStrength.overrideState ? m_toSettings.toneCurveShoulderStrength.value : m_tempSettings.toneCurveShoulderStrength.value;
 
         //toneCurveShoulderLength
-        if ((m_fromSettings != null && m_fromSettings.toneCurveShoulderLength.overrideState) ||
-            (m_toSettings != null && m_toSettings.toneCurveShoulderLength.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveShoulderLength.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveShoulderLength.overrideState))
         {
             m_tempSettings.toneCurveShoulderLength.overrideState = true;
         }
@@ -90,12 +90,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.toneCurveShoulderLength.overrideState = false;
         }
-        toneCurveShoulderLength.x = m_fromSettings == null ? 0.5f : m_fromSettings.toneCurveShoulderLength.value;
-        toneCurveShoulderLength.y = m_toSettings == null ? 0.5f : m_toSettings.toneCurveShoulderLength.value;
+        toneCurveShoulderLength.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveShoulderLength.overrideState ? m_fromSettings.toneCurveShoulderLength.value : m_tempSettings.toneCurveShoulderLength.value;
+        toneCurveShoulderLength.y = m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveShoulderLength.overrideState ? m_toSettings.toneCurveShoulderLength.value : m_tempSettings.toneCurveShoulderLength.value;
 
         //toneCurveShoulderAngle
-        if ((m_fromSettings != null && m_fromSettings.toneCurveShoulderAngle.overrideState) ||
-            (m_toSettings != null && m_toSettings.toneCurveShoulderAngle.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveShoulderAngle.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveShoulderAngle.overrideState))
         {
             m_tempSettings.toneCurveShoulderAngle.overrideState = true;
         }
@@ -103,12 +103,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.toneCurveShoulderAngle.overrideState = false;
         }
-        toneCurveShoulderAngle.x = m_fromSettings == null ? 0f : m_fromSettings.toneCurveShoulderAngle.value;
-        toneCurveShoulderAngle.y = m_toSettings == null ? 0f : m_toSettings.toneCurveShoulderAngle.value;
+        toneCurveShoulderAngle.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveShoulderAngle.overrideState ? m_fromSettings.toneCurveShoulderAngle.value : m_tempSettings.toneCurveShoulderAngle.value;
+        toneCurveShoulderAngle.y = m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveShoulderAngle.overrideState ? m_toSettings.toneCurveShoulderAngle.value : m_tempSettings.toneCurveShoulderAngle.value;
 
         //toneCurveGamma
-        if ((m_fromSettings != null && m_fromSettings.toneCurveGamma.overrideState) ||
-            (m_toSettings != null && m_toSettings.toneCurveGamma.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveGamma.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveGamma.overrideState))
         {
             m_tempSettings.toneCurveGamma.overrideState = true;
         }
@@ -116,12 +116,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.toneCurveGamma.overrideState = false;
         }
-        toneCurveGamma.x = m_fromSettings == null ? 1f : m_fromSettings.toneCurveGamma.value;
-        toneCurveGamma.y = m_toSettings == null ? 1f : m_toSettings.toneCurveGamma.value;
+        toneCurveGamma.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveGamma.overrideState ? m_fromSettings.toneCurveGamma.value : m_tempSettings.toneCurveGamma.value;
+        toneCurveGamma.y = m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveGamma.overrideState ? m_toSettings.toneCurveGamma.value : m_tempSettings.toneCurveGamma.value;
 
         //ldrLutContribution
-        if ((m_fromSettings != null && m_fromSettings.ldrLutContribution.overrideState) ||
-            (m_toSettings != null && m_toSettings.ldrLutContribution.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.ldrLutContribution.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.ldrLutContribution.overrideState))
         {
             m_tempSettings.ldrLutContribution.overrideState = true;
         }
@@ -129,12 +129,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.ldrLutContribution.overrideState = false;
         }
-        ldrLutContribution.x = m_fromSettings == null ? 1f : m_fromSettings.ldrLutContribution.value;
-        ldrLutContribution.y = m_toSettings == null ? 1f : m_toSettings.ldrLutContribution.value;
+        ldrLutContribution.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.ldrLutContribution.overrideState ? m_fromSettings.ldrLutContribution.value : m_tempSettings.ldrLutContribution.value;
+        ldrLutContribution.y = m_toSettings != null && m_toSettings.active && m_toSettings.ldrLutContribution.overrideState ? m_toSettings.ldrLutContribution.value : m_tempSettings.ldrLutContribution.value;
 
         //temperature
-        if ((m_fromSettings != null && m_fromSettings.temperature.overrideState) ||
-            (m_toSettings != null && m_toSettings.temperature.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.temperature.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.temperature.overrideState))
         {
             m_tempSettings.temperature.overrideState = true;
         }
@@ -142,12 +142,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.temperature.overrideState = false;
         }
-        temperature.x = m_fromSettings == null ? 0f : m_fromSettings.temperature.value;
-        temperature.y = m_toSettings == null ? 0f : m_toSettings.temperature.value;
+        temperature.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.temperature.overrideState ? m_fromSettings.temperature.value : m_tempSettings.temperature.value;
+        temperature.y = m_toSettings != null && m_toSettings.active && m_toSettings.temperature.overrideState ? m_toSettings.temperature.value : m_tempSettings.temperature.value;
 
         //tint
-        if ((m_fromSettings != null && m_fromSettings.tint.overrideState) ||
-            (m_toSettings != null && m_toSettings.tint.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.tint.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.tint.overrideState))
         {
             m_tempSettings.tint.overrideState = true;
         }
@@ -155,12 +155,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.tint.overrideState = false;
         }
-        tint.x = m_fromSettings == null ? 0f : m_fromSettings.tint.value;
-        tint.y = m_toSettings == null ? 0f : m_toSettings.tint.value;
+        tint.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.tint.overrideState ? m_fromSettings.tint.value : m_tempSettings.tint.value;
+        tint.y = m_toSettings != null && m_toSettings.active && m_toSettings.tint.overrideState ? m_toSettings.tint.value : m_tempSettings.tint.value;
 
         //colorFilter
-        if ((m_fromSettings != null && m_fromSettings.colorFilter.overrideState) ||
-            (m_toSettings != null && m_toSettings.colorFilter.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.colorFilter.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.colorFilter.overrideState))
         {
             m_tempSettings.colorFilter.overrideState = true;
         }
@@ -168,12 +168,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.colorFilter.overrideState = false;
         }
-        fromColorFilter = m_fromSettings == null ? Color.white : m_fromSettings.colorFilter.value;
-        toColorFilter = m_toSettings == null ? Color.white : m_toSettings.colorFilter.value;
+        fromColorFilter = m_fromSettings != null && m_fromSettings.active && m_fromSettings.colorFilter.overrideState ? m_fromSettings.colorFilter.value : m_tempSettings.colorFilter.value;
+        toColorFilter = m_toSettings != null && m_toSettings.active && m_toSettings.colorFilter.overrideState ? m_toSettings.colorFilter.value : m_tempSettings.colorFilter.value;
 
         //hueShift
-        if ((m_fromSettings != null && m_fromSettings.hueShift.overrideState) ||
-            (m_toSettings != null && m_toSettings.hueShift.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.hueShift.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.hueShift.overrideState))
         {
             m_tempSettings.hueShift.overrideState = true;
         }
@@ -181,12 +181,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.hueShift.overrideState = false;
         }
-        hueShift.x = m_fromSettings == null ? 0f : m_fromSettings.hueShift.value;
-        hueShift.y = m_toSettings == null ? 0f : m_toSettings.hueShift.value;
+        hueShift.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.hueShift.overrideState ? m_fromSettings.hueShift.value : m_tempSettings.hueShift.value;
+        hueShift.y = m_toSettings != null && m_toSettings.active && m_toSettings.hueShift.overrideState ? m_toSettings.hueShift.value : m_tempSettings.hueShift.value;
 
         //saturation
-        if ((m_fromSettings != null && m_fromSettings.saturation.overrideState) ||
-            (m_toSettings != null && m_toSettings.saturation.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.saturation.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.saturation.overrideState))
         {
             m_tempSettings.saturation.overrideState = true;
         }
@@ -194,12 +194,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.saturation.overrideState = false;
         }
-        saturation.x = m_fromSettings == null ? 0f : m_fromSettings.saturation.value;
-        saturation.y = m_toSettings == null ? 0f : m_toSettings.saturation.value;
+        saturation.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.saturation.overrideState ? m_fromSettings.saturation.value : m_tempSettings.saturation.value;
+        saturation.y = m_toSettings != null && m_toSettings.active && m_toSettings.saturation.overrideState ? m_toSettings.saturation.value : m_tempSettings.saturation.value;
 
         //brightness
-        if ((m_fromSettings != null && m_fromSettings.brightness.overrideState) ||
-            (m_toSettings != null && m_toSettings.brightness.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.brightness.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.brightness.overrideState))
         {
             m_tempSettings.brightness.overrideState = true;
         }
@@ -207,12 +207,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.brightness.overrideState = false;
         }
-        brightness.x = m_fromSettings == null ? 0f : m_fromSettings.brightness.value;
-        brightness.y = m_toSettings == null ? 0f : m_toSettings.brightness.value;
+        brightness.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.brightness.overrideState ? m_fromSettings.brightness.value : m_tempSettings.brightness.value;
+        brightness.y = m_toSettings != null && m_toSettings.active && m_toSettings.brightness.overrideState ? m_toSettings.brightness.value : m_tempSettings.brightness.value;
 
         //postExposure
-        if ((m_fromSettings != null && m_fromSettings.postExposure.overrideState) ||
-            (m_toSettings != null && m_toSettings.postExposure.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.postExposure.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.postExposure.overrideState))
         {
             m_tempSettings.postExposure.overrideState = true;
         }
@@ -220,12 +220,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.postExposure.overrideState = false;
         }
-        postExposure.x = m_fromSettings == null ? 0f : m_fromSettings.postExposure.value;
-        postExposure.y = m_toSettings == null ? 0f : m_toSettings.postExposure.value;
+        postExposure.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.postExposure.overrideState ? m_fromSettings.postExposure.value : m_tempSettings.postExposure.value;
+        postExposure.y = m_toSettings != null && m_toSettings.active && m_toSettings.postExposure.overrideState ? m_toSettings.postExposure.value : m_tempSettings.postExposure.value;
 
         //contrast
-        if ((m_fromSettings != null && m_fromSettings.contrast.overrideState) ||
-            (m_toSettings != null && m_toSettings.contrast.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.contrast.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.contrast.overrideState))
         {
             m_tempSettings.contrast.overrideState = true;
         }
@@ -233,12 +233,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.contrast.overrideState = false;
         }
-        contrast.x = m_fromSettings == null ? 0f : m_fromSettings.contrast.value;
-        contrast.y = m_toSettings == null ? 0f : m_toSettings.contrast.value;
+        contrast.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.contrast.overrideState ? m_fromSettings.contrast.value : m_tempSettings.contrast.value;
+        contrast.y = m_toSettings != null && m_toSettings.active && m_toSettings.contrast.overrideState ? m_toSettings.contrast.value : m_tempSettings.contrast.value;
 
         //mixerRedOutRedIn
-        if ((m_fromSettings != null && m_fromSettings.mixerRedOutRedIn.overrideState) ||
-            (m_toSettings != null && m_toSettings.mixerRedOutRedIn.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerRedOutRedIn.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mixerRedOutRedIn.overrideState))
         {
             m_tempSettings.mixerRedOutRedIn.overrideState = true;
         }
@@ -246,12 +246,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerRedOutRedIn.overrideState = false;
         }
-        mixerRedOutRedIn.x = m_fromSettings == null ? 100f : m_fromSettings.mixerRedOutRedIn.value;
-        mixerRedOutRedIn.y = m_toSettings == null ? 100f : m_toSettings.mixerRedOutRedIn.value;
+        mixerRedOutRedIn.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerRedOutRedIn.overrideState ? m_fromSettings.mixerRedOutRedIn.value : m_tempSettings.mixerRedOutRedIn.value;
+        mixerRedOutRedIn.y = m_toSettings != null && m_toSettings.active && m_toSettings.mixerRedOutRedIn.overrideState ? m_toSettings.mixerRedOutRedIn.value : m_tempSettings.mixerRedOutRedIn.value;
 
         //mixerRedOutGreenIn
-        if ((m_fromSettings != null && m_fromSettings.mixerRedOutGreenIn.overrideState) ||
-            (m_toSettings != null && m_toSettings.mixerRedOutGreenIn.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerRedOutGreenIn.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mixerRedOutGreenIn.overrideState))
         {
             m_tempSettings.mixerRedOutGreenIn.overrideState = true;
         }
@@ -259,12 +259,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerRedOutGreenIn.overrideState = false;
         }
-        mixerRedOutGreenIn.x = m_fromSettings == null ? 0f : m_fromSettings.mixerRedOutGreenIn.value;
-        mixerRedOutGreenIn.y = m_toSettings == null ? 0f : m_toSettings.mixerRedOutGreenIn.value;
+        mixerRedOutGreenIn.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerRedOutGreenIn.overrideState ? m_fromSettings.mixerRedOutGreenIn.value : m_tempSettings.mixerRedOutGreenIn.value;
+        mixerRedOutGreenIn.y = m_toSettings != null && m_toSettings.active && m_toSettings.mixerRedOutGreenIn.overrideState ? m_toSettings.mixerRedOutGreenIn.value : m_tempSettings.mixerRedOutGreenIn.value;
 
         //mixerRedOutBlueIn
-        if ((m_fromSettings != null && m_fromSettings.mixerRedOutBlueIn.overrideState) ||
-            (m_toSettings != null && m_toSettings.mixerRedOutBlueIn.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerRedOutBlueIn.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mixerRedOutBlueIn.overrideState))
         {
             m_tempSettings.mixerRedOutBlueIn.overrideState = true;
         }
@@ -272,12 +272,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerRedOutBlueIn.overrideState = false;
         }
-        mixerRedOutBlueIn.x = m_fromSettings == null ? 0f : m_fromSettings.mixerRedOutBlueIn.value;
-        mixerRedOutBlueIn.y = m_toSettings == null ? 0f : m_toSettings.mixerRedOutBlueIn.value;
+        mixerRedOutBlueIn.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerRedOutBlueIn.overrideState ? m_fromSettings.mixerRedOutBlueIn.value : m_tempSettings.mixerRedOutBlueIn.value;
+        mixerRedOutBlueIn.y = m_toSettings != null && m_toSettings.active && m_toSettings.mixerRedOutBlueIn.overrideState ? m_toSettings.mixerRedOutBlueIn.value : m_tempSettings.mixerRedOutBlueIn.value;
 
         //mixerGreenOutRedIn
-        if ((m_fromSettings != null && m_fromSettings.mixerGreenOutRedIn.overrideState) ||
-            (m_toSettings != null && m_toSettings.mixerGreenOutRedIn.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerGreenOutRedIn.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mixerGreenOutRedIn.overrideState))
         {
             m_tempSettings.mixerGreenOutRedIn.overrideState = true;
         }
@@ -285,12 +285,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerGreenOutRedIn.overrideState = false;
         }
-        mixerGreenOutRedIn.x = m_fromSettings == null ? 0f : m_fromSettings.mixerGreenOutRedIn.value;
-        mixerGreenOutRedIn.y = m_toSettings == null ? 0f : m_toSettings.mixerGreenOutRedIn.value;
+        mixerGreenOutRedIn.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerGreenOutRedIn.overrideState ? m_fromSettings.mixerGreenOutRedIn.value : m_tempSettings.mixerGreenOutRedIn.value;
+        mixerGreenOutRedIn.y = m_toSettings != null && m_toSettings.active && m_toSettings.mixerGreenOutRedIn.overrideState ? m_toSettings.mixerGreenOutRedIn.value : m_tempSettings.mixerGreenOutRedIn.value;
 
         //mixerGreenOutGreenIn
-        if ((m_fromSettings != null && m_fromSettings.mixerGreenOutGreenIn.overrideState) ||
-            (m_toSettings != null && m_toSettings.mixerGreenOutGreenIn.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerGreenOutGreenIn.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mixerGreenOutGreenIn.overrideState))
         {
             m_tempSettings.mixerGreenOutGreenIn.overrideState = true;
         }
@@ -298,12 +298,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerGreenOutGreenIn.overrideState = false;
         }
-        mixerGreenOutGreenIn.x = m_fromSettings == null ? 100f : m_fromSettings.mixerGreenOutGreenIn.value;
-        mixerGreenOutGreenIn.y = m_toSettings == null ? 100f : m_toSettings.mixerGreenOutGreenIn.value;
+        mixerGreenOutGreenIn.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerGreenOutGreenIn.overrideState ? m_fromSettings.mixerGreenOutGreenIn.value : m_tempSettings.mixerGreenOutGreenIn.value;
+        mixerGreenOutGreenIn.y = m_toSettings != null && m_toSettings.active && m_toSettings.mixerGreenOutGreenIn.overrideState ? m_toSettings.mixerGreenOutGreenIn.value : m_tempSettings.mixerGreenOutGreenIn.value;
 
         //mixerGreenOutBlueIn
-        if ((m_fromSettings != null && m_fromSettings.mixerGreenOutBlueIn.overrideState) ||
-            (m_toSettings != null && m_toSettings.mixerGreenOutBlueIn.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerGreenOutBlueIn.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mixerGreenOutBlueIn.overrideState))
         {
             m_tempSettings.mixerGreenOutBlueIn.overrideState = true;
         }
@@ -311,12 +311,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerGreenOutBlueIn.overrideState = false;
         }
-        mixerGreenOutBlueIn.x = m_fromSettings == null ? 0f : m_fromSettings.mixerGreenOutBlueIn.value;
-        mixerGreenOutBlueIn.y = m_toSettings == null ? 0f : m_toSettings.mixerGreenOutBlueIn.value;
+        mixerGreenOutBlueIn.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerGreenOutBlueIn.overrideState ? m_fromSettings.mixerGreenOutBlueIn.value : m_tempSettings.mixerGreenOutBlueIn.value;
+        mixerGreenOutBlueIn.y = m_toSettings != null && m_toSettings.active && m_toSettings.mixerGreenOutBlueIn.overrideState ? m_toSettings.mixerGreenOutBlueIn.value : m_tempSettings.mixerGreenOutBlueIn.value;
 
         //mixerBlueOutRedIn
-        if ((m_fromSettings != null && m_fromSettings.mixerBlueOutRedIn.overrideState) ||
-            (m_toSettings != null && m_toSettings.mixerBlueOutRedIn.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerBlueOutRedIn.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mixerBlueOutRedIn.overrideState))
         {
             m_tempSettings.mixerBlueOutRedIn.overrideState = true;
         }
@@ -324,12 +324,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerBlueOutRedIn.overrideState = false;
         }
-        mixerBlueOutRedIn.x = m_fromSettings == null ? 0f : m_fromSettings.mixerBlueOutRedIn.value;
-        mixerBlueOutRedIn.y = m_toSettings == null ? 0f : m_toSettings.mixerBlueOutRedIn.value;
+        mixerBlueOutRedIn.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerBlueOutRedIn.overrideState ? m_fromSettings.mixerBlueOutRedIn.value : m_tempSettings.mixerBlueOutRedIn.value;
+        mixerBlueOutRedIn.y = m_toSettings != null && m_toSettings.active && m_toSettings.mixerBlueOutRedIn.overrideState ? m_toSettings.mixerBlueOutRedIn.value : m_tempSettings.mixerBlueOutRedIn.value;
 
         //mixerBlueOutGreenIn
-        if ((m_fromSettings != null && m_fromSettings.mixerBlueOutGreenIn.overrideState) ||
-            (m_toSettings != null && m_toSettings.mixerBlueOutGreenIn.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerBlueOutGreenIn.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mixerBlueOutGreenIn.overrideState))
         {
             m_tempSettings.mixerBlueOutGreenIn.overrideState = true;
         }
@@ -337,12 +337,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerBlueOutGreenIn.overrideState = false;
         }
-        mixerBlueOutGreenIn.x = m_fromSettings == null ? 0f : m_fromSettings.mixerBlueOutGreenIn.value;
-        mixerBlueOutGreenIn.y = m_toSettings == null ? 0f : m_toSettings.mixerBlueOutGreenIn.value;
+        mixerBlueOutGreenIn.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerBlueOutGreenIn.overrideState ? m_fromSettings.mixerBlueOutGreenIn.value : m_tempSettings.mixerBlueOutGreenIn.value;
+        mixerBlueOutGreenIn.y = m_toSettings != null && m_toSettings.active && m_toSettings.mixerBlueOutGreenIn.overrideState ? m_toSettings.mixerBlueOutGreenIn.value : m_tempSettings.mixerBlueOutGreenIn.value;
 
         //mixerBlueOutBlueIn
-        if ((m_fromSettings != null && m_fromSettings.mixerBlueOutBlueIn.overrideState) ||
-            (m_toSettings != null && m_toSettings.mixerBlueOutBlueIn.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerBlueOutBlueIn.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mixerBlueOutBlueIn.overrideState))
         {
             m_tempSettings.mixerBlueOutBlueIn.overrideState = true;
         }
@@ -350,12 +350,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.mixerBlueOutBlueIn.overrideState = false;
         }
-        mixerBlueOutBlueIn.x = m_fromSettings == null ? 100f : m_fromSettings.mixerBlueOutBlueIn.value;
-        mixerBlueOutBlueIn.y = m_toSettings == null ? 100f : m_toSettings.mixerBlueOutBlueIn.value;
+        mixerBlueOutBlueIn.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.mixerBlueOutBlueIn.overrideState ? m_fromSettings.mixerBlueOutBlueIn.value : m_tempSettings.mixerBlueOutBlueIn.value;
+        mixerBlueOutBlueIn.y = m_toSettings != null && m_toSettings.active && m_toSettings.mixerBlueOutBlueIn.overrideState ? m_toSettings.mixerBlueOutBlueIn.value : m_tempSettings.mixerBlueOutBlueIn.value;
 
         //lift
-        if ((m_fromSettings != null && m_fromSettings.lift.overrideState) ||
-            (m_toSettings != null && m_toSettings.lift.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.lift.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.lift.overrideState))
         {
             m_tempSettings.lift.overrideState = true;
         }
@@ -363,12 +363,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.lift.overrideState = false;
         }
-        fromLift = m_fromSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_fromSettings.lift.value;
-        toLift = m_toSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_toSettings.lift.value;
+        fromLift = m_fromSettings != null && m_fromSettings.active && m_fromSettings.lift.overrideState ? m_fromSettings.lift.value : m_tempSettings.lift.value;
+        toLift = m_toSettings != null && m_toSettings.active && m_toSettings.lift.overrideState ? m_toSettings.lift.value : m_tempSettings.lift.value;
 
         //gamma
-        if ((m_fromSettings != null && m_fromSettings.gamma.overrideState) ||
-            (m_toSettings != null && m_toSettings.gamma.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.gamma.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.gamma.overrideState))
         {
             m_tempSettings.gamma.overrideState = true;
         }
@@ -376,12 +376,12 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.gamma.overrideState = false;
         }
-        fromGamma = m_fromSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_fromSettings.gamma.value;
-        toGamma = m_toSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_toSettings.gamma.value;
+        fromGamma = m_fromSettings != null && m_fromSettings.active && m_fromSettings.gamma.overrideState ? m_fromSettings.gamma.value : m_tempSettings.gamma.value;
+        toGamma = m_toSettings != null && m_toSettings.active && m_toSettings.gamma.overrideState ? m_toSettings.gamma.value : m_tempSettings.gamma.value;
 
         //gain
-        if ((m_fromSettings != null && m_fromSettings.gain.overrideState) ||
-            (m_toSettings != null && m_toSettings.gain.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.gain.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.gain.overrideState))
         {
             m_tempSettings.gain.overrideState = true;
         }
@@ -389,8 +389,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.gain.overrideState = false;
         }
-        fromGain = m_fromSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_fromSettings.gain.value;
-        toGain = m_toSettings == null ? new Vector4(1f, 1f, 1f, 0f) : m_toSettings.gain.value;
+        fromGain = m_fromSettings != null && m_fromSettings.active && m_fromSettings.gain.overrideState ? m_fromSettings.gain.value : m_tempSettings.gain.value;
+        toGain = m_toSettings != null && m_toSettings.active && m_toSettings.gain.overrideState ? m_toSettings.gain.value : m_tempSettings.gain.value;
     }
 
     public override void Lerp(float value)
@@ -401,8 +401,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //gradingMode
-        if ((m_fromSettings != null && m_fromSettings.gradingMode.overrideState) ||
-            (m_toSettings != null && m_toSettings.gradingMode.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.gradingMode.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.gradingMode.overrideState))
         {
             m_tempSettings.gradingMode.overrideState = true;
 
@@ -435,8 +435,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //externalLut
-        if ((m_fromSettings != null && m_fromSettings.externalLut.overrideState) ||
-            (m_toSettings != null && m_toSettings.externalLut.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.externalLut.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.externalLut.overrideState))
         {
             m_tempSettings.externalLut.overrideState = true;
 
@@ -469,8 +469,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //tonemapper
-        if ((m_fromSettings != null && m_fromSettings.tonemapper.overrideState) ||
-            (m_toSettings != null && m_toSettings.tonemapper.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.tonemapper.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.tonemapper.overrideState))
         {
             m_tempSettings.tonemapper.overrideState = true;
 
@@ -521,8 +521,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         m_tempSettings.toneCurveGamma.value = Mathf.Lerp(toneCurveGamma.x, toneCurveGamma.y, value);
 
         //ldrLut
-        if ((m_fromSettings != null && m_fromSettings.ldrLut.overrideState) ||
-            (m_toSettings != null && m_toSettings.ldrLut.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.ldrLut.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.ldrLut.overrideState))
         {
             m_tempSettings.ldrLut.overrideState = true;
 
@@ -618,8 +618,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         m_tempSettings.gain.value = Vector4.Lerp(fromGain, toGain, value);
 
         //masterCurve
-        if ((m_fromSettings != null && m_fromSettings.masterCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.masterCurve.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.masterCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.masterCurve.overrideState))
         {
             m_tempSettings.masterCurve.overrideState = true;
 
@@ -658,8 +658,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //redCurve
-        if ((m_fromSettings != null && m_fromSettings.redCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.redCurve.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.redCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.redCurve.overrideState))
         {
             m_tempSettings.redCurve.overrideState = true;
 
@@ -698,8 +698,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //greenCurve
-        if ((m_fromSettings != null && m_fromSettings.greenCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.greenCurve.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.greenCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.greenCurve.overrideState))
         {
             m_tempSettings.greenCurve.overrideState = true;
 
@@ -738,8 +738,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //blueCurve
-        if ((m_fromSettings != null && m_fromSettings.blueCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.blueCurve.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.blueCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.blueCurve.overrideState))
         {
             m_tempSettings.blueCurve.overrideState = true;
 
@@ -778,8 +778,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //hueVsHueCurve
-        if ((m_fromSettings != null && m_fromSettings.hueVsHueCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.hueVsHueCurve.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.hueVsHueCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.hueVsHueCurve.overrideState))
         {
             m_tempSettings.hueVsHueCurve.overrideState = true;
 
@@ -804,8 +804,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //hueVsSatCurve
-        if ((m_fromSettings != null && m_fromSettings.hueVsSatCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.hueVsSatCurve.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.hueVsSatCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.hueVsSatCurve.overrideState))
         {
             m_tempSettings.hueVsSatCurve.overrideState = true;
 
@@ -838,8 +838,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //satVsSatCurve
-        if ((m_fromSettings != null && m_fromSettings.satVsSatCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.satVsSatCurve.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.satVsSatCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.satVsSatCurve.overrideState))
         {
             m_tempSettings.satVsSatCurve.overrideState = true;
 
@@ -872,8 +872,8 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //lumVsSatCurve
-        if ((m_fromSettings != null && m_fromSettings.lumVsSatCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.lumVsSatCurve.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.lumVsSatCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.lumVsSatCurve.overrideState))
         {
             m_tempSettings.lumVsSatCurve.overrideState = true;
 

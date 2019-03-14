@@ -17,8 +17,8 @@ public class LensDistortionTransition : BaseTransition<LensDistortion>
     public override void InitializeParameters()
     {
         //intensity
-        if ((m_fromSettings != null && m_fromSettings.intensity.overrideState) ||
-            (m_toSettings != null && m_toSettings.intensity.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensity.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.intensity.overrideState))
         {
             m_tempSettings.intensity.overrideState = true;
         }
@@ -26,12 +26,12 @@ public class LensDistortionTransition : BaseTransition<LensDistortion>
         {
             m_tempSettings.intensity.overrideState = false;
         }
-        intensity.x = m_fromSettings == null ? 0f : m_fromSettings.intensity.value;
-        intensity.y = m_toSettings == null ? 0f : m_toSettings.intensity.value;
+        intensity.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensity.overrideState ? m_fromSettings.intensity.value : m_tempSettings.intensity.value;
+        intensity.y = m_toSettings != null && m_toSettings.active && m_toSettings.intensity.overrideState ? m_toSettings.intensity.value : m_tempSettings.intensity.value;
 
         //intensityX
-        if ((m_fromSettings != null && m_fromSettings.intensityX.overrideState) ||
-            (m_toSettings != null && m_toSettings.intensityX.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensityX.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.intensityX.overrideState))
         {
             m_tempSettings.intensityX.overrideState = true;
         }
@@ -39,12 +39,12 @@ public class LensDistortionTransition : BaseTransition<LensDistortion>
         {
             m_tempSettings.intensityX.overrideState = false;
         }
-        intensityX.x = m_fromSettings == null ? 0f : m_fromSettings.intensityX.value;
-        intensityX.y = m_toSettings == null ? 0f : m_toSettings.intensityX.value;
+        intensityX.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensityX.overrideState ? m_fromSettings.intensityX.value : m_tempSettings.intensityX.value;
+        intensityX.y = m_toSettings != null && m_toSettings.active && m_toSettings.intensityX.overrideState ? m_toSettings.intensityX.value : m_tempSettings.intensityX.value;
 
         //intensityY
-        if ((m_fromSettings != null && m_fromSettings.intensityY.overrideState) ||
-            (m_toSettings != null && m_toSettings.intensityY.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensityY.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.intensityY.overrideState))
         {
             m_tempSettings.intensityY.overrideState = true;
         }
@@ -52,12 +52,12 @@ public class LensDistortionTransition : BaseTransition<LensDistortion>
         {
             m_tempSettings.intensityY.overrideState = false;
         }
-        intensityY.x = m_fromSettings == null ? 0f : m_fromSettings.intensityY.value;
-        intensityY.y = m_toSettings == null ? 0f : m_toSettings.intensityY.value;
+        intensityY.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensityY.overrideState ? m_fromSettings.intensityY.value : m_tempSettings.intensityY.value;
+        intensityY.y = m_toSettings != null && m_toSettings.active && m_toSettings.intensityY.overrideState ? m_toSettings.intensityY.value : m_tempSettings.intensityY.value;
 
         //centerX
-        if ((m_fromSettings != null && m_fromSettings.centerX.overrideState) ||
-            (m_toSettings != null && m_toSettings.centerX.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.centerX.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.centerX.overrideState))
         {
             m_tempSettings.centerX.overrideState = true;
         }
@@ -65,12 +65,12 @@ public class LensDistortionTransition : BaseTransition<LensDistortion>
         {
             m_tempSettings.centerX.overrideState = false;
         }
-        centerX.x = m_fromSettings == null ? 0f : m_fromSettings.centerX.value;
-        centerX.y = m_toSettings == null ? 0f : m_toSettings.centerX.value;
+        centerX.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.centerX.overrideState ? m_fromSettings.centerX.value : m_tempSettings.centerX.value;
+        centerX.y = m_toSettings != null && m_toSettings.active && m_toSettings.centerX.overrideState ? m_toSettings.centerX.value : m_tempSettings.centerX.value;
 
         //centerY
-        if ((m_fromSettings != null && m_fromSettings.centerY.overrideState) ||
-            (m_toSettings != null && m_toSettings.centerY.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.centerY.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.centerY.overrideState))
         {
             m_tempSettings.centerY.overrideState = true;
         }
@@ -78,12 +78,12 @@ public class LensDistortionTransition : BaseTransition<LensDistortion>
         {
             m_tempSettings.centerY.overrideState = false;
         }
-        centerY.x = m_fromSettings == null ? 0f : m_fromSettings.centerY.value;
-        centerY.y = m_toSettings == null ? 0f : m_toSettings.centerY.value;
+        centerY.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.centerY.overrideState ? m_fromSettings.centerY.value : m_tempSettings.centerY.value;
+        centerY.y = m_toSettings != null && m_toSettings.active && m_toSettings.centerY.overrideState ? m_toSettings.centerY.value : m_tempSettings.centerY.value;
 
         //scale
-        if ((m_fromSettings != null && m_fromSettings.scale.overrideState) ||
-            (m_toSettings != null && m_toSettings.scale.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.scale.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.scale.overrideState))
         {
             m_tempSettings.scale.overrideState = true;
         }
@@ -91,8 +91,8 @@ public class LensDistortionTransition : BaseTransition<LensDistortion>
         {
             m_tempSettings.scale.overrideState = false;
         }
-        scale.x = m_fromSettings == null ? 0f : m_fromSettings.scale.value;
-        scale.y = m_toSettings == null ? 0f : m_toSettings.scale.value;
+        scale.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.scale.overrideState ? m_fromSettings.scale.value : m_tempSettings.scale.value;
+        scale.y = m_toSettings != null && m_toSettings.active && m_toSettings.scale.overrideState ? m_toSettings.scale.value : m_tempSettings.scale.value;
     }
 
     public override void Lerp(float value)

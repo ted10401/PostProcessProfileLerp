@@ -25,8 +25,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         defaultMode = m_tempSettings.mode.value;
 
         //intensity
-        if ((m_fromSettings != null && m_fromSettings.intensity.overrideState) ||
-            (m_toSettings != null && m_toSettings.intensity.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensity.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.intensity.overrideState))
         {
             m_tempSettings.intensity.overrideState = true;
         }
@@ -34,12 +34,12 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.intensity.overrideState = false;
         }
-        intensity.x = m_fromSettings == null ? m_tempSettings.intensity.value : m_fromSettings.intensity.value;
-        intensity.y = m_toSettings == null ? m_tempSettings.intensity.value : m_toSettings.intensity.value;
+        intensity.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensity.overrideState ? m_fromSettings.intensity.value : m_tempSettings.intensity.value;
+        intensity.y = m_toSettings != null && m_toSettings.active && m_toSettings.intensity.overrideState ? m_toSettings.intensity.value : m_tempSettings.intensity.value;
 
         //color
-        if ((m_fromSettings != null && m_fromSettings.color.overrideState) ||
-            (m_toSettings != null && m_toSettings.color.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.color.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.color.overrideState))
         {
             m_tempSettings.color.overrideState = true;
         }
@@ -47,14 +47,14 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.color.overrideState = false;
         }
-        fromColor = m_fromSettings == null ? m_tempSettings.color.value : m_fromSettings.color.value;
-        toColor = m_toSettings == null ? m_tempSettings.color.value : m_toSettings.color.value;
+        fromColor = m_fromSettings != null && m_fromSettings.active && m_fromSettings.color.overrideState ? m_fromSettings.color.value : m_tempSettings.color.value;
+        toColor = m_toSettings != null && m_toSettings.active && m_toSettings.color.overrideState ? m_toSettings.color.value : m_tempSettings.color.value;
 
         defaultAmbientOnly = m_tempSettings.ambientOnly;
 
         //noiseFilterTolerance
-        if ((m_fromSettings != null && m_fromSettings.noiseFilterTolerance.overrideState) ||
-            (m_toSettings != null && m_toSettings.noiseFilterTolerance.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.noiseFilterTolerance.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.noiseFilterTolerance.overrideState))
         {
             m_tempSettings.noiseFilterTolerance.overrideState = true;
         }
@@ -62,12 +62,12 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.noiseFilterTolerance.overrideState = false;
         }
-        noiseFilterTolerance.x = m_fromSettings == null ? m_tempSettings.noiseFilterTolerance.value : m_fromSettings.noiseFilterTolerance.value;
-        noiseFilterTolerance.y = m_toSettings == null ? m_tempSettings.noiseFilterTolerance.value : m_toSettings.noiseFilterTolerance.value;
+        noiseFilterTolerance.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.noiseFilterTolerance.overrideState ? m_fromSettings.noiseFilterTolerance.value : m_tempSettings.noiseFilterTolerance.value;
+        noiseFilterTolerance.y = m_toSettings != null && m_toSettings.active && m_toSettings.noiseFilterTolerance.overrideState ? m_toSettings.noiseFilterTolerance.value : m_tempSettings.noiseFilterTolerance.value;
 
         //blurTolerance
-        if ((m_fromSettings != null && m_fromSettings.blurTolerance.overrideState) ||
-            (m_toSettings != null && m_toSettings.blurTolerance.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.blurTolerance.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.blurTolerance.overrideState))
         {
             m_tempSettings.blurTolerance.overrideState = true;
         }
@@ -75,12 +75,12 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.blurTolerance.overrideState = false;
         }
-        blurTolerance.x = m_fromSettings == null ? m_tempSettings.blurTolerance.value : m_fromSettings.blurTolerance.value;
-        blurTolerance.y = m_toSettings == null ? m_tempSettings.blurTolerance.value : m_toSettings.blurTolerance.value;
+        blurTolerance.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.blurTolerance.overrideState ? m_fromSettings.blurTolerance.value : m_tempSettings.blurTolerance.value;
+        blurTolerance.y = m_toSettings != null && m_toSettings.active && m_toSettings.blurTolerance.overrideState ? m_toSettings.blurTolerance.value : m_tempSettings.blurTolerance.value;
 
         //upsampleTolerance
-        if ((m_fromSettings != null && m_fromSettings.upsampleTolerance.overrideState) ||
-            (m_toSettings != null && m_toSettings.upsampleTolerance.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.upsampleTolerance.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.upsampleTolerance.overrideState))
         {
             m_tempSettings.upsampleTolerance.overrideState = true;
         }
@@ -88,12 +88,12 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.upsampleTolerance.overrideState = false;
         }
-        upsampleTolerance.x = m_fromSettings == null ? m_tempSettings.upsampleTolerance.value : m_fromSettings.upsampleTolerance.value;
-        upsampleTolerance.y = m_toSettings == null ? m_tempSettings.upsampleTolerance.value : m_toSettings.upsampleTolerance.value;
+        upsampleTolerance.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.upsampleTolerance.overrideState ? m_fromSettings.upsampleTolerance.value : m_tempSettings.upsampleTolerance.value;
+        upsampleTolerance.y = m_toSettings != null && m_toSettings.active && m_toSettings.upsampleTolerance.overrideState ? m_toSettings.upsampleTolerance.value : m_tempSettings.upsampleTolerance.value;
 
         //thicknessModifier
-        if ((m_fromSettings != null && m_fromSettings.thicknessModifier.overrideState) ||
-            (m_toSettings != null && m_toSettings.thicknessModifier.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.thicknessModifier.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.thicknessModifier.overrideState))
         {
             m_tempSettings.thicknessModifier.overrideState = true;
         }
@@ -101,12 +101,12 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.thicknessModifier.overrideState = false;
         }
-        thicknessModifier.x = m_fromSettings == null ? m_tempSettings.thicknessModifier.value : m_fromSettings.thicknessModifier.value;
-        thicknessModifier.y = m_toSettings == null ? m_tempSettings.thicknessModifier.value : m_toSettings.thicknessModifier.value;
+        thicknessModifier.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.thicknessModifier.overrideState ? m_fromSettings.thicknessModifier.value : m_tempSettings.thicknessModifier.value;
+        thicknessModifier.y = m_toSettings != null && m_toSettings.active && m_toSettings.thicknessModifier.overrideState ? m_toSettings.thicknessModifier.value : m_tempSettings.thicknessModifier.value;
 
         //directLightingStrength
-        if ((m_fromSettings != null && m_fromSettings.directLightingStrength.overrideState) ||
-            (m_toSettings != null && m_toSettings.directLightingStrength.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.directLightingStrength.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.directLightingStrength.overrideState))
         {
             m_tempSettings.directLightingStrength.overrideState = true;
         }
@@ -114,12 +114,12 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.directLightingStrength.overrideState = false;
         }
-        directLightingStrength.x = m_fromSettings == null ? m_tempSettings.directLightingStrength.value : m_fromSettings.directLightingStrength.value;
-        directLightingStrength.y = m_toSettings == null ? m_tempSettings.directLightingStrength.value : m_toSettings.directLightingStrength.value;
+        directLightingStrength.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.directLightingStrength.overrideState ? m_fromSettings.directLightingStrength.value : m_tempSettings.directLightingStrength.value;
+        directLightingStrength.y = m_toSettings != null && m_toSettings.active && m_toSettings.directLightingStrength.overrideState ? m_toSettings.directLightingStrength.value : m_tempSettings.directLightingStrength.value;
 
         //radius
-        if ((m_fromSettings != null && m_fromSettings.radius.overrideState) ||
-            (m_toSettings != null && m_toSettings.radius.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.radius.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.radius.overrideState))
         {
             m_tempSettings.radius.overrideState = true;
         }
@@ -127,8 +127,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.radius.overrideState = false;
         }
-        radius.x = m_fromSettings == null ? m_tempSettings.radius.value : m_fromSettings.radius.value;
-        radius.y = m_toSettings == null ? m_tempSettings.radius.value : m_toSettings.radius.value;
+        radius.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.radius.overrideState ? m_fromSettings.radius.value : m_tempSettings.radius.value;
+        radius.y = m_toSettings != null && m_toSettings.active && m_toSettings.radius.overrideState ? m_toSettings.radius.value : m_tempSettings.radius.value;
 
         defaultQuality = m_tempSettings.quality.value;
     }
@@ -141,8 +141,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         }
 
         //mode
-        if ((m_fromSettings != null && m_fromSettings.mode.overrideState) ||
-            (m_toSettings != null && m_toSettings.mode.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mode.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mode.overrideState))
         {
             m_tempSettings.mode.overrideState = true;
 
@@ -178,8 +178,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         m_tempSettings.color.value = Color.Lerp(fromColor, toColor, value);
 
         //ambientOnly
-        if ((m_fromSettings != null && m_fromSettings.ambientOnly.overrideState) ||
-            (m_toSettings != null && m_toSettings.ambientOnly.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.ambientOnly.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.ambientOnly.overrideState))
         {
             m_tempSettings.ambientOnly.overrideState = true;
 
@@ -219,8 +219,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         m_tempSettings.radius.value = Mathf.Lerp(radius.x, radius.y, value);
 
         //quality
-        if ((m_fromSettings != null && m_fromSettings.quality.overrideState) ||
-            (m_toSettings != null && m_toSettings.quality.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.quality.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.quality.overrideState))
         {
             m_tempSettings.quality.overrideState = true;
 

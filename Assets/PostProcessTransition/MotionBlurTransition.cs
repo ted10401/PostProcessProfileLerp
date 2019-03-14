@@ -13,8 +13,8 @@ public class MotionBlurTransition : BaseTransition<MotionBlur>
     public override void InitializeParameters()
     {
         //shutterAngle
-        if ((m_fromSettings != null && m_fromSettings.shutterAngle.overrideState) ||
-            (m_toSettings != null && m_toSettings.shutterAngle.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.shutterAngle.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.shutterAngle.overrideState))
         {
             m_tempSettings.shutterAngle.overrideState = true;
         }
@@ -22,12 +22,12 @@ public class MotionBlurTransition : BaseTransition<MotionBlur>
         {
             m_tempSettings.shutterAngle.overrideState = false;
         }
-        shutterAngle.x = m_fromSettings == null ? m_tempSettings.shutterAngle.value : m_fromSettings.shutterAngle.value;
-        shutterAngle.y = m_toSettings == null ? m_tempSettings.shutterAngle.value : m_toSettings.shutterAngle.value;
+        shutterAngle.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.shutterAngle.overrideState ? m_fromSettings.shutterAngle.value : m_tempSettings.shutterAngle.value;
+        shutterAngle.y = m_toSettings != null && m_toSettings.active && m_toSettings.shutterAngle.overrideState ? m_toSettings.shutterAngle.value : m_tempSettings.shutterAngle.value;
 
         //sampleCount
-        if ((m_fromSettings != null && m_fromSettings.sampleCount.overrideState) ||
-            (m_toSettings != null && m_toSettings.sampleCount.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.sampleCount.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.sampleCount.overrideState))
         {
             m_tempSettings.sampleCount.overrideState = true;
         }
@@ -35,8 +35,8 @@ public class MotionBlurTransition : BaseTransition<MotionBlur>
         {
             m_tempSettings.sampleCount.overrideState = false;
         }
-        sampleCount.x = m_fromSettings == null ? m_tempSettings.sampleCount.value : m_fromSettings.sampleCount.value;
-        sampleCount.y = m_toSettings == null ? m_tempSettings.sampleCount.value : m_toSettings.sampleCount.value;
+        sampleCount.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.sampleCount.overrideState ? m_fromSettings.sampleCount.value : m_tempSettings.sampleCount.value;
+        sampleCount.y = m_toSettings != null && m_toSettings.active && m_toSettings.sampleCount.overrideState ? m_toSettings.sampleCount.value : m_tempSettings.sampleCount.value;
     }
 
     public override void Lerp(float value)

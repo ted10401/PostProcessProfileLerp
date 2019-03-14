@@ -31,7 +31,7 @@ public class PostProcessTransition
         m_fromPostProcessProfile = m_postProcessVolumn.profile;
         m_toPostProcessProfile = toPostProcessProfile;
         m_onComplete = onComplete;
-        m_tempPostProcessProfile = PostProcessTransitionUtils.CreateInstance();
+        m_tempPostProcessProfile = UnityEngine.ScriptableObject.CreateInstance<PostProcessProfile>();
 
         m_postProcessVolumn.profile = m_tempPostProcessProfile;
 
@@ -88,7 +88,7 @@ public class PostProcessTransition
 
         if(m_tempPostProcessProfile != null)
         {
-            UnityEngine.Object.Destroy(m_tempPostProcessProfile);
+            UnityEngine.ScriptableObject.Destroy(m_tempPostProcessProfile);
             m_tempPostProcessProfile = null;
         }
 

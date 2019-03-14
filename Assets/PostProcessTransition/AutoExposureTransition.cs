@@ -18,8 +18,8 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
     public override void InitializeParameters()
     {
         //filtering
-        if ((m_fromSettings != null && m_fromSettings.filtering.overrideState) ||
-            (m_toSettings != null && m_toSettings.filtering.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.filtering.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.filtering.overrideState))
         {
             m_tempSettings.filtering.overrideState = true;
         }
@@ -27,12 +27,12 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.filtering.overrideState = false;
         }
-        fromFiltering = m_fromSettings == null ? new Vector2(50f, 95f) : m_fromSettings.filtering.value;
-        toFiltering = m_toSettings == null ? new Vector2(50f, 95f) : m_toSettings.filtering.value;
+        fromFiltering = m_fromSettings != null && m_fromSettings.active && m_fromSettings.filtering.overrideState ? m_fromSettings.filtering.value : m_tempSettings.filtering.value;
+        toFiltering = m_toSettings != null && m_toSettings.active && m_toSettings.filtering.overrideState ? m_toSettings.filtering.value : m_tempSettings.filtering.value;
 
         //minLuminance
-        if ((m_fromSettings != null && m_fromSettings.minLuminance.overrideState) ||
-            (m_toSettings != null && m_toSettings.minLuminance.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.minLuminance.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.minLuminance.overrideState))
         {
             m_tempSettings.minLuminance.overrideState = true;
         }
@@ -40,12 +40,12 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.minLuminance.overrideState = false;
         }
-        minLuminance.x = m_fromSettings == null ? 0f : m_fromSettings.minLuminance.value;
-        minLuminance.y = m_toSettings == null ? 0f : m_toSettings.minLuminance.value;
+        minLuminance.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.minLuminance.overrideState ? m_fromSettings.minLuminance.value : m_tempSettings.minLuminance.value;
+        minLuminance.y = m_toSettings != null && m_toSettings.active && m_toSettings.minLuminance.overrideState ? m_toSettings.minLuminance.value : m_tempSettings.minLuminance.value;
 
         //maxLuminance
-        if ((m_fromSettings != null && m_fromSettings.maxLuminance.overrideState) ||
-            (m_toSettings != null && m_toSettings.maxLuminance.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.maxLuminance.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.maxLuminance.overrideState))
         {
             m_tempSettings.maxLuminance.overrideState = true;
         }
@@ -53,12 +53,12 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.maxLuminance.overrideState = false;
         }
-        maxLuminance.x = m_fromSettings == null ? 0f : m_fromSettings.maxLuminance.value;
-        maxLuminance.y = m_toSettings == null ? 0f : m_toSettings.maxLuminance.value;
+        maxLuminance.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.maxLuminance.overrideState ? m_fromSettings.maxLuminance.value : m_tempSettings.maxLuminance.value;
+        maxLuminance.y = m_toSettings != null && m_toSettings.active && m_toSettings.maxLuminance.overrideState ? m_toSettings.maxLuminance.value : m_tempSettings.maxLuminance.value;
 
         //keyValue
-        if ((m_fromSettings != null && m_fromSettings.keyValue.overrideState) ||
-            (m_toSettings != null && m_toSettings.keyValue.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.keyValue.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.keyValue.overrideState))
         {
             m_tempSettings.keyValue.overrideState = true;
         }
@@ -66,12 +66,12 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.keyValue.overrideState = false;
         }
-        keyValue.x = m_fromSettings == null ? 1f : m_fromSettings.keyValue.value;
-        keyValue.y = m_toSettings == null ? 1f : m_toSettings.keyValue.value;
+        keyValue.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.keyValue.overrideState ? m_fromSettings.keyValue.value : m_tempSettings.keyValue.value;
+        keyValue.y = m_toSettings != null && m_toSettings.active && m_toSettings.keyValue.overrideState ? m_toSettings.keyValue.value : m_tempSettings.keyValue.value;
 
         //speedUp
-        if ((m_fromSettings != null && m_fromSettings.speedUp.overrideState) ||
-            (m_toSettings != null && m_toSettings.speedUp.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.speedUp.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.speedUp.overrideState))
         {
             m_tempSettings.speedUp.overrideState = true;
         }
@@ -79,12 +79,12 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.speedUp.overrideState = false;
         }
-        speedUp.x = m_fromSettings == null ? 2f : m_fromSettings.speedUp.value;
-        speedUp.y = m_toSettings == null ? 2f : m_toSettings.speedUp.value;
+        speedUp.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.speedUp.overrideState ? m_fromSettings.speedUp.value : m_tempSettings.speedUp.value;
+        speedUp.y = m_toSettings != null && m_toSettings.active && m_toSettings.speedUp.overrideState ? m_toSettings.speedUp.value : m_tempSettings.speedUp.value;
 
         //speedDown
-        if ((m_fromSettings != null && m_fromSettings.speedDown.overrideState) ||
-            (m_toSettings != null && m_toSettings.speedDown.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.speedDown.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.speedDown.overrideState))
         {
             m_tempSettings.speedDown.overrideState = true;
         }
@@ -92,8 +92,8 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.speedDown.overrideState = false;
         }
-        speedDown.x = m_fromSettings == null ? 1f : m_fromSettings.speedDown.value;
-        speedDown.y = m_toSettings == null ? 1f : m_toSettings.speedDown.value;
+        speedDown.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.speedDown.overrideState ? m_fromSettings.speedDown.value : m_tempSettings.speedDown.value;
+        speedDown.y = m_toSettings != null && m_toSettings.active && m_toSettings.speedDown.overrideState ? m_toSettings.speedDown.value : m_tempSettings.speedDown.value;
     }
 
     public override void Lerp(float value)
@@ -109,8 +109,8 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         m_tempSettings.keyValue.value = Mathf.Lerp(keyValue.x, keyValue.y, value);
 
         //eyeAdaptation
-        if ((m_fromSettings != null && m_fromSettings.eyeAdaptation.overrideState) ||
-            (m_toSettings != null && m_toSettings.eyeAdaptation.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.eyeAdaptation.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.eyeAdaptation.overrideState))
         {
             m_tempSettings.eyeAdaptation.overrideState = true;
 

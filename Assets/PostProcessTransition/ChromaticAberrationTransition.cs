@@ -12,8 +12,8 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
     public override void InitializeParameters()
     {
         //intensity
-        if ((m_fromSettings != null && m_fromSettings.intensity.overrideState) ||
-            (m_toSettings != null && m_toSettings.intensity.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensity.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.intensity.overrideState))
         {
             m_tempSettings.intensity.overrideState = true;
         }
@@ -21,8 +21,8 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
         {
             m_tempSettings.intensity.overrideState = false;
         }
-        intensity.x = m_fromSettings == null ? 0f : m_fromSettings.intensity.value;
-        intensity.y = m_toSettings == null ? 0f : m_toSettings.intensity.value;
+        intensity.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensity.overrideState ? m_fromSettings.intensity.value : m_tempSettings.intensity.value;
+        intensity.y = m_toSettings != null && m_toSettings.active && m_toSettings.intensity.overrideState ? m_toSettings.intensity.value : m_tempSettings.intensity.value;
     }
 
     public override void Lerp(float value)
@@ -33,8 +33,8 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
         }
 
         //spectralLut
-        if ((m_fromSettings != null && m_fromSettings.spectralLut.overrideState) ||
-            (m_toSettings != null && m_toSettings.spectralLut.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.spectralLut.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.spectralLut.overrideState))
         {
             m_tempSettings.spectralLut.overrideState = true;
 
@@ -69,8 +69,8 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
         m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
 
         //fastMode
-        if ((m_fromSettings != null && m_fromSettings.fastMode.overrideState) ||
-            (m_toSettings != null && m_toSettings.fastMode.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.fastMode.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.fastMode.overrideState))
         {
             m_tempSettings.fastMode.overrideState = true;
 

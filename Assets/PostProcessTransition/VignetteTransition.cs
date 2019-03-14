@@ -23,8 +23,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         defaultMode = m_tempSettings.mode.value;
 
         //color
-        if ((m_fromSettings != null && m_fromSettings.color.overrideState) ||
-            (m_toSettings != null && m_toSettings.color.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.color.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.color.overrideState))
         {
             m_tempSettings.color.overrideState = true;
         }
@@ -36,8 +36,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         toColor = m_toSettings == null ? m_tempSettings.color.value : m_toSettings.color.value;
 
         //center
-        if ((m_fromSettings != null && m_fromSettings.center.overrideState) ||
-            (m_toSettings != null && m_toSettings.center.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.center.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.center.overrideState))
         {
             m_tempSettings.center.overrideState = true;
         }
@@ -49,8 +49,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         toCenter = m_toSettings == null ? m_tempSettings.center.value : m_toSettings.center.value;
 
         //intensity
-        if ((m_fromSettings != null && m_fromSettings.intensity.overrideState) ||
-            (m_toSettings != null && m_toSettings.intensity.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensity.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.intensity.overrideState))
         {
             m_tempSettings.intensity.overrideState = true;
         }
@@ -62,8 +62,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         intensity.y = m_toSettings == null ? m_tempSettings.intensity.value : m_toSettings.intensity.value;
 
         //smoothness
-        if ((m_fromSettings != null && m_fromSettings.smoothness.overrideState) ||
-            (m_toSettings != null && m_toSettings.smoothness.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.smoothness.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.smoothness.overrideState))
         {
             m_tempSettings.smoothness.overrideState = true;
         }
@@ -75,8 +75,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         smoothness.y = m_toSettings == null ? m_tempSettings.smoothness.value : m_toSettings.smoothness.value;
 
         //roundness
-        if ((m_fromSettings != null && m_fromSettings.roundness.overrideState) ||
-            (m_toSettings != null && m_toSettings.roundness.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.roundness.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.roundness.overrideState))
         {
             m_tempSettings.roundness.overrideState = true;
         }
@@ -90,8 +90,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         defaultRounded = m_tempSettings.rounded.value;
 
         //opacity
-        if ((m_fromSettings != null && m_fromSettings.opacity.overrideState) ||
-            (m_toSettings != null && m_toSettings.opacity.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.opacity.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.opacity.overrideState))
         {
             m_tempSettings.opacity.overrideState = true;
         }
@@ -111,8 +111,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         }
 
         //mode
-        if ((m_fromSettings != null && m_fromSettings.mode.overrideState) ||
-            (m_toSettings != null && m_toSettings.mode.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mode.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mode.overrideState))
         {
             m_tempSettings.mode.overrideState = true;
 
@@ -151,8 +151,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         m_tempSettings.roundness.value = Mathf.Lerp(roundness.x, roundness.y, value);
 
         //rounded
-        if ((m_fromSettings != null && m_fromSettings.rounded.overrideState) ||
-            (m_toSettings != null && m_toSettings.rounded.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.rounded.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.rounded.overrideState))
         {
             m_tempSettings.rounded.overrideState = true;
 
@@ -185,8 +185,8 @@ public class VignetteTransition : BaseTransition<Vignette>
         }
 
         //mask
-        if ((m_fromSettings != null && m_fromSettings.mask.overrideState) ||
-            (m_toSettings != null && m_toSettings.mask.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mask.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mask.overrideState))
         {
             m_tempSettings.mask.overrideState = true;
 

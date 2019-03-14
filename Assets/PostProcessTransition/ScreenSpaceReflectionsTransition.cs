@@ -20,8 +20,8 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         defaultPresent = m_tempSettings.preset.value;
 
         //maximumIterationCount
-        if ((m_fromSettings != null && m_fromSettings.maximumIterationCount.overrideState) ||
-            (m_toSettings != null && m_toSettings.maximumIterationCount.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.maximumIterationCount.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.maximumIterationCount.overrideState))
         {
             m_tempSettings.maximumIterationCount.overrideState = true;
         }
@@ -29,14 +29,14 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.maximumIterationCount.overrideState = false;
         }
-        maximumIterationCount.x = m_fromSettings == null ? m_tempSettings.maximumIterationCount.value : m_fromSettings.maximumIterationCount.value;
-        maximumIterationCount.y = m_toSettings == null ? m_tempSettings.maximumIterationCount.value : m_toSettings.maximumIterationCount.value;
+        maximumIterationCount.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.maximumIterationCount.overrideState ? m_fromSettings.maximumIterationCount.value : m_tempSettings.maximumIterationCount.value;
+        maximumIterationCount.y = m_toSettings != null && m_toSettings.active && m_toSettings.maximumIterationCount.overrideState ? m_toSettings.maximumIterationCount.value : m_tempSettings.maximumIterationCount.value;
 
         defaultResolution = m_tempSettings.resolution.value;
 
         //thickness
-        if ((m_fromSettings != null && m_fromSettings.thickness.overrideState) ||
-            (m_toSettings != null && m_toSettings.thickness.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.thickness.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.thickness.overrideState))
         {
             m_tempSettings.thickness.overrideState = true;
         }
@@ -44,12 +44,12 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.thickness.overrideState = false;
         }
-        thickness.x = m_fromSettings == null ? m_tempSettings.thickness.value : m_fromSettings.thickness.value;
-        thickness.y = m_toSettings == null ? m_tempSettings.thickness.value : m_toSettings.thickness.value;
+        thickness.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.thickness.overrideState ? m_fromSettings.thickness.value : m_tempSettings.thickness.value;
+        thickness.y = m_toSettings != null && m_toSettings.active && m_toSettings.thickness.overrideState ? m_toSettings.thickness.value : m_tempSettings.thickness.value;
 
         //maximumMarchDistance
-        if ((m_fromSettings != null && m_fromSettings.maximumMarchDistance.overrideState) ||
-            (m_toSettings != null && m_toSettings.maximumMarchDistance.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.maximumMarchDistance.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.maximumMarchDistance.overrideState))
         {
             m_tempSettings.maximumMarchDistance.overrideState = true;
         }
@@ -57,12 +57,12 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.maximumMarchDistance.overrideState = false;
         }
-        maximumMarchDistance.x = m_fromSettings == null ? m_tempSettings.maximumMarchDistance.value : m_fromSettings.maximumMarchDistance.value;
-        maximumMarchDistance.y = m_toSettings == null ? m_tempSettings.maximumMarchDistance.value : m_toSettings.maximumMarchDistance.value;
+        maximumMarchDistance.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.maximumMarchDistance.overrideState ? m_fromSettings.maximumMarchDistance.value : m_tempSettings.maximumMarchDistance.value;
+        maximumMarchDistance.y = m_toSettings != null && m_toSettings.active && m_toSettings.maximumMarchDistance.overrideState ? m_toSettings.maximumMarchDistance.value : m_tempSettings.maximumMarchDistance.value;
 
         //distanceFade
-        if ((m_fromSettings != null && m_fromSettings.distanceFade.overrideState) ||
-            (m_toSettings != null && m_toSettings.distanceFade.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.distanceFade.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.distanceFade.overrideState))
         {
             m_tempSettings.distanceFade.overrideState = true;
         }
@@ -70,12 +70,12 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.distanceFade.overrideState = false;
         }
-        distanceFade.x = m_fromSettings == null ? m_tempSettings.distanceFade.value : m_fromSettings.distanceFade.value;
-        distanceFade.y = m_toSettings == null ? m_tempSettings.distanceFade.value : m_toSettings.distanceFade.value;
+        distanceFade.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.distanceFade.overrideState ? m_fromSettings.distanceFade.value : m_tempSettings.distanceFade.value;
+        distanceFade.y = m_toSettings != null && m_toSettings.active && m_toSettings.distanceFade.overrideState ? m_toSettings.distanceFade.value : m_tempSettings.distanceFade.value;
 
         //vignette
-        if ((m_fromSettings != null && m_fromSettings.vignette.overrideState) ||
-            (m_toSettings != null && m_toSettings.vignette.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.vignette.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.vignette.overrideState))
         {
             m_tempSettings.vignette.overrideState = true;
         }
@@ -83,8 +83,8 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.vignette.overrideState = false;
         }
-        vignette.x = m_fromSettings == null ? m_tempSettings.vignette.value : m_fromSettings.vignette.value;
-        vignette.y = m_toSettings == null ? m_tempSettings.vignette.value : m_toSettings.vignette.value;
+        vignette.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.vignette.overrideState ? m_fromSettings.vignette.value : m_tempSettings.vignette.value;
+        vignette.y = m_toSettings != null && m_toSettings.active && m_toSettings.vignette.overrideState ? m_toSettings.vignette.value : m_tempSettings.vignette.value;
     }
 
     public override void Lerp(float value)
@@ -95,8 +95,8 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         }
 
         //preset
-        if ((m_fromSettings != null && m_fromSettings.preset.overrideState) ||
-            (m_toSettings != null && m_toSettings.preset.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.preset.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.preset.overrideState))
         {
             m_tempSettings.preset.overrideState = true;
 
@@ -131,8 +131,8 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         m_tempSettings.maximumIterationCount.value = (int)Mathf.Lerp(maximumIterationCount.x, maximumIterationCount.y, value);
 
         //resolution
-        if ((m_fromSettings != null && m_fromSettings.resolution.overrideState) ||
-            (m_toSettings != null && m_toSettings.resolution.overrideState))
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.resolution.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.resolution.overrideState))
         {
             m_tempSettings.resolution.overrideState = true;
 
