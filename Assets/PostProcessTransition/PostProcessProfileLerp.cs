@@ -1,15 +1,11 @@
 ﻿using UnityEngine.Rendering.PostProcessing;
-using DG.Tweening;
-using System;
 
-public class PostProcessTransition
+public class PostProcessProfileLerp
 {
-    private const string TEMP_NAME = "PostProcessTransition";
+    private const string TEMP_NAME = "PostProcessProfileLerp";
 
-    private PostProcessVolume m_postProcessVolumn;
     private PostProcessProfile m_fromPostProcessProfile;
     private PostProcessProfile m_toPostProcessProfile;
-    private Action m_onComplete;
     private PostProcessProfile m_tempPostProcessProfile;
     
     private AmbientOcclusionTransition m_ambientOcclusionTransition;
@@ -23,17 +19,13 @@ public class PostProcessTransition
     private MotionBlurTransition m_motionBlurTransition;
     private ScreenSpaceReflectionsTransition m_screenSpaceReflectionsTransition;
     private VignetteTransition m_vignetteTransition;
-    private Tweener m_tweener;
 
-    public PostProcessTransition(PostProcessVolume postProcessVolume, PostProcessProfile toPostProcessProfile, float duration, Action onComplete)
+    public PostProcessProfileLerp(PostProcessProfile a, PostProcessProfile b)
     {
-        m_postProcessVolumn = postProcessVolume;
-        m_fromPostProcessProfile = m_postProcessVolumn.profile;
-        m_toPostProcessProfile = toPostProcessProfile;
-        m_onComplete = onComplete;
+        m_fromPostProcessProfile = a;
+        m_toPostProcessProfile = b;
         m_tempPostProcessProfile = UnityEngine.ScriptableObject.CreateInstance<PostProcessProfile>();
-
-        m_postProcessVolumn.profile = m_tempPostProcessProfile;
+        m_tempPostProcessProfile.name = TEMP_NAME;
 
         m_ambientOcclusionTransition = new AmbientOcclusionTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
         m_autoExposureTransition = new AutoExposureTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
@@ -46,51 +38,15 @@ public class PostProcessTransition
         m_motionBlurTransition = new MotionBlurTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
         m_screenSpaceReflectionsTransition = new ScreenSpaceReflectionsTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
         m_vignetteTransition = new VignetteTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-
-        m_tweener = DOTween.To(Lerp, 0f, 1f, duration).OnComplete(OnComplete);
     }
 
-    public void Lerp(float value)
+    ~PostProcessProfileLerp()
     {
-        UnityEngine.Debug.LogError(value);
+        UnityEngine.Debug.LogError("~PostProcessProfileLerp");
 
-        m_ambientOcclusionTransition.Lerp(value);
-        m_autoExposureTransition.Lerp(value);
-        m_bloomTransition.Lerp(value);
-        m_chromaticAberrationTransition.Lerp(value);
-        m_colorGradingTransition.Lerp(value);
-        m_depthOfFieldTransition.Lerp(value);
-        m_grainTransition.Lerp(value);
-        m_lensDisstortionTransition.Lerp(value);
-        m_motionBlurTransition.Lerp(value);
-        m_screenSpaceReflectionsTransition.Lerp(value);
-        m_vignetteTransition.Lerp(value);
-    }
-
-    private void OnComplete()
-    {
-        m_postProcessVolumn.profile = m_toPostProcessProfile;
-        m_tweener = null;
-
-        if (m_onComplete != null)
-        {
-            m_onComplete();
-        }
-    }
-
-    public void Destroy()
-    {
-        if(m_tweener != null)
-        {
-            m_tweener.Kill();
-            m_tweener = null;
-        }
-
-        if(m_tempPostProcessProfile != null)
-        {
-            UnityEngine.ScriptableObject.Destroy(m_tempPostProcessProfile);
-            m_tempPostProcessProfile = null;
-        }
+        m_fromPostProcessProfile = null;
+        m_toPostProcessProfile = null;
+        m_tempPostProcessProfile = null;
 
         if (m_ambientOcclusionTransition != null)
         {
@@ -157,5 +113,22 @@ public class PostProcessTransition
             m_vignetteTransition.Destroy();
             m_vignetteTransition = null;
         }
+    }
+
+    public PostProcessProfile Lerp(float t)
+    {
+        m_ambientOcclusionTransition.Lerp(t);
+        m_autoExposureTransition.Lerp(t);
+        m_bloomTransition.Lerp(t);
+        m_chromaticAberrationTransition.Lerp(t);
+        m_colorGradingTransition.Lerp(t);
+        m_depthOfFieldTransition.Lerp(t);
+        m_grainTransition.Lerp(t);
+        m_lensDisstortionTransition.Lerp(t);
+        m_motionBlurTransition.Lerp(t);
+        m_screenSpaceReflectionsTransition.Lerp(t);
+        m_vignetteTransition.Lerp(t);
+
+        return m_tempPostProcessProfile;
     }
 }
