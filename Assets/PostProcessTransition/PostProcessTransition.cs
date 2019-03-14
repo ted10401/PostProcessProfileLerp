@@ -13,7 +13,7 @@ public class PostProcessTransition
     
     private AmbientOcclusionTransition m_ambientOcclusionTransition;
     private AutoExposureTransition m_autoExposureTransition;
-    //private BloomTransition m_bloomTransition;
+    private BloomTransition m_bloomTransition;
     //private ChromaticAberrationTransition m_chromaticAberrationTransition;
     //private ColorGradingTransition m_colorGradingTransition;
     //private DepthOfFieldTransition m_depthOfFieldTransition;
@@ -35,7 +35,7 @@ public class PostProcessTransition
 
         m_ambientOcclusionTransition = new AmbientOcclusionTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_postProcessVolumn.profile);
         m_autoExposureTransition = new AutoExposureTransition(m_fromPostProcessProfile, postProcessProfile, m_postProcessVolumn.profile);
-        //m_bloomTransition = new BloomTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
+        m_bloomTransition = new BloomTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
         //m_chromaticAberrationTransition = new ChromaticAberrationTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
         //m_colorGradingTransition = new ColorGradingTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
         //m_depthOfFieldTransition = new DepthOfFieldTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
@@ -52,7 +52,7 @@ public class PostProcessTransition
     {
         m_ambientOcclusionTransition.Lerp(value);
         m_autoExposureTransition.Lerp(value);
-        //m_bloomTransition.Lerp(value);
+        m_bloomTransition.Lerp(value);
         //m_chromaticAberrationTransition.Lerp(value);
         //m_colorGradingTransition.Lerp(value);
         //m_depthOfFieldTransition.Lerp(value);
@@ -93,11 +93,11 @@ public class PostProcessTransition
             m_autoExposureTransition = null;
         }
 
-        //if (m_bloomTransition != null)
-        //{
-        //    m_bloomTransition.Destroy();
-        //    m_bloomTransition = null;
-        //}
+        if (m_bloomTransition != null)
+        {
+            m_bloomTransition.Destroy();
+            m_bloomTransition = null;
+        }
 
         //if (m_chromaticAberrationTransition != null)
         //{

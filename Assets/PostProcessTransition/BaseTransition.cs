@@ -2,6 +2,7 @@
 
 public abstract class BaseTransition<T> where T : PostProcessEffectSettings
 {
+    private bool m_isValid;
     protected T m_fromSettings;
     protected T m_toSettings;
     protected T m_tempSettings;
@@ -11,8 +12,8 @@ public abstract class BaseTransition<T> where T : PostProcessEffectSettings
         from.TryGetSettings(out m_fromSettings);
         to.TryGetSettings(out m_toSettings);
 
-        if ((m_fromSettings != null && m_fromSettings.enabled.value) ||
-            (m_toSettings != null && m_toSettings.enabled.value))
+        if ((m_fromSettings != null && m_fromSettings.active) ||
+            (m_toSettings != null && m_toSettings.active))
         {
             temp.TryGetSettings(out m_tempSettings);
             if (m_tempSettings == null)
@@ -20,10 +21,11 @@ public abstract class BaseTransition<T> where T : PostProcessEffectSettings
                 m_tempSettings = temp.AddSettings<T>();
             }
 
-            m_tempSettings.enabled.value = true;
+            m_isValid = true;
+            m_tempSettings.active = true;
         }
 
-        if(m_tempSettings != null)
+        if(m_isValid)
         {
             InitializeParameters();
         }
@@ -41,6 +43,6 @@ public abstract class BaseTransition<T> where T : PostProcessEffectSettings
 
     protected bool IsValid()
     {
-        return m_fromSettings != null || m_toSettings != null;
+        return m_isValid;
     }
 }
