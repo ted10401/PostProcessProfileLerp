@@ -26,6 +26,6 @@ public class UnitTest_PostProcessProfileLerp : MonoBehaviour
             return;
         }
 
-        m_postProcessVolumn.profile = PostProcessProfileUtils.Lerp(postProcessProfileA, postProcessProfileB, lerp);
+        m_postProcessVolumn.profile = PostProcessProfileUtility.Lerp(postProcessProfileA, postProcessProfileB, lerp);
     }
 }

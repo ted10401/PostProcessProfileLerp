@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class MotionBlurTransition : BaseTransition<MotionBlur>
+public class MotionBlurLerp : PostProcessEffectSettingsLerp<MotionBlur>
 {
     public Vector2 shutterAngle;
     public Vector2 sampleCount;
 
-    public MotionBlurTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
+    public MotionBlurLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
     }
 
@@ -39,14 +39,14 @@ public class MotionBlurTransition : BaseTransition<MotionBlur>
         sampleCount.y = m_toSettings != null && m_toSettings.active && m_toSettings.sampleCount.overrideState ? m_toSettings.sampleCount.value : m_tempSettings.sampleCount.value;
     }
 
-    public override void Lerp(float value)
+    public override void Lerp(float t)
     {
         if (!IsValid())
         {
             return;
         }
 
-        m_tempSettings.shutterAngle.value = Mathf.Lerp(shutterAngle.x, shutterAngle.y, value);
-        m_tempSettings.sampleCount.value = (int)Mathf.Lerp(sampleCount.x, sampleCount.y, value);
+        m_tempSettings.shutterAngle.value = Mathf.Lerp(shutterAngle.x, shutterAngle.y, t);
+        m_tempSettings.sampleCount.value = (int)Mathf.Lerp(sampleCount.x, sampleCount.y, t);
     }
 }

@@ -8,17 +8,17 @@ public class PostProcessProfileLerp
     private PostProcessProfile m_toPostProcessProfile;
     private PostProcessProfile m_tempPostProcessProfile;
     
-    private AmbientOcclusionTransition m_ambientOcclusionTransition;
-    private AutoExposureTransition m_autoExposureTransition;
-    private BloomTransition m_bloomTransition;
-    private ChromaticAberrationTransition m_chromaticAberrationTransition;
-    private ColorGradingTransition m_colorGradingTransition;
-    private DepthOfFieldTransition m_depthOfFieldTransition;
-    private GrainTransition m_grainTransition;
-    private LensDistortionTransition m_lensDisstortionTransition;
-    private MotionBlurTransition m_motionBlurTransition;
-    private ScreenSpaceReflectionsTransition m_screenSpaceReflectionsTransition;
-    private VignetteTransition m_vignetteTransition;
+    private AmbientOcclusionLerp m_ambientOcclusionTransition;
+    private AutoExposureLerp m_autoExposureTransition;
+    private BloomLerp m_bloomTransition;
+    private ChromaticAberrationLerp m_chromaticAberrationTransition;
+    private ColorGradingLerp m_colorGradingTransition;
+    private DepthOfFieldLerp m_depthOfFieldTransition;
+    private GrainLerp m_grainTransition;
+    private LensDistortionLerp m_lensDisstortionTransition;
+    private MotionBlurLerp m_motionBlurTransition;
+    private ScreenSpaceReflectionsLerp m_screenSpaceReflectionsTransition;
+    private VignetteLerp m_vignetteTransition;
 
     public PostProcessProfileLerp(PostProcessProfile a, PostProcessProfile b)
     {
@@ -27,17 +27,17 @@ public class PostProcessProfileLerp
         m_tempPostProcessProfile = UnityEngine.ScriptableObject.CreateInstance<PostProcessProfile>();
         m_tempPostProcessProfile.name = TEMP_NAME;
 
-        m_ambientOcclusionTransition = new AmbientOcclusionTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        m_autoExposureTransition = new AutoExposureTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        m_bloomTransition = new BloomTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        m_chromaticAberrationTransition = new ChromaticAberrationTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        m_colorGradingTransition = new ColorGradingTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        m_depthOfFieldTransition = new DepthOfFieldTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        m_grainTransition = new GrainTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        m_lensDisstortionTransition = new LensDistortionTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        m_motionBlurTransition = new MotionBlurTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        m_screenSpaceReflectionsTransition = new ScreenSpaceReflectionsTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
-        m_vignetteTransition = new VignetteTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_ambientOcclusionTransition = new AmbientOcclusionLerp(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_autoExposureTransition = new AutoExposureLerp(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_bloomTransition = new BloomLerp(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_chromaticAberrationTransition = new ChromaticAberrationLerp(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_colorGradingTransition = new ColorGradingLerp(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_depthOfFieldTransition = new DepthOfFieldLerp(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_grainTransition = new GrainLerp(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_lensDisstortionTransition = new LensDistortionLerp(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_motionBlurTransition = new MotionBlurLerp(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_screenSpaceReflectionsTransition = new ScreenSpaceReflectionsLerp(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
+        m_vignetteTransition = new VignetteLerp(m_fromPostProcessProfile, m_toPostProcessProfile, m_tempPostProcessProfile);
     }
 
     ~PostProcessProfileLerp()

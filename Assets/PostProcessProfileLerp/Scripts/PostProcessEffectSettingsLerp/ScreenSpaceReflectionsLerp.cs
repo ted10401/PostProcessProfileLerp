@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflections>
+public class ScreenSpaceReflectionsLerp : PostProcessEffectSettingsLerp<ScreenSpaceReflections>
 {
     public ScreenSpaceReflectionPreset defaultPresent;
     public Vector2 maximumIterationCount;
@@ -11,7 +11,7 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
     public Vector2 distanceFade;
     public Vector2 vignette;
 
-    public ScreenSpaceReflectionsTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
+    public ScreenSpaceReflectionsLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
     }
 
@@ -87,7 +87,7 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         vignette.y = m_toSettings != null && m_toSettings.active && m_toSettings.vignette.overrideState ? m_toSettings.vignette.value : m_tempSettings.vignette.value;
     }
 
-    public override void Lerp(float value)
+    public override void Lerp(float t)
     {
         if (!IsValid())
         {
@@ -100,7 +100,7 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.preset.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -128,7 +128,7 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
             m_tempSettings.preset.overrideState = false;
         }
 
-        m_tempSettings.maximumIterationCount.value = (int)Mathf.Lerp(maximumIterationCount.x, maximumIterationCount.y, value);
+        m_tempSettings.maximumIterationCount.value = (int)Mathf.Lerp(maximumIterationCount.x, maximumIterationCount.y, t);
 
         //resolution
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.resolution.overrideState) ||
@@ -136,7 +136,7 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
         {
             m_tempSettings.resolution.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -164,9 +164,9 @@ public class ScreenSpaceReflectionsTransition : BaseTransition<ScreenSpaceReflec
             m_tempSettings.resolution.overrideState = false;
         }
 
-        m_tempSettings.thickness.value = Mathf.Lerp(thickness.x, thickness.y, value);
-        m_tempSettings.maximumMarchDistance.value = Mathf.Lerp(maximumMarchDistance.x, maximumMarchDistance.y, value);
-        m_tempSettings.distanceFade.value = Mathf.Lerp(distanceFade.x, distanceFade.y, value);
-        m_tempSettings.vignette.value = Mathf.Lerp(vignette.x, vignette.y, value);
+        m_tempSettings.thickness.value = Mathf.Lerp(thickness.x, thickness.y, t);
+        m_tempSettings.maximumMarchDistance.value = Mathf.Lerp(maximumMarchDistance.x, maximumMarchDistance.y, t);
+        m_tempSettings.distanceFade.value = Mathf.Lerp(distanceFade.x, distanceFade.y, t);
+        m_tempSettings.vignette.value = Mathf.Lerp(vignette.x, vignette.y, t);
     }
 }

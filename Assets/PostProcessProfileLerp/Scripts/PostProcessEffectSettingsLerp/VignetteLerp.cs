@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class VignetteTransition : BaseTransition<Vignette>
+public class VignetteLerp : PostProcessEffectSettingsLerp<Vignette>
 {
     public VignetteMode defaultMode;
     public Color fromColor;
@@ -14,7 +14,7 @@ public class VignetteTransition : BaseTransition<Vignette>
     public bool defaultRounded;
     public Vector2 opacity;
 
-    public VignetteTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
+    public VignetteLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
     }
 
@@ -103,7 +103,7 @@ public class VignetteTransition : BaseTransition<Vignette>
         opacity.y = m_toSettings == null ? m_tempSettings.opacity.value : m_toSettings.opacity.value;
     }
 
-    public override void Lerp(float value)
+    public override void Lerp(float t)
     {
         if (!IsValid())
         {
@@ -116,7 +116,7 @@ public class VignetteTransition : BaseTransition<Vignette>
         {
             m_tempSettings.mode.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -144,11 +144,11 @@ public class VignetteTransition : BaseTransition<Vignette>
             m_tempSettings.mode.overrideState = false;
         }
 
-        m_tempSettings.color.value = Color.Lerp(fromColor, toColor, value);
-        m_tempSettings.center.value = Vector2.Lerp(fromCenter, toCenter, value);
-        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
-        m_tempSettings.smoothness.value = Mathf.Lerp(smoothness.x, smoothness.y, value);
-        m_tempSettings.roundness.value = Mathf.Lerp(roundness.x, roundness.y, value);
+        m_tempSettings.color.value = Color.Lerp(fromColor, toColor, t);
+        m_tempSettings.center.value = Vector2.Lerp(fromCenter, toCenter, t);
+        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, t);
+        m_tempSettings.smoothness.value = Mathf.Lerp(smoothness.x, smoothness.y, t);
+        m_tempSettings.roundness.value = Mathf.Lerp(roundness.x, roundness.y, t);
 
         //rounded
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.rounded.overrideState) ||
@@ -156,7 +156,7 @@ public class VignetteTransition : BaseTransition<Vignette>
         {
             m_tempSettings.rounded.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -190,7 +190,7 @@ public class VignetteTransition : BaseTransition<Vignette>
         {
             m_tempSettings.mask.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -218,6 +218,6 @@ public class VignetteTransition : BaseTransition<Vignette>
             m_tempSettings.mask.overrideState = false;
         }
 
-        m_tempSettings.opacity.value = Mathf.Lerp(opacity.x, opacity.y, value);
+        m_tempSettings.opacity.value = Mathf.Lerp(opacity.x, opacity.y, t);
     }
 }

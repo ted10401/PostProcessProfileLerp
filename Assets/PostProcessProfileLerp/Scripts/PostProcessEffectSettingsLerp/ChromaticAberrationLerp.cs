@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
+public class ChromaticAberrationLerp : PostProcessEffectSettingsLerp<ChromaticAberration>
 {
     public Vector2 intensity;
 
-    public ChromaticAberrationTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
+    public ChromaticAberrationLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
     }
 
@@ -25,7 +25,7 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
         intensity.y = m_toSettings != null && m_toSettings.active && m_toSettings.intensity.overrideState ? m_toSettings.intensity.value : m_tempSettings.intensity.value;
     }
 
-    public override void Lerp(float value)
+    public override void Lerp(float t)
     {
         if (!IsValid())
         {
@@ -38,7 +38,7 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
         {
             m_tempSettings.spectralLut.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -66,7 +66,7 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
             m_tempSettings.spectralLut.overrideState = false;
         }
 
-        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
+        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, t);
 
         //fastMode
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.fastMode.overrideState) ||
@@ -74,7 +74,7 @@ public class ChromaticAberrationTransition : BaseTransition<ChromaticAberration>
         {
             m_tempSettings.fastMode.overrideState = true;
 
-            if(value < 0.5f)
+            if(t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {

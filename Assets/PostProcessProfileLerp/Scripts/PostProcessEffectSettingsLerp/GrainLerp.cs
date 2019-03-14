@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class GrainTransition : BaseTransition<Grain>
+public class GrainLerp : PostProcessEffectSettingsLerp<Grain>
 {
     public bool defaultColored;
     public Vector2 intensity;
     public Vector2 size;
     public Vector2 lumContrib;
 
-    public GrainTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
+    public GrainLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
     }
 
@@ -56,7 +56,7 @@ public class GrainTransition : BaseTransition<Grain>
         lumContrib.y = m_toSettings != null && m_toSettings.active && m_toSettings.lumContrib.overrideState ? m_toSettings.lumContrib.value : m_tempSettings.lumContrib.value;
     }
 
-    public override void Lerp(float value)
+    public override void Lerp(float t)
     {
         if(!IsValid())
         {
@@ -69,7 +69,7 @@ public class GrainTransition : BaseTransition<Grain>
         {
             m_tempSettings.colored.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -97,8 +97,8 @@ public class GrainTransition : BaseTransition<Grain>
             m_tempSettings.colored.overrideState = false;
         }
 
-        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
-        m_tempSettings.size.value = Mathf.Lerp(size.x, size.y, value);
-        m_tempSettings.lumContrib.value = Mathf.Lerp(lumContrib.x, lumContrib.y, value);
+        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, t);
+        m_tempSettings.size.value = Mathf.Lerp(size.x, size.y, t);
+        m_tempSettings.lumContrib.value = Mathf.Lerp(lumContrib.x, lumContrib.y, t);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class AutoExposureTransition : BaseTransition<AutoExposure>
+public class AutoExposureLerp : PostProcessEffectSettingsLerp<AutoExposure>
 {
     public Vector2 fromFiltering;
     public Vector2 toFiltering;
@@ -11,7 +11,7 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
     public Vector2 speedUp;
     public Vector2 speedDown;
 
-    public AutoExposureTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
+    public AutoExposureLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
     }
 
@@ -96,17 +96,17 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         speedDown.y = m_toSettings != null && m_toSettings.active && m_toSettings.speedDown.overrideState ? m_toSettings.speedDown.value : m_tempSettings.speedDown.value;
     }
 
-    public override void Lerp(float value)
+    public override void Lerp(float t)
     {
         if (!IsValid())
         {
             return;
         }
 
-        m_tempSettings.filtering.value = Vector2.Lerp(fromFiltering, toFiltering, value);
-        m_tempSettings.minLuminance.value = Mathf.Lerp(minLuminance.x, minLuminance.y, value);
-        m_tempSettings.maxLuminance.value = Mathf.Lerp(maxLuminance.x, maxLuminance.y, value);
-        m_tempSettings.keyValue.value = Mathf.Lerp(keyValue.x, keyValue.y, value);
+        m_tempSettings.filtering.value = Vector2.Lerp(fromFiltering, toFiltering, t);
+        m_tempSettings.minLuminance.value = Mathf.Lerp(minLuminance.x, minLuminance.y, t);
+        m_tempSettings.maxLuminance.value = Mathf.Lerp(maxLuminance.x, maxLuminance.y, t);
+        m_tempSettings.keyValue.value = Mathf.Lerp(keyValue.x, keyValue.y, t);
 
         //eyeAdaptation
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.eyeAdaptation.overrideState) ||
@@ -114,7 +114,7 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
         {
             m_tempSettings.eyeAdaptation.overrideState = true;
 
-            if(value < 0.5f)
+            if(t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -142,7 +142,7 @@ public class AutoExposureTransition : BaseTransition<AutoExposure>
             m_tempSettings.eyeAdaptation.overrideState = false;
         }
 
-        m_tempSettings.speedUp.value = Mathf.Lerp(speedUp.x, speedUp.y, value);
-        m_tempSettings.speedDown.value = Mathf.Lerp(speedDown.x, speedDown.y, value);
+        m_tempSettings.speedUp.value = Mathf.Lerp(speedUp.x, speedUp.y, t);
+        m_tempSettings.speedDown.value = Mathf.Lerp(speedDown.x, speedDown.y, t);
     }
 }

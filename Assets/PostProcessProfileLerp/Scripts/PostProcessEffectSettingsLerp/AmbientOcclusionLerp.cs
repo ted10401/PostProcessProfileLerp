@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
+public class AmbientOcclusionLerp : PostProcessEffectSettingsLerp<AmbientOcclusion>
 {
     public AmbientOcclusionMode defaultMode;
     public Vector2 intensity;
@@ -16,7 +16,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
     public Vector2 radius;
     public AmbientOcclusionQuality defaultQuality;
 
-    public AmbientOcclusionTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
+    public AmbientOcclusionLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
     }
 
@@ -133,7 +133,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         defaultQuality = m_tempSettings.quality.value;
     }
 
-    public override void Lerp(float value)
+    public override void Lerp(float t)
     {
         if (!IsValid())
         {
@@ -146,7 +146,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.mode.overrideState = true;
 
-            if(value < 0.5f)
+            if(t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -174,8 +174,8 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
             m_tempSettings.mode.overrideState = false;
         }
 
-        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
-        m_tempSettings.color.value = Color.Lerp(fromColor, toColor, value);
+        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, t);
+        m_tempSettings.color.value = Color.Lerp(fromColor, toColor, t);
 
         //ambientOnly
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.ambientOnly.overrideState) ||
@@ -183,7 +183,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.ambientOnly.overrideState = true;
 
-            if(value < 0.5f)
+            if(t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -211,12 +211,12 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
             m_tempSettings.ambientOnly.overrideState = false;
         }
 
-        m_tempSettings.noiseFilterTolerance.value = Mathf.Lerp(noiseFilterTolerance.x, noiseFilterTolerance.y, value);
-        m_tempSettings.blurTolerance.value = Mathf.Lerp(blurTolerance.x, blurTolerance.y, value);
-        m_tempSettings.upsampleTolerance.value = Mathf.Lerp(upsampleTolerance.x, upsampleTolerance.y, value);
-        m_tempSettings.thicknessModifier.value = Mathf.Lerp(thicknessModifier.x, thicknessModifier.y, value);
-        m_tempSettings.directLightingStrength.value = Mathf.Lerp(directLightingStrength.x, directLightingStrength.y, value);
-        m_tempSettings.radius.value = Mathf.Lerp(radius.x, radius.y, value);
+        m_tempSettings.noiseFilterTolerance.value = Mathf.Lerp(noiseFilterTolerance.x, noiseFilterTolerance.y, t);
+        m_tempSettings.blurTolerance.value = Mathf.Lerp(blurTolerance.x, blurTolerance.y, t);
+        m_tempSettings.upsampleTolerance.value = Mathf.Lerp(upsampleTolerance.x, upsampleTolerance.y, t);
+        m_tempSettings.thicknessModifier.value = Mathf.Lerp(thicknessModifier.x, thicknessModifier.y, t);
+        m_tempSettings.directLightingStrength.value = Mathf.Lerp(directLightingStrength.x, directLightingStrength.y, t);
+        m_tempSettings.radius.value = Mathf.Lerp(radius.x, radius.y, t);
 
         //quality
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.quality.overrideState) ||
@@ -224,7 +224,7 @@ public class AmbientOcclusionTransition : BaseTransition<AmbientOcclusion>
         {
             m_tempSettings.quality.overrideState = true;
 
-            if(value < 0.5f)
+            if(t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {

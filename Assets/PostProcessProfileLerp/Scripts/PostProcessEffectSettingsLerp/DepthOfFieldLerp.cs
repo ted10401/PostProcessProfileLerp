@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class DepthOfFieldTransition : BaseTransition<DepthOfField>
+public class DepthOfFieldLerp : PostProcessEffectSettingsLerp<DepthOfField>
 {
     public Vector2 focusDistance;
     public Vector2 aperture;
     public Vector2 focalLength;
     public KernelSizeParameter kernelSize;
 
-    public DepthOfFieldTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
+    public DepthOfFieldLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
     }
 
@@ -54,16 +54,16 @@ public class DepthOfFieldTransition : BaseTransition<DepthOfField>
         focalLength.y = m_toSettings != null && m_toSettings.active && m_toSettings.focalLength.overrideState ? m_toSettings.focalLength.value : m_tempSettings.focalLength.value;
     }
 
-    public override void Lerp(float value)
+    public override void Lerp(float t)
     {
         if (!IsValid())
         {
             return;
         }
 
-        m_tempSettings.focusDistance.value = Mathf.Lerp(focusDistance.x, focusDistance.y, value);
-        m_tempSettings.aperture.value = Mathf.Lerp(aperture.x, aperture.y, value);
-        m_tempSettings.focalLength.value = Mathf.Lerp(focalLength.x, focalLength.y, value);
+        m_tempSettings.focusDistance.value = Mathf.Lerp(focusDistance.x, focusDistance.y, t);
+        m_tempSettings.aperture.value = Mathf.Lerp(aperture.x, aperture.y, t);
+        m_tempSettings.focalLength.value = Mathf.Lerp(focalLength.x, focalLength.y, t);
 
         //kernelSize
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.kernelSize.overrideState) ||
@@ -71,7 +71,7 @@ public class DepthOfFieldTransition : BaseTransition<DepthOfField>
         {
             m_tempSettings.kernelSize.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {

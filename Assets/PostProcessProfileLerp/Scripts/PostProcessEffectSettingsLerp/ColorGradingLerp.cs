@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class ColorGradingTransition : BaseTransition<ColorGrading>
+public class ColorGradingLerp : PostProcessEffectSettingsLerp<ColorGrading>
 {
     public Vector2 toneCurveToeStrength;
     public Vector2 toneCurveToeLength;
@@ -35,7 +35,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
     public Vector4 fromGain;
     public Vector4 toGain;
 
-    public ColorGradingTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
+    public ColorGradingLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
     }
 
@@ -393,7 +393,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         toGain = m_toSettings != null && m_toSettings.active && m_toSettings.gain.overrideState ? m_toSettings.gain.value : m_tempSettings.gain.value;
     }
 
-    public override void Lerp(float value)
+    public override void Lerp(float t)
     {
         if (!IsValid())
         {
@@ -406,7 +406,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.gradingMode.overrideState = true;
 
-            if(value < 0.5f)
+            if(t < 0.5f)
             {
                 if(m_fromSettings != null)
                 {
@@ -440,7 +440,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.externalLut.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -474,7 +474,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.tonemapper.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -503,22 +503,22 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //toneCurveToeStrength
-        m_tempSettings.toneCurveToeStrength.value = Mathf.Lerp(toneCurveToeStrength.x, toneCurveToeStrength.y, value);
+        m_tempSettings.toneCurveToeStrength.value = Mathf.Lerp(toneCurveToeStrength.x, toneCurveToeStrength.y, t);
 
         //toneCurveToeLength
-        m_tempSettings.toneCurveToeLength.value = Mathf.Lerp(toneCurveToeLength.x, toneCurveToeLength.y, value);
+        m_tempSettings.toneCurveToeLength.value = Mathf.Lerp(toneCurveToeLength.x, toneCurveToeLength.y, t);
 
         //toneCurveShoulderStrength
-        m_tempSettings.toneCurveShoulderStrength.value = Mathf.Lerp(toneCurveShoulderStrength.x, toneCurveShoulderStrength.y, value);
+        m_tempSettings.toneCurveShoulderStrength.value = Mathf.Lerp(toneCurveShoulderStrength.x, toneCurveShoulderStrength.y, t);
 
         //toneCurveShoulderLength
-        m_tempSettings.toneCurveShoulderLength.value = Mathf.Lerp(toneCurveShoulderLength.x, toneCurveShoulderLength.y, value);
+        m_tempSettings.toneCurveShoulderLength.value = Mathf.Lerp(toneCurveShoulderLength.x, toneCurveShoulderLength.y, t);
 
         //toneCurveShoulderAngle
-        m_tempSettings.toneCurveShoulderAngle.value = Mathf.Lerp(toneCurveShoulderAngle.x, toneCurveShoulderAngle.y, value);
+        m_tempSettings.toneCurveShoulderAngle.value = Mathf.Lerp(toneCurveShoulderAngle.x, toneCurveShoulderAngle.y, t);
 
         //toneCurveGamma
-        m_tempSettings.toneCurveGamma.value = Mathf.Lerp(toneCurveGamma.x, toneCurveGamma.y, value);
+        m_tempSettings.toneCurveGamma.value = Mathf.Lerp(toneCurveGamma.x, toneCurveGamma.y, t);
 
         //ldrLut
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.ldrLut.overrideState) ||
@@ -526,7 +526,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.ldrLut.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -555,67 +555,67 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         }
 
         //ldrLutContribution
-        m_tempSettings.ldrLutContribution.value = Mathf.Lerp(ldrLutContribution.x, ldrLutContribution.y, value);
+        m_tempSettings.ldrLutContribution.value = Mathf.Lerp(ldrLutContribution.x, ldrLutContribution.y, t);
 
         //temperature
-        m_tempSettings.temperature.value = Mathf.Lerp(temperature.x, temperature.y, value);
+        m_tempSettings.temperature.value = Mathf.Lerp(temperature.x, temperature.y, t);
 
         //tint
-        m_tempSettings.tint.value = Mathf.Lerp(tint.x, tint.y, value);
+        m_tempSettings.tint.value = Mathf.Lerp(tint.x, tint.y, t);
 
         //colorFilter
-        m_tempSettings.colorFilter.value = Color.Lerp(fromColorFilter, toColorFilter, value);
+        m_tempSettings.colorFilter.value = Color.Lerp(fromColorFilter, toColorFilter, t);
 
         //hueShift
-        m_tempSettings.hueShift.value = Mathf.Lerp(hueShift.x, hueShift.y, value);
+        m_tempSettings.hueShift.value = Mathf.Lerp(hueShift.x, hueShift.y, t);
 
         //saturation
-        m_tempSettings.saturation.value = Mathf.Lerp(saturation.x, saturation.y, value);
+        m_tempSettings.saturation.value = Mathf.Lerp(saturation.x, saturation.y, t);
 
         //brightness
-        m_tempSettings.brightness.value = Mathf.Lerp(brightness.x, brightness.y, value);
+        m_tempSettings.brightness.value = Mathf.Lerp(brightness.x, brightness.y, t);
 
         //postExposure
-        m_tempSettings.postExposure.value = Mathf.Lerp(postExposure.x, postExposure.y, value);
+        m_tempSettings.postExposure.value = Mathf.Lerp(postExposure.x, postExposure.y, t);
 
         //contrast
-        m_tempSettings.contrast.value = Mathf.Lerp(contrast.x, contrast.y, value);
+        m_tempSettings.contrast.value = Mathf.Lerp(contrast.x, contrast.y, t);
 
         //mixerRedOutRedIn
-        m_tempSettings.mixerRedOutRedIn.value = Mathf.Lerp(mixerRedOutRedIn.x, mixerRedOutRedIn.y, value);
+        m_tempSettings.mixerRedOutRedIn.value = Mathf.Lerp(mixerRedOutRedIn.x, mixerRedOutRedIn.y, t);
 
         //mixerRedOutGreenIn
-        m_tempSettings.mixerRedOutGreenIn.value = Mathf.Lerp(mixerRedOutGreenIn.x, mixerRedOutGreenIn.y, value);
+        m_tempSettings.mixerRedOutGreenIn.value = Mathf.Lerp(mixerRedOutGreenIn.x, mixerRedOutGreenIn.y, t);
 
         //mixerRedOutBlueIn
-        m_tempSettings.mixerRedOutBlueIn.value = Mathf.Lerp(mixerRedOutBlueIn.x, mixerRedOutBlueIn.y, value);
+        m_tempSettings.mixerRedOutBlueIn.value = Mathf.Lerp(mixerRedOutBlueIn.x, mixerRedOutBlueIn.y, t);
 
         //mixerGreenOutRedIn
-        m_tempSettings.mixerGreenOutRedIn.value = Mathf.Lerp(mixerGreenOutRedIn.x, mixerGreenOutRedIn.y, value);
+        m_tempSettings.mixerGreenOutRedIn.value = Mathf.Lerp(mixerGreenOutRedIn.x, mixerGreenOutRedIn.y, t);
 
         //mixerGreenOutGreenIn
-        m_tempSettings.mixerGreenOutGreenIn.value = Mathf.Lerp(mixerGreenOutGreenIn.x, mixerGreenOutGreenIn.y, value);
+        m_tempSettings.mixerGreenOutGreenIn.value = Mathf.Lerp(mixerGreenOutGreenIn.x, mixerGreenOutGreenIn.y, t);
 
         //mixerGreenOutBlueIn
-        m_tempSettings.mixerGreenOutBlueIn.value = Mathf.Lerp(mixerGreenOutBlueIn.x, mixerGreenOutBlueIn.y, value);
+        m_tempSettings.mixerGreenOutBlueIn.value = Mathf.Lerp(mixerGreenOutBlueIn.x, mixerGreenOutBlueIn.y, t);
 
         //mixerBlueOutRedIn
-        m_tempSettings.mixerBlueOutRedIn.value = Mathf.Lerp(mixerBlueOutRedIn.x, mixerBlueOutRedIn.y, value);
+        m_tempSettings.mixerBlueOutRedIn.value = Mathf.Lerp(mixerBlueOutRedIn.x, mixerBlueOutRedIn.y, t);
 
         //mixerBlueOutGreenIn
-        m_tempSettings.mixerBlueOutGreenIn.value = Mathf.Lerp(mixerBlueOutGreenIn.x, mixerBlueOutGreenIn.y, value);
+        m_tempSettings.mixerBlueOutGreenIn.value = Mathf.Lerp(mixerBlueOutGreenIn.x, mixerBlueOutGreenIn.y, t);
 
         //mixerBlueOutBlueIn
-        m_tempSettings.mixerBlueOutBlueIn.value = Mathf.Lerp(mixerBlueOutBlueIn.x, mixerBlueOutBlueIn.y, value);
+        m_tempSettings.mixerBlueOutBlueIn.value = Mathf.Lerp(mixerBlueOutBlueIn.x, mixerBlueOutBlueIn.y, t);
 
         //lift
-        m_tempSettings.lift.value = Vector4.Lerp(fromLift, toLift, value);
+        m_tempSettings.lift.value = Vector4.Lerp(fromLift, toLift, t);
 
         //gamma
-        m_tempSettings.gamma.value = Vector4.Lerp(fromGamma, toGamma, value);
+        m_tempSettings.gamma.value = Vector4.Lerp(fromGamma, toGamma, t);
 
         //gain
-        m_tempSettings.gain.value = Vector4.Lerp(fromGain, toGain, value);
+        m_tempSettings.gain.value = Vector4.Lerp(fromGain, toGain, t);
 
         //masterCurve
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.masterCurve.overrideState) ||
@@ -623,7 +623,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.masterCurve.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -663,7 +663,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.redCurve.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -703,7 +703,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.greenCurve.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -743,7 +743,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.blueCurve.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -783,7 +783,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.hueVsHueCurve.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -809,7 +809,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.hueVsSatCurve.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -843,7 +843,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.satVsSatCurve.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -877,7 +877,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         {
             m_tempSettings.lumVsSatCurve.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {

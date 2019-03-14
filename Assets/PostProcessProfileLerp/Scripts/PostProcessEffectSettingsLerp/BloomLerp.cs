@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class BloomTransition : BaseTransition<Bloom>
+public class BloomLerp : PostProcessEffectSettingsLerp<Bloom>
 {
     public Vector2 intensity;
     public Vector2 threshold;
@@ -13,7 +13,7 @@ public class BloomTransition : BaseTransition<Bloom>
     public Color toColor;
     public Vector2 dirtIntensity;
 
-    public BloomTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
+    public BloomLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
     }
 
@@ -124,21 +124,21 @@ public class BloomTransition : BaseTransition<Bloom>
         dirtIntensity.y = m_toSettings != null && m_toSettings.active && m_toSettings.dirtIntensity.overrideState ? m_toSettings.dirtIntensity.value : m_tempSettings.dirtIntensity.value;
     }
 
-    public override void Lerp(float value)
+    public override void Lerp(float t)
     {
         if (!IsValid())
         {
             return;
         }
 
-        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
-        m_tempSettings.threshold.value = Mathf.Lerp(threshold.x, threshold.y, value);
-        m_tempSettings.softKnee.value = Mathf.Lerp(softKnee.x, softKnee.y, value);
-        m_tempSettings.clamp.value = Mathf.Lerp(clamp.x, clamp.y, value);
-        m_tempSettings.diffusion.value = Mathf.Lerp(diffusion.x, diffusion.y, value);
-        m_tempSettings.anamorphicRatio.value = Mathf.Lerp(anamorphicRatio.x, anamorphicRatio.y, value);
-        m_tempSettings.color.value = Color.Lerp(fromColor, toColor, value);
-        m_tempSettings.dirtIntensity.value = Mathf.Lerp(dirtIntensity.x, dirtIntensity.y, value);
+        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, t);
+        m_tempSettings.threshold.value = Mathf.Lerp(threshold.x, threshold.y, t);
+        m_tempSettings.softKnee.value = Mathf.Lerp(softKnee.x, softKnee.y, t);
+        m_tempSettings.clamp.value = Mathf.Lerp(clamp.x, clamp.y, t);
+        m_tempSettings.diffusion.value = Mathf.Lerp(diffusion.x, diffusion.y, t);
+        m_tempSettings.anamorphicRatio.value = Mathf.Lerp(anamorphicRatio.x, anamorphicRatio.y, t);
+        m_tempSettings.color.value = Color.Lerp(fromColor, toColor, t);
+        m_tempSettings.dirtIntensity.value = Mathf.Lerp(dirtIntensity.x, dirtIntensity.y, t);
 
         //fastMode
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.fastMode.overrideState) ||
@@ -146,7 +146,7 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.fastMode.overrideState = true;
 
-            if(value < 0.5f)
+            if(t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {
@@ -180,7 +180,7 @@ public class BloomTransition : BaseTransition<Bloom>
         {
             m_tempSettings.dirtTexture.overrideState = true;
 
-            if (value < 0.5f)
+            if (t < 0.5f)
             {
                 if (m_fromSettings != null)
                 {

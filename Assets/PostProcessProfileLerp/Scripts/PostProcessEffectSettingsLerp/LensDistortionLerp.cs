@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class LensDistortionTransition : BaseTransition<LensDistortion>
+public class LensDistortionLerp : PostProcessEffectSettingsLerp<LensDistortion>
 {
     public Vector2 intensity;
     public Vector2 intensityX;
@@ -10,7 +10,7 @@ public class LensDistortionTransition : BaseTransition<LensDistortion>
     public Vector2 centerY;
     public Vector2 scale;
 
-    public LensDistortionTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
+    public LensDistortionLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
     }
 
@@ -95,18 +95,18 @@ public class LensDistortionTransition : BaseTransition<LensDistortion>
         scale.y = m_toSettings != null && m_toSettings.active && m_toSettings.scale.overrideState ? m_toSettings.scale.value : m_tempSettings.scale.value;
     }
 
-    public override void Lerp(float value)
+    public override void Lerp(float t)
     {
         if(!IsValid())
         {
             return;
         }
 
-        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
-        m_tempSettings.intensityX.value = Mathf.Lerp(intensityX.x, intensityX.y, value);
-        m_tempSettings.intensityY.value = Mathf.Lerp(intensityY.x, intensityY.y, value);
-        m_tempSettings.centerX.value = Mathf.Lerp(centerX.x, centerX.y, value);
-        m_tempSettings.centerY.value = Mathf.Lerp(centerY.x, centerY.y, value);
-        m_tempSettings.scale.value = Mathf.Lerp(scale.x, scale.y, value);
+        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, t);
+        m_tempSettings.intensityX.value = Mathf.Lerp(intensityX.x, intensityX.y, t);
+        m_tempSettings.intensityY.value = Mathf.Lerp(intensityY.x, intensityY.y, t);
+        m_tempSettings.centerX.value = Mathf.Lerp(centerX.x, centerX.y, t);
+        m_tempSettings.centerY.value = Mathf.Lerp(centerY.x, centerY.y, t);
+        m_tempSettings.scale.value = Mathf.Lerp(scale.x, scale.y, t);
     }
 }

@@ -1,13 +1,13 @@
 ﻿using UnityEngine.Rendering.PostProcessing;
 
-public abstract class BaseTransition<T> where T : PostProcessEffectSettings
+public abstract class PostProcessEffectSettingsLerp<T> where T : PostProcessEffectSettings
 {
     private bool m_isValid;
     protected T m_fromSettings;
     protected T m_toSettings;
     protected T m_tempSettings;
 
-    public BaseTransition(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp)
+    public PostProcessEffectSettingsLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp)
     {
         from.TryGetSettings(out m_fromSettings);
         to.TryGetSettings(out m_toSettings);
@@ -39,7 +39,7 @@ public abstract class BaseTransition<T> where T : PostProcessEffectSettings
     }
 
     public abstract void InitializeParameters();
-    public abstract void Lerp(float value);
+    public abstract void Lerp(float t);
 
     protected bool IsValid()
     {
