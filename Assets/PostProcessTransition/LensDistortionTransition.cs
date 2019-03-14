@@ -97,6 +97,11 @@ public class LensDistortionTransition : BaseTransition<LensDistortion>
 
     public override void Lerp(float value)
     {
+        if(!IsValid())
+        {
+            return;
+        }
+
         m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, value);
         m_tempSettings.intensityX.value = Mathf.Lerp(intensityX.x, intensityX.y, value);
         m_tempSettings.intensityY.value = Mathf.Lerp(intensityY.x, intensityY.y, value);

@@ -55,6 +55,11 @@ public class GrainTransition : BaseTransition<Grain>
 
     public override void Lerp(float value)
     {
+        if(!IsValid())
+        {
+            return;
+        }
+
         //colored
         if ((m_fromSettings != null && m_fromSettings.colored.overrideState) ||
             (m_toSettings != null && m_toSettings.colored.overrideState))
