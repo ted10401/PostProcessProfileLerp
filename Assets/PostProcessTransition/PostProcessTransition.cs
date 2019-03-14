@@ -10,6 +10,7 @@ public class PostProcessTransition
     private BloomTransition m_bloomTransition;
     private ChromaticAberrationTransition m_chromaticAberrationTransition;
     private ColorGradingTransition m_colorGradingTransition;
+    private DepthOfFieldTransition m_depthOfFieldTransition;
     private Tweener m_tweener;
 
     public PostProcessTransition(PostProcessVolume postProcessVolume, PostProcessProfile postProcessProfile, float duration)
@@ -22,6 +23,7 @@ public class PostProcessTransition
         m_bloomTransition = new BloomTransition(from, postProcessProfile, postProcessVolume.profile);
         m_chromaticAberrationTransition = new ChromaticAberrationTransition(from, postProcessProfile, postProcessVolume.profile);
         m_colorGradingTransition = new ColorGradingTransition(from, postProcessProfile, postProcessVolume.profile);
+        m_depthOfFieldTransition = new DepthOfFieldTransition(from, postProcessProfile, postProcessVolume.profile);
 
         m_tweener = DOTween.To(OnTransitionUpdate, 0f, 1f, duration).OnComplete(OnTransitionComplete);
     }
@@ -42,6 +44,7 @@ public class PostProcessTransition
         m_autoExposureTransition.Lerp(value);
         m_chromaticAberrationTransition.Lerp(value);
         m_colorGradingTransition.Lerp(value);
+        m_depthOfFieldTransition.Lerp(value);
     }
 
     private void OnTransitionComplete()
