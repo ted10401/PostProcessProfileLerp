@@ -520,7 +520,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
         //toneCurveGamma
         m_tempSettings.toneCurveGamma.value = Mathf.Lerp(toneCurveGamma.x, toneCurveGamma.y, value);
 
-        //tonemapper
+        //ldrLut
         if ((m_fromSettings != null && m_fromSettings.ldrLut.overrideState) ||
             (m_toSettings != null && m_toSettings.ldrLut.overrideState))
         {
@@ -671,7 +671,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 }
                 else
                 {
-                    m_tempSettings.masterCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
+                    m_tempSettings.redCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
                     new Keyframe (0f, 0f, 1f, 1f),
                     new Keyframe (1f, 1f, 1f, 1f)
                     }), 0f, false, new Vector2(0f, 1f));
@@ -685,7 +685,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 }
                 else
                 {
-                    m_tempSettings.masterCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
+                    m_tempSettings.redCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
                     new Keyframe (0f, 0f, 1f, 1f),
                     new Keyframe (1f, 1f, 1f, 1f)
                     }), 0f, false, new Vector2(0f, 1f));
@@ -851,7 +851,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 }
                 else
                 {
-                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
+                    m_tempSettings.satVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
                 }
             }
             else
@@ -862,7 +862,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 }
                 else
                 {
-                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
+                    m_tempSettings.satVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
                 }
             }
         }
@@ -885,7 +885,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 }
                 else
                 {
-                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
+                    m_tempSettings.lumVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
                 }
             }
             else
@@ -896,7 +896,7 @@ public class ColorGradingTransition : BaseTransition<ColorGrading>
                 }
                 else
                 {
-                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
+                    m_tempSettings.lumVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
                 }
             }
         }
