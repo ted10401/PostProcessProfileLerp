@@ -16,7 +16,7 @@ public class PostProcessTransition
     private BloomTransition m_bloomTransition;
     private ChromaticAberrationTransition m_chromaticAberrationTransition;
     private ColorGradingTransition m_colorGradingTransition;
-    //private DepthOfFieldTransition m_depthOfFieldTransition;
+    private DepthOfFieldTransition m_depthOfFieldTransition;
     //private GrainTransition m_grainTransition;
     //private LensDistortionTransition m_lensDisstortionTransition;
     //private MotionBlurTransition m_motionBlurTransition;
@@ -24,26 +24,26 @@ public class PostProcessTransition
     //private VignetteTransition m_vignetteTransition;
     private Tweener m_tweener;
 
-    public PostProcessTransition(PostProcessVolume postProcessVolume, PostProcessProfile postProcessProfile, float duration, Action onComplete)
+    public PostProcessTransition(PostProcessVolume postProcessVolume, PostProcessProfile toPostProcessProfile, float duration, Action onComplete)
     {
         m_postProcessVolumn = postProcessVolume;
         m_fromPostProcessProfile = m_postProcessVolumn.profile;
-        m_toPostProcessProfile = postProcessProfile;
+        m_toPostProcessProfile = toPostProcessProfile;
         m_onComplete = onComplete;
 
         m_postProcessVolumn.profile = PostProcessTransitionUtils.CreateInstance();
 
         m_ambientOcclusionTransition = new AmbientOcclusionTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_postProcessVolumn.profile);
-        m_autoExposureTransition = new AutoExposureTransition(m_fromPostProcessProfile, postProcessProfile, m_postProcessVolumn.profile);
-        m_bloomTransition = new BloomTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
-        m_chromaticAberrationTransition = new ChromaticAberrationTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
-        m_colorGradingTransition = new ColorGradingTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
-        //m_depthOfFieldTransition = new DepthOfFieldTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
-        //m_grainTransition = new GrainTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
-        //m_lensDisstortionTransition = new LensDistortionTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
-        //m_motionBlurTransition = new MotionBlurTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
-        //m_screenSpaceReflectionsTransition = new ScreenSpaceReflectionsTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
-        //m_vignetteTransition = new VignetteTransition(m_fromPostProcessProfile, postProcessProfile, postProcessVolume.profile);
+        m_autoExposureTransition = new AutoExposureTransition(m_fromPostProcessProfile, m_toPostProcessProfile, m_postProcessVolumn.profile);
+        m_bloomTransition = new BloomTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
+        m_chromaticAberrationTransition = new ChromaticAberrationTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
+        m_colorGradingTransition = new ColorGradingTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
+        m_depthOfFieldTransition = new DepthOfFieldTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
+        //m_grainTransition = new GrainTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
+        //m_lensDisstortionTransition = new LensDistortionTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
+        //m_motionBlurTransition = new MotionBlurTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
+        //m_screenSpaceReflectionsTransition = new ScreenSpaceReflectionsTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
+        //m_vignetteTransition = new VignetteTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
 
         m_tweener = DOTween.To(Lerp, 0f, 1f, duration).OnComplete(OnComplete);
     }
@@ -55,7 +55,7 @@ public class PostProcessTransition
         m_bloomTransition.Lerp(value);
         m_chromaticAberrationTransition.Lerp(value);
         m_colorGradingTransition.Lerp(value);
-        //m_depthOfFieldTransition.Lerp(value);
+        m_depthOfFieldTransition.Lerp(value);
         //m_grainTransition.Lerp(value);
         //m_lensDisstortionTransition.Lerp(value);
         //m_motionBlurTransition.Lerp(value);
@@ -65,6 +65,7 @@ public class PostProcessTransition
 
     private void OnComplete()
     {
+        m_postProcessVolumn.profile = m_toPostProcessProfile;
         m_tweener = null;
 
         if (m_onComplete != null)
@@ -111,11 +112,11 @@ public class PostProcessTransition
             m_colorGradingTransition = null;
         }
 
-        //if(m_depthOfFieldTransition != null)
-        //{
-        //    m_depthOfFieldTransition.Destroy();
-        //    m_depthOfFieldTransition = null;
-        //}
+        if (m_depthOfFieldTransition != null)
+        {
+            m_depthOfFieldTransition.Destroy();
+            m_depthOfFieldTransition = null;
+        }
 
         //if(m_grainTransition != null)
         //{
