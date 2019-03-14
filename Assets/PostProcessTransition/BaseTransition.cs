@@ -36,18 +36,8 @@ public abstract class BaseTransition<T> where T : PostProcessEffectSettings
         m_tempSettings = null;
     }
 
-    public virtual void InitializeParameters()
-    {
-
-    }
-
-    public virtual void Lerp(float value)
-    {
-        if(!IsValid())
-        {
-            return;
-        }
-    }
+    public abstract void InitializeParameters();
+    public abstract void Lerp(float value);
 
     protected bool IsValid()
     {
