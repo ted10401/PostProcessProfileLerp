@@ -42,8 +42,6 @@ public class PostProcessProfileLerp
 
     ~PostProcessProfileLerp()
     {
-        UnityEngine.Debug.LogError("~PostProcessProfileLerp");
-
         m_fromPostProcessProfile = null;
         m_toPostProcessProfile = null;
         m_tempPostProcessProfile = null;
