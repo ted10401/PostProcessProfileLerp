@@ -17,7 +17,7 @@ public class PostProcessTransition
     private ChromaticAberrationTransition m_chromaticAberrationTransition;
     private ColorGradingTransition m_colorGradingTransition;
     private DepthOfFieldTransition m_depthOfFieldTransition;
-    //private GrainTransition m_grainTransition;
+    private GrainTransition m_grainTransition;
     //private LensDistortionTransition m_lensDisstortionTransition;
     //private MotionBlurTransition m_motionBlurTransition;
     //private ScreenSpaceReflectionsTransition m_screenSpaceReflectionsTransition;
@@ -39,7 +39,7 @@ public class PostProcessTransition
         m_chromaticAberrationTransition = new ChromaticAberrationTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
         m_colorGradingTransition = new ColorGradingTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
         m_depthOfFieldTransition = new DepthOfFieldTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
-        //m_grainTransition = new GrainTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
+        m_grainTransition = new GrainTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
         //m_lensDisstortionTransition = new LensDistortionTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
         //m_motionBlurTransition = new MotionBlurTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
         //m_screenSpaceReflectionsTransition = new ScreenSpaceReflectionsTransition(m_fromPostProcessProfile, m_toPostProcessProfile, postProcessVolume.profile);
@@ -56,7 +56,7 @@ public class PostProcessTransition
         m_chromaticAberrationTransition.Lerp(value);
         m_colorGradingTransition.Lerp(value);
         m_depthOfFieldTransition.Lerp(value);
-        //m_grainTransition.Lerp(value);
+        m_grainTransition.Lerp(value);
         //m_lensDisstortionTransition.Lerp(value);
         //m_motionBlurTransition.Lerp(value);
         //m_screenSpaceReflectionsTransition.Lerp(value);
@@ -118,11 +118,11 @@ public class PostProcessTransition
             m_depthOfFieldTransition = null;
         }
 
-        //if(m_grainTransition != null)
-        //{
-        //    m_grainTransition.Destroy();
-        //    m_grainTransition = null;
-        //}
+        if (m_grainTransition != null)
+        {
+            m_grainTransition.Destroy();
+            m_grainTransition = null;
+        }
 
         //if(m_lensDisstortionTransition != null)
         //{
