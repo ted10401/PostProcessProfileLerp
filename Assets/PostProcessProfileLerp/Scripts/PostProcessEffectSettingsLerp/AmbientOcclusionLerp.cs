@@ -3,18 +3,21 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class AmbientOcclusionLerp : PostProcessEffectSettingsLerp<AmbientOcclusion>
 {
-    public AmbientOcclusionMode defaultMode;
+    public AmbientOcclusionMode fromMode;
+    public AmbientOcclusionMode toMode;
     public Vector2 intensity;
     public Color fromColor;
     public Color toColor;
-    public bool defaultAmbientOnly;
+    public bool fromAmbientOnly;
+    public bool toAmbientOnly;
     public Vector2 noiseFilterTolerance;
     public Vector2 blurTolerance;
     public Vector2 upsampleTolerance;
     public Vector2 thicknessModifier;
     public Vector2 directLightingStrength;
     public Vector2 radius;
-    public AmbientOcclusionQuality defaultQuality;
+    public AmbientOcclusionQuality fromQuality;
+    public AmbientOcclusionQuality toQuality;
 
     public AmbientOcclusionLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
@@ -22,7 +25,18 @@ public class AmbientOcclusionLerp : PostProcessEffectSettingsLerp<AmbientOcclusi
 
     public override void InitializeParameters()
     {
-        defaultMode = m_tempSettings.mode.value;
+        //mode
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mode.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.mode.overrideState))
+        {
+            m_tempSettings.mode.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.mode.overrideState = false;
+        }
+        fromMode = m_fromSettings != null && m_fromSettings.active && m_fromSettings.mode.overrideState ? m_fromSettings.mode.value : m_tempSettings.mode.value;
+        toMode = m_toSettings != null && m_toSettings.active && m_toSettings.mode.overrideState ? m_toSettings.mode.value : m_tempSettings.mode.value;
 
         //intensity
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensity.overrideState) ||
@@ -50,7 +64,18 @@ public class AmbientOcclusionLerp : PostProcessEffectSettingsLerp<AmbientOcclusi
         fromColor = m_fromSettings != null && m_fromSettings.active && m_fromSettings.color.overrideState ? m_fromSettings.color.value : m_tempSettings.color.value;
         toColor = m_toSettings != null && m_toSettings.active && m_toSettings.color.overrideState ? m_toSettings.color.value : m_tempSettings.color.value;
 
-        defaultAmbientOnly = m_tempSettings.ambientOnly;
+        //ambientOnly
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.ambientOnly.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.ambientOnly.overrideState))
+        {
+            m_tempSettings.ambientOnly.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.ambientOnly.overrideState = false;
+        }
+        fromAmbientOnly = m_fromSettings != null && m_fromSettings.active && m_fromSettings.ambientOnly.overrideState ? m_fromSettings.ambientOnly.value : m_tempSettings.ambientOnly.value;
+        toAmbientOnly = m_toSettings != null && m_toSettings.active && m_toSettings.ambientOnly.overrideState ? m_toSettings.ambientOnly.value : m_tempSettings.ambientOnly.value;
 
         //noiseFilterTolerance
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.noiseFilterTolerance.overrideState) ||
@@ -130,7 +155,18 @@ public class AmbientOcclusionLerp : PostProcessEffectSettingsLerp<AmbientOcclusi
         radius.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.radius.overrideState ? m_fromSettings.radius.value : m_tempSettings.radius.value;
         radius.y = m_toSettings != null && m_toSettings.active && m_toSettings.radius.overrideState ? m_toSettings.radius.value : m_tempSettings.radius.value;
 
-        defaultQuality = m_tempSettings.quality.value;
+        //quality
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.quality.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.quality.overrideState))
+        {
+            m_tempSettings.quality.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.quality.overrideState = false;
+        }
+        fromQuality = m_fromSettings != null && m_fromSettings.active && m_fromSettings.quality.overrideState ? m_fromSettings.quality.value : m_tempSettings.quality.value;
+        toQuality = m_toSettings != null && m_toSettings.active && m_toSettings.quality.overrideState ? m_toSettings.quality.value : m_tempSettings.quality.value;
     }
 
     public override void Lerp(float t)
@@ -140,116 +176,16 @@ public class AmbientOcclusionLerp : PostProcessEffectSettingsLerp<AmbientOcclusi
             return;
         }
 
-        //mode
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.mode.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.mode.overrideState))
-        {
-            m_tempSettings.mode.overrideState = true;
-
-            if(t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.mode.value = m_fromSettings.mode.value;
-                }
-                else
-                {
-                    m_tempSettings.mode.value = defaultMode;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.mode.value = m_toSettings.mode.value;
-                }
-                else
-                {
-                    m_tempSettings.mode.value = defaultMode;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.mode.overrideState = false;
-        }
-
-        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, t);
-        m_tempSettings.color.value = Color.Lerp(fromColor, toColor, t);
-
-        //ambientOnly
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.ambientOnly.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.ambientOnly.overrideState))
-        {
-            m_tempSettings.ambientOnly.overrideState = true;
-
-            if(t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.ambientOnly.value = m_fromSettings.ambientOnly.value;
-                }
-                else
-                {
-                    m_tempSettings.ambientOnly.value = defaultAmbientOnly;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.ambientOnly.value = m_toSettings.ambientOnly.value;
-                }
-                else
-                {
-                    m_tempSettings.ambientOnly.value = defaultAmbientOnly;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.ambientOnly.overrideState = false;
-        }
-
-        m_tempSettings.noiseFilterTolerance.value = Mathf.Lerp(noiseFilterTolerance.x, noiseFilterTolerance.y, t);
-        m_tempSettings.blurTolerance.value = Mathf.Lerp(blurTolerance.x, blurTolerance.y, t);
-        m_tempSettings.upsampleTolerance.value = Mathf.Lerp(upsampleTolerance.x, upsampleTolerance.y, t);
-        m_tempSettings.thicknessModifier.value = Mathf.Lerp(thicknessModifier.x, thicknessModifier.y, t);
-        m_tempSettings.directLightingStrength.value = Mathf.Lerp(directLightingStrength.x, directLightingStrength.y, t);
-        m_tempSettings.radius.value = Mathf.Lerp(radius.x, radius.y, t);
-
-        //quality
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.quality.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.quality.overrideState))
-        {
-            m_tempSettings.quality.overrideState = true;
-
-            if(t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.quality.value = m_fromSettings.quality.value;
-                }
-                else
-                {
-                    m_tempSettings.quality.value = defaultQuality;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.quality.value = m_toSettings.quality.value;
-                }
-                else
-                {
-                    m_tempSettings.quality.value = defaultQuality;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.quality.overrideState = false;
-        }
+        m_tempSettings.mode.Interp(fromMode, toMode, t);
+        m_tempSettings.intensity.Interp(intensity.x, intensity.y, t);
+        m_tempSettings.color.Interp(fromColor, toColor, t);
+        m_tempSettings.ambientOnly.Interp(fromAmbientOnly, toAmbientOnly, t);
+        m_tempSettings.noiseFilterTolerance.Interp(noiseFilterTolerance.x, noiseFilterTolerance.y, t);
+        m_tempSettings.blurTolerance.Interp(blurTolerance.x, blurTolerance.y, t);
+        m_tempSettings.upsampleTolerance.Interp(upsampleTolerance.x, upsampleTolerance.y, t);
+        m_tempSettings.thicknessModifier.Interp(thicknessModifier.x, thicknessModifier.y, t);
+        m_tempSettings.directLightingStrength.Interp(directLightingStrength.x, directLightingStrength.y, t);
+        m_tempSettings.radius.Interp(radius.x, radius.y, t);
+        m_tempSettings.quality.Interp(fromQuality, toQuality, t);
     }
 }

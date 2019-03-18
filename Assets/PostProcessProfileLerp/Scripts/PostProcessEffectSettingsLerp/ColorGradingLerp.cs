@@ -3,12 +3,20 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class ColorGradingLerp : PostProcessEffectSettingsLerp<ColorGrading>
 {
+    public GradingMode fromGradingMode;
+    public GradingMode toGradingMode;
+    public Texture fromExternalLut;
+    public Texture toExternalLut;
+    public Tonemapper fromTonemapper;
+    public Tonemapper toTonemapper;
     public Vector2 toneCurveToeStrength;
     public Vector2 toneCurveToeLength;
     public Vector2 toneCurveShoulderStrength;
     public Vector2 toneCurveShoulderLength;
     public Vector2 toneCurveShoulderAngle;
     public Vector2 toneCurveGamma;
+    public Texture fromLdrLut;
+    public Texture toLdrLut;
     public Vector2 ldrLutContribution;
     public Vector2 temperature;
     public Vector2 tint;
@@ -34,6 +42,22 @@ public class ColorGradingLerp : PostProcessEffectSettingsLerp<ColorGrading>
     public Vector4 toGamma;
     public Vector4 fromGain;
     public Vector4 toGain;
+    public Spline fromMasterCurve;
+    public Spline toMasterCurve;
+    public Spline fromRedCurve;
+    public Spline toRedCurve;
+    public Spline fromGreenCurve;
+    public Spline toGreenCurve;
+    public Spline fromBlueCurve;
+    public Spline toBlueCurve;
+    public Spline fromHueVsHueCurve;
+    public Spline toHueVsHueCurve;
+    public Spline fromHueVsSatCurve;
+    public Spline toHueVsSatCurve;
+    public Spline fromSatVsSatCurve;
+    public Spline toSatVsSatCurve;
+    public Spline fromLumVsSatCurve;
+    public Spline toLumVsSatCurve;
 
     public ColorGradingLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
@@ -41,6 +65,45 @@ public class ColorGradingLerp : PostProcessEffectSettingsLerp<ColorGrading>
 
     public override void InitializeParameters()
     {
+        //gradingMode
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.gradingMode.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.gradingMode.overrideState))
+        {
+            m_tempSettings.gradingMode.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.gradingMode.overrideState = false;
+        }
+        fromGradingMode = m_fromSettings != null && m_fromSettings.active && m_fromSettings.gradingMode.overrideState ? m_fromSettings.gradingMode.value : m_tempSettings.gradingMode.value;
+        toGradingMode = m_toSettings != null && m_toSettings.active && m_toSettings.gradingMode.overrideState ? m_toSettings.gradingMode.value : m_tempSettings.gradingMode.value;
+
+        //externalLut
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.externalLut.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.externalLut.overrideState))
+        {
+            m_tempSettings.externalLut.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.externalLut.overrideState = false;
+        }
+        fromExternalLut = m_fromSettings != null && m_fromSettings.active && m_fromSettings.externalLut.overrideState ? m_fromSettings.externalLut.value : m_tempSettings.externalLut.value;
+        toExternalLut = m_toSettings != null && m_toSettings.active && m_toSettings.externalLut.overrideState ? m_toSettings.externalLut.value : m_tempSettings.externalLut.value;
+
+        //tonemapper
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.tonemapper.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.tonemapper.overrideState))
+        {
+            m_tempSettings.tonemapper.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.tonemapper.overrideState = false;
+        }
+        fromTonemapper = m_fromSettings != null && m_fromSettings.active && m_fromSettings.tonemapper.overrideState ? m_fromSettings.tonemapper.value : m_tempSettings.tonemapper.value;
+        toTonemapper = m_toSettings != null && m_toSettings.active && m_toSettings.tonemapper.overrideState ? m_toSettings.tonemapper.value : m_tempSettings.tonemapper.value;
+
         //toneCurveToeStrength
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveToeStrength.overrideState) ||
             (m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveToeStrength.overrideState))
@@ -118,6 +181,19 @@ public class ColorGradingLerp : PostProcessEffectSettingsLerp<ColorGrading>
         }
         toneCurveGamma.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.toneCurveGamma.overrideState ? m_fromSettings.toneCurveGamma.value : m_tempSettings.toneCurveGamma.value;
         toneCurveGamma.y = m_toSettings != null && m_toSettings.active && m_toSettings.toneCurveGamma.overrideState ? m_toSettings.toneCurveGamma.value : m_tempSettings.toneCurveGamma.value;
+
+        //ldrLut
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.ldrLut.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.ldrLut.overrideState))
+        {
+            m_tempSettings.ldrLut.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.ldrLut.overrideState = false;
+        }
+        fromLdrLut = m_fromSettings != null && m_fromSettings.active && m_fromSettings.ldrLut.overrideState ? m_fromSettings.ldrLut.value : m_tempSettings.ldrLut.value;
+        toLdrLut = m_toSettings != null && m_toSettings.active && m_toSettings.ldrLut.overrideState ? m_toSettings.ldrLut.value : m_tempSettings.ldrLut.value;
 
         //ldrLutContribution
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.ldrLutContribution.overrideState) ||
@@ -391,6 +467,110 @@ public class ColorGradingLerp : PostProcessEffectSettingsLerp<ColorGrading>
         }
         fromGain = m_fromSettings != null && m_fromSettings.active && m_fromSettings.gain.overrideState ? m_fromSettings.gain.value : m_tempSettings.gain.value;
         toGain = m_toSettings != null && m_toSettings.active && m_toSettings.gain.overrideState ? m_toSettings.gain.value : m_tempSettings.gain.value;
+
+        //masterCurve
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.masterCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.masterCurve.overrideState))
+        {
+            m_tempSettings.masterCurve.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.masterCurve.overrideState = false;
+        }
+        fromMasterCurve = m_fromSettings != null && m_fromSettings.active && m_fromSettings.masterCurve.overrideState ? m_fromSettings.masterCurve.value : m_tempSettings.masterCurve.value;
+        toMasterCurve = m_toSettings != null && m_toSettings.active && m_toSettings.masterCurve.overrideState ? m_toSettings.masterCurve.value : m_tempSettings.masterCurve.value;
+
+        //redCurve
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.redCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.redCurve.overrideState))
+        {
+            m_tempSettings.redCurve.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.redCurve.overrideState = false;
+        }
+        fromRedCurve = m_fromSettings != null && m_fromSettings.active && m_fromSettings.redCurve.overrideState ? m_fromSettings.redCurve.value : m_tempSettings.redCurve.value;
+        toRedCurve = m_toSettings != null && m_toSettings.active && m_toSettings.redCurve.overrideState ? m_toSettings.redCurve.value : m_tempSettings.redCurve.value;
+
+        //greenCurve
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.greenCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.greenCurve.overrideState))
+        {
+            m_tempSettings.greenCurve.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.greenCurve.overrideState = false;
+        }
+        fromGreenCurve = m_fromSettings != null && m_fromSettings.active && m_fromSettings.greenCurve.overrideState ? m_fromSettings.greenCurve.value : m_tempSettings.greenCurve.value;
+        toGreenCurve = m_toSettings != null && m_toSettings.active && m_toSettings.greenCurve.overrideState ? m_toSettings.greenCurve.value : m_tempSettings.greenCurve.value;
+
+        //blueCurve
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.blueCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.blueCurve.overrideState))
+        {
+            m_tempSettings.blueCurve.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.blueCurve.overrideState = false;
+        }
+        fromBlueCurve = m_fromSettings != null && m_fromSettings.active && m_fromSettings.blueCurve.overrideState ? m_fromSettings.blueCurve.value : m_tempSettings.blueCurve.value;
+        toBlueCurve = m_toSettings != null && m_toSettings.active && m_toSettings.blueCurve.overrideState ? m_toSettings.blueCurve.value : m_tempSettings.blueCurve.value;
+
+        //hueVsHueCurve
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.hueVsHueCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.hueVsHueCurve.overrideState))
+        {
+            m_tempSettings.hueVsHueCurve.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.hueVsHueCurve.overrideState = false;
+        }
+        fromHueVsHueCurve = m_fromSettings != null && m_fromSettings.active && m_fromSettings.hueVsHueCurve.overrideState ? m_fromSettings.hueVsHueCurve.value : m_tempSettings.hueVsHueCurve.value;
+        toHueVsHueCurve = m_toSettings != null && m_toSettings.active && m_toSettings.hueVsHueCurve.overrideState ? m_toSettings.hueVsHueCurve.value : m_tempSettings.hueVsHueCurve.value;
+
+        //hueVsSatCurve
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.hueVsSatCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.hueVsSatCurve.overrideState))
+        {
+            m_tempSettings.hueVsSatCurve.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.hueVsSatCurve.overrideState = false;
+        }
+        fromHueVsSatCurve = m_fromSettings != null && m_fromSettings.active && m_fromSettings.hueVsSatCurve.overrideState ? m_fromSettings.hueVsSatCurve.value : m_tempSettings.hueVsSatCurve.value;
+        toHueVsSatCurve = m_toSettings != null && m_toSettings.active && m_toSettings.hueVsSatCurve.overrideState ? m_toSettings.hueVsSatCurve.value : m_tempSettings.hueVsSatCurve.value;
+
+        //satVsSatCurve
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.satVsSatCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.satVsSatCurve.overrideState))
+        {
+            m_tempSettings.satVsSatCurve.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.satVsSatCurve.overrideState = false;
+        }
+        fromSatVsSatCurve = m_fromSettings != null && m_fromSettings.active && m_fromSettings.satVsSatCurve.overrideState ? m_fromSettings.satVsSatCurve.value : m_tempSettings.satVsSatCurve.value;
+        toSatVsSatCurve = m_toSettings != null && m_toSettings.active && m_toSettings.satVsSatCurve.overrideState ? m_toSettings.satVsSatCurve.value : m_tempSettings.satVsSatCurve.value;
+
+        //lumVsSatCurve
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.lumVsSatCurve.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.lumVsSatCurve.overrideState))
+        {
+            m_tempSettings.lumVsSatCurve.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.lumVsSatCurve.overrideState = false;
+        }
+        fromLumVsSatCurve = m_fromSettings != null && m_fromSettings.active && m_fromSettings.lumVsSatCurve.overrideState ? m_fromSettings.lumVsSatCurve.value : m_tempSettings.lumVsSatCurve.value;
+        toLumVsSatCurve = m_toSettings != null && m_toSettings.active && m_toSettings.lumVsSatCurve.overrideState ? m_toSettings.lumVsSatCurve.value : m_tempSettings.lumVsSatCurve.value;
     }
 
     public override void Lerp(float t)
@@ -400,509 +580,44 @@ public class ColorGradingLerp : PostProcessEffectSettingsLerp<ColorGrading>
             return;
         }
 
-        //gradingMode
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.gradingMode.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.gradingMode.overrideState))
-        {
-            m_tempSettings.gradingMode.overrideState = true;
-
-            if(t < 0.5f)
-            {
-                if(m_fromSettings != null)
-                {
-                    m_tempSettings.gradingMode.value = m_fromSettings.gradingMode.value;
-                }
-                else
-                {
-                    m_tempSettings.gradingMode.value = GradingMode.HighDefinitionRange;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.gradingMode.value = m_toSettings.gradingMode.value;
-                }
-                else
-                {
-                    m_tempSettings.gradingMode.value = GradingMode.HighDefinitionRange;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.gradingMode.overrideState = false;
-        }
-
-        //externalLut
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.externalLut.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.externalLut.overrideState))
-        {
-            m_tempSettings.externalLut.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.externalLut.value = m_fromSettings.externalLut.value;
-                }
-                else
-                {
-                    m_tempSettings.externalLut.value = null;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.externalLut.value = m_toSettings.externalLut.value;
-                }
-                else
-                {
-                    m_tempSettings.externalLut.value = null;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.externalLut.overrideState = false;
-        }
-
-        //tonemapper
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.tonemapper.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.tonemapper.overrideState))
-        {
-            m_tempSettings.tonemapper.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.tonemapper.value = m_fromSettings.tonemapper.value;
-                }
-                else
-                {
-                    m_tempSettings.tonemapper.value = Tonemapper.None;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.tonemapper.value = m_toSettings.tonemapper.value;
-                }
-                else
-                {
-                    m_tempSettings.tonemapper.value = Tonemapper.None;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.tonemapper.overrideState = false;
-        }
-
-        //toneCurveToeStrength
-        m_tempSettings.toneCurveToeStrength.value = Mathf.Lerp(toneCurveToeStrength.x, toneCurveToeStrength.y, t);
-
-        //toneCurveToeLength
-        m_tempSettings.toneCurveToeLength.value = Mathf.Lerp(toneCurveToeLength.x, toneCurveToeLength.y, t);
-
-        //toneCurveShoulderStrength
-        m_tempSettings.toneCurveShoulderStrength.value = Mathf.Lerp(toneCurveShoulderStrength.x, toneCurveShoulderStrength.y, t);
-
-        //toneCurveShoulderLength
-        m_tempSettings.toneCurveShoulderLength.value = Mathf.Lerp(toneCurveShoulderLength.x, toneCurveShoulderLength.y, t);
-
-        //toneCurveShoulderAngle
-        m_tempSettings.toneCurveShoulderAngle.value = Mathf.Lerp(toneCurveShoulderAngle.x, toneCurveShoulderAngle.y, t);
-
-        //toneCurveGamma
-        m_tempSettings.toneCurveGamma.value = Mathf.Lerp(toneCurveGamma.x, toneCurveGamma.y, t);
-
-        //ldrLut
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.ldrLut.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.ldrLut.overrideState))
-        {
-            m_tempSettings.ldrLut.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.ldrLut.value = m_fromSettings.ldrLut.value;
-                }
-                else
-                {
-                    m_tempSettings.ldrLut.value = null;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.ldrLut.value = m_toSettings.ldrLut.value;
-                }
-                else
-                {
-                    m_tempSettings.ldrLut.value = null;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.ldrLut.overrideState = false;
-        }
-
-        //ldrLutContribution
-        m_tempSettings.ldrLutContribution.value = Mathf.Lerp(ldrLutContribution.x, ldrLutContribution.y, t);
-
-        //temperature
-        m_tempSettings.temperature.value = Mathf.Lerp(temperature.x, temperature.y, t);
-
-        //tint
-        m_tempSettings.tint.value = Mathf.Lerp(tint.x, tint.y, t);
-
-        //colorFilter
-        m_tempSettings.colorFilter.value = Color.Lerp(fromColorFilter, toColorFilter, t);
-
-        //hueShift
-        m_tempSettings.hueShift.value = Mathf.Lerp(hueShift.x, hueShift.y, t);
-
-        //saturation
-        m_tempSettings.saturation.value = Mathf.Lerp(saturation.x, saturation.y, t);
-
-        //brightness
-        m_tempSettings.brightness.value = Mathf.Lerp(brightness.x, brightness.y, t);
-
-        //postExposure
-        m_tempSettings.postExposure.value = Mathf.Lerp(postExposure.x, postExposure.y, t);
-
-        //contrast
-        m_tempSettings.contrast.value = Mathf.Lerp(contrast.x, contrast.y, t);
-
-        //mixerRedOutRedIn
-        m_tempSettings.mixerRedOutRedIn.value = Mathf.Lerp(mixerRedOutRedIn.x, mixerRedOutRedIn.y, t);
-
-        //mixerRedOutGreenIn
-        m_tempSettings.mixerRedOutGreenIn.value = Mathf.Lerp(mixerRedOutGreenIn.x, mixerRedOutGreenIn.y, t);
-
-        //mixerRedOutBlueIn
-        m_tempSettings.mixerRedOutBlueIn.value = Mathf.Lerp(mixerRedOutBlueIn.x, mixerRedOutBlueIn.y, t);
-
-        //mixerGreenOutRedIn
-        m_tempSettings.mixerGreenOutRedIn.value = Mathf.Lerp(mixerGreenOutRedIn.x, mixerGreenOutRedIn.y, t);
-
-        //mixerGreenOutGreenIn
-        m_tempSettings.mixerGreenOutGreenIn.value = Mathf.Lerp(mixerGreenOutGreenIn.x, mixerGreenOutGreenIn.y, t);
-
-        //mixerGreenOutBlueIn
-        m_tempSettings.mixerGreenOutBlueIn.value = Mathf.Lerp(mixerGreenOutBlueIn.x, mixerGreenOutBlueIn.y, t);
-
-        //mixerBlueOutRedIn
-        m_tempSettings.mixerBlueOutRedIn.value = Mathf.Lerp(mixerBlueOutRedIn.x, mixerBlueOutRedIn.y, t);
-
-        //mixerBlueOutGreenIn
-        m_tempSettings.mixerBlueOutGreenIn.value = Mathf.Lerp(mixerBlueOutGreenIn.x, mixerBlueOutGreenIn.y, t);
-
-        //mixerBlueOutBlueIn
-        m_tempSettings.mixerBlueOutBlueIn.value = Mathf.Lerp(mixerBlueOutBlueIn.x, mixerBlueOutBlueIn.y, t);
-
-        //lift
-        m_tempSettings.lift.value = Vector4.Lerp(fromLift, toLift, t);
-
-        //gamma
-        m_tempSettings.gamma.value = Vector4.Lerp(fromGamma, toGamma, t);
-
-        //gain
-        m_tempSettings.gain.value = Vector4.Lerp(fromGain, toGain, t);
-
-        //masterCurve
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.masterCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.masterCurve.overrideState))
-        {
-            m_tempSettings.masterCurve.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.masterCurve.value = m_fromSettings.masterCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.masterCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
-                    new Keyframe (0f, 0f, 1f, 1f),
-                    new Keyframe (1f, 1f, 1f, 1f)
-                    }), 0f, false, new Vector2(0f, 1f));
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.masterCurve.value = m_toSettings.masterCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.masterCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
-                    new Keyframe (0f, 0f, 1f, 1f),
-                    new Keyframe (1f, 1f, 1f, 1f)
-                    }), 0f, false, new Vector2(0f, 1f));
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.masterCurve.overrideState = false;
-        }
-
-        //redCurve
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.redCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.redCurve.overrideState))
-        {
-            m_tempSettings.redCurve.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.redCurve.value = m_fromSettings.redCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.redCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
-                    new Keyframe (0f, 0f, 1f, 1f),
-                    new Keyframe (1f, 1f, 1f, 1f)
-                    }), 0f, false, new Vector2(0f, 1f));
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.redCurve.value = m_toSettings.redCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.redCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
-                    new Keyframe (0f, 0f, 1f, 1f),
-                    new Keyframe (1f, 1f, 1f, 1f)
-                    }), 0f, false, new Vector2(0f, 1f));
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.redCurve.overrideState = false;
-        }
-
-        //greenCurve
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.greenCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.greenCurve.overrideState))
-        {
-            m_tempSettings.greenCurve.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.greenCurve.value = m_fromSettings.greenCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.greenCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
-                        new Keyframe (0f, 0f, 1f, 1f),
-                        new Keyframe (1f, 1f, 1f, 1f)
-                    }), 0f, false, new Vector2(0f, 1f));
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.greenCurve.value = m_toSettings.greenCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.greenCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
-                        new Keyframe (0f, 0f, 1f, 1f),
-                        new Keyframe (1f, 1f, 1f, 1f)
-                    }), 0f, false, new Vector2(0f, 1f));
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.greenCurve.overrideState = false;
-        }
-
-        //blueCurve
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.blueCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.blueCurve.overrideState))
-        {
-            m_tempSettings.blueCurve.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.blueCurve.value = m_fromSettings.blueCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.blueCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
-                        new Keyframe (0f, 0f, 1f, 1f),
-                        new Keyframe (1f, 1f, 1f, 1f)
-                    }), 0f, false, new Vector2(0f, 1f));
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.blueCurve.value = m_toSettings.blueCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.blueCurve.value = new Spline(new AnimationCurve((Keyframe[])new Keyframe[2] {
-                        new Keyframe (0f, 0f, 1f, 1f),
-                        new Keyframe (1f, 1f, 1f, 1f)
-                    }), 0f, false, new Vector2(0f, 1f));
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.blueCurve.overrideState = false;
-        }
-
-        //hueVsHueCurve
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.hueVsHueCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.hueVsHueCurve.overrideState))
-        {
-            m_tempSettings.hueVsHueCurve.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.hueVsHueCurve.value = m_fromSettings.hueVsHueCurve.value;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.hueVsHueCurve.value = m_toSettings.hueVsHueCurve.value;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.hueVsHueCurve.overrideState = false;
-        }
-
-        //hueVsSatCurve
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.hueVsSatCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.hueVsSatCurve.overrideState))
-        {
-            m_tempSettings.hueVsSatCurve.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.hueVsSatCurve.value = m_fromSettings.hueVsSatCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.hueVsSatCurve.value = m_toSettings.hueVsSatCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.hueVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.hueVsSatCurve.overrideState = false;
-        }
-
-        //satVsSatCurve
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.satVsSatCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.satVsSatCurve.overrideState))
-        {
-            m_tempSettings.satVsSatCurve.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.satVsSatCurve.value = m_fromSettings.satVsSatCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.satVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.satVsSatCurve.value = m_toSettings.satVsSatCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.satVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.satVsSatCurve.overrideState = false;
-        }
-
-        //lumVsSatCurve
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.lumVsSatCurve.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.lumVsSatCurve.overrideState))
-        {
-            m_tempSettings.lumVsSatCurve.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.lumVsSatCurve.value = m_fromSettings.lumVsSatCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.lumVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.lumVsSatCurve.value = m_toSettings.lumVsSatCurve.value;
-                }
-                else
-                {
-                    m_tempSettings.lumVsSatCurve.value = new Spline(new AnimationCurve(), 0.5f, true, new Vector2(0f, 1f));
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.lumVsSatCurve.overrideState = false;
-        }
+        m_tempSettings.gradingMode.Interp(fromGradingMode, toGradingMode, t);
+        m_tempSettings.externalLut.Interp(fromExternalLut, toExternalLut, t);
+        m_tempSettings.tonemapper.Interp(fromTonemapper, toTonemapper, t);
+        m_tempSettings.toneCurveToeStrength.Interp(toneCurveToeStrength.x, toneCurveToeStrength.y, t);
+        m_tempSettings.toneCurveToeLength.Interp(toneCurveToeLength.x, toneCurveToeLength.y, t);
+        m_tempSettings.toneCurveShoulderStrength.Interp(toneCurveShoulderStrength.x, toneCurveShoulderStrength.y, t);
+        m_tempSettings.toneCurveShoulderLength.Interp(toneCurveShoulderLength.x, toneCurveShoulderLength.y, t);
+        m_tempSettings.toneCurveShoulderAngle.Interp(toneCurveShoulderAngle.x, toneCurveShoulderAngle.y, t);
+        m_tempSettings.toneCurveGamma.Interp(toneCurveGamma.x, toneCurveGamma.y, t);
+        m_tempSettings.ldrLut.Interp(fromLdrLut, toLdrLut, t);
+        m_tempSettings.ldrLutContribution.Interp(ldrLutContribution.x, ldrLutContribution.y, t);
+        m_tempSettings.temperature.Interp(temperature.x, temperature.y, t);
+        m_tempSettings.tint.Interp(tint.x, tint.y, t);
+        m_tempSettings.colorFilter.Interp(fromColorFilter, toColorFilter, t);
+        m_tempSettings.hueShift.Interp(hueShift.x, hueShift.y, t);
+        m_tempSettings.saturation.Interp(saturation.x, saturation.y, t);
+        m_tempSettings.brightness.Interp(brightness.x, brightness.y, t);
+        m_tempSettings.postExposure.Interp(postExposure.x, postExposure.y, t);
+        m_tempSettings.contrast.Interp(contrast.x, contrast.y, t);
+        m_tempSettings.mixerRedOutRedIn.Interp(mixerRedOutRedIn.x, mixerRedOutRedIn.y, t);
+        m_tempSettings.mixerRedOutGreenIn.Interp(mixerRedOutGreenIn.x, mixerRedOutGreenIn.y, t);
+        m_tempSettings.mixerRedOutBlueIn.Interp(mixerRedOutBlueIn.x, mixerRedOutBlueIn.y, t);
+        m_tempSettings.mixerGreenOutRedIn.Interp(mixerGreenOutRedIn.x, mixerGreenOutRedIn.y, t);
+        m_tempSettings.mixerGreenOutGreenIn.Interp(mixerGreenOutGreenIn.x, mixerGreenOutGreenIn.y, t);
+        m_tempSettings.mixerGreenOutBlueIn.Interp(mixerGreenOutBlueIn.x, mixerGreenOutBlueIn.y, t);
+        m_tempSettings.mixerBlueOutRedIn.Interp(mixerBlueOutRedIn.x, mixerBlueOutRedIn.y, t);
+        m_tempSettings.mixerBlueOutGreenIn.Interp(mixerBlueOutGreenIn.x, mixerBlueOutGreenIn.y, t);
+        m_tempSettings.mixerBlueOutBlueIn.Interp(mixerBlueOutBlueIn.x, mixerBlueOutBlueIn.y, t);
+        m_tempSettings.lift.Interp(fromLift, toLift, t);
+        m_tempSettings.gamma.Interp(fromGamma, toGamma, t);
+        m_tempSettings.gain.Interp(fromGain, toGain, t);
+        m_tempSettings.masterCurve.Interp(fromMasterCurve, toMasterCurve, t);
+        m_tempSettings.redCurve.Interp(fromRedCurve, toRedCurve, t);
+        m_tempSettings.greenCurve.Interp(fromGreenCurve, toGreenCurve, t);
+        m_tempSettings.blueCurve.Interp(fromBlueCurve, toBlueCurve, t);
+        m_tempSettings.hueVsHueCurve.Interp(fromHueVsHueCurve, toHueVsHueCurve, t);
+        m_tempSettings.hueVsSatCurve.Interp(fromHueVsSatCurve, toHueVsSatCurve, t);
+        m_tempSettings.satVsSatCurve.Interp(fromSatVsSatCurve, toSatVsSatCurve, t);
+        m_tempSettings.lumVsSatCurve.Interp(fromLumVsSatCurve, toLumVsSatCurve, t);
     }
 }

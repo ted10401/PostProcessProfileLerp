@@ -3,7 +3,8 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class GrainLerp : PostProcessEffectSettingsLerp<Grain>
 {
-    public bool defaultColored;
+    public bool fromColored;
+    public bool toColored;
     public Vector2 intensity;
     public Vector2 size;
     public Vector2 lumContrib;
@@ -14,7 +15,18 @@ public class GrainLerp : PostProcessEffectSettingsLerp<Grain>
 
     public override void InitializeParameters()
     {
-        defaultColored = m_tempSettings.colored.value;
+        //colored
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.colored.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.colored.overrideState))
+        {
+            m_tempSettings.colored.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.colored.overrideState = false;
+        }
+        fromColored = m_fromSettings != null && m_fromSettings.active && m_fromSettings.colored.overrideState ? m_fromSettings.colored.value : m_tempSettings.colored.value;
+        toColored = m_toSettings != null && m_toSettings.active && m_toSettings.colored.overrideState ? m_toSettings.colored.value : m_tempSettings.colored.value;
 
         //intensity
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.intensity.overrideState) ||
@@ -63,42 +75,9 @@ public class GrainLerp : PostProcessEffectSettingsLerp<Grain>
             return;
         }
 
-        //colored
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.colored.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.colored.overrideState))
-        {
-            m_tempSettings.colored.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.colored.value = m_fromSettings.colored.value;
-                }
-                else
-                {
-                    m_tempSettings.colored.value = defaultColored;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.colored.value = m_toSettings.colored.value;
-                }
-                else
-                {
-                    m_tempSettings.colored.value = defaultColored;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.colored.overrideState = false;
-        }
-
-        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, t);
-        m_tempSettings.size.value = Mathf.Lerp(size.x, size.y, t);
-        m_tempSettings.lumContrib.value = Mathf.Lerp(lumContrib.x, lumContrib.y, t);
+        m_tempSettings.colored.Interp(fromColored, toColored, t);
+        m_tempSettings.intensity.Interp(intensity.x, intensity.y, t);
+        m_tempSettings.size.Interp(size.x, size.y, t);
+        m_tempSettings.lumContrib.Interp(lumContrib.x, lumContrib.y, t);
     }
 }

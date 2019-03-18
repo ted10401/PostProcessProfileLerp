@@ -6,7 +6,8 @@ public class DepthOfFieldLerp : PostProcessEffectSettingsLerp<DepthOfField>
     public Vector2 focusDistance;
     public Vector2 aperture;
     public Vector2 focalLength;
-    public KernelSizeParameter kernelSize;
+    public KernelSize fromKernelSize;
+    public KernelSize toKernelSize;
 
     public DepthOfFieldLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
@@ -52,6 +53,19 @@ public class DepthOfFieldLerp : PostProcessEffectSettingsLerp<DepthOfField>
         }
         focalLength.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.focalLength.overrideState ? m_fromSettings.focalLength.value : m_tempSettings.focalLength.value;
         focalLength.y = m_toSettings != null && m_toSettings.active && m_toSettings.focalLength.overrideState ? m_toSettings.focalLength.value : m_tempSettings.focalLength.value;
+
+        //kernelSize
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.kernelSize.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.kernelSize.overrideState))
+        {
+            m_tempSettings.kernelSize.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.kernelSize.overrideState = false;
+        }
+        fromKernelSize = m_fromSettings != null && m_fromSettings.active && m_fromSettings.kernelSize.overrideState ? m_fromSettings.kernelSize.value : m_tempSettings.kernelSize.value;
+        toKernelSize = m_toSettings != null && m_toSettings.active && m_toSettings.kernelSize.overrideState ? m_toSettings.kernelSize.value : m_tempSettings.kernelSize.value;
     }
 
     public override void Lerp(float t)
@@ -61,42 +75,9 @@ public class DepthOfFieldLerp : PostProcessEffectSettingsLerp<DepthOfField>
             return;
         }
 
-        m_tempSettings.focusDistance.value = Mathf.Lerp(focusDistance.x, focusDistance.y, t);
-        m_tempSettings.aperture.value = Mathf.Lerp(aperture.x, aperture.y, t);
-        m_tempSettings.focalLength.value = Mathf.Lerp(focalLength.x, focalLength.y, t);
-
-        //kernelSize
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.kernelSize.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.kernelSize.overrideState))
-        {
-            m_tempSettings.kernelSize.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.kernelSize.value = m_fromSettings.kernelSize.value;
-                }
-                else
-                {
-                    //m_tempSettings.kernelSize.value = false;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.kernelSize.value = m_toSettings.kernelSize.value;
-                }
-                else
-                {
-                    //m_tempSettings.kernelSize.value = false;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.kernelSize.overrideState = false;
-        }
+        m_tempSettings.focusDistance.Interp(focusDistance.x, focusDistance.y, t);
+        m_tempSettings.aperture.Interp(aperture.x, aperture.y, t);
+        m_tempSettings.focalLength.Interp(focalLength.x, focalLength.y, t);
+        m_tempSettings.kernelSize.Interp(fromKernelSize, toKernelSize, t);
     }
 }

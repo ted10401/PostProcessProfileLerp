@@ -12,6 +12,10 @@ public class BloomLerp : PostProcessEffectSettingsLerp<Bloom>
     public Color fromColor;
     public Color toColor;
     public Vector2 dirtIntensity;
+    public bool fromFastMode;
+    public bool toFastMode;
+    public Texture fromDirtTexture;
+    public Texture toDirtTexture;
 
     public BloomLerp(PostProcessProfile from, PostProcessProfile to, PostProcessProfile temp) : base(from, to, temp)
     {
@@ -122,6 +126,32 @@ public class BloomLerp : PostProcessEffectSettingsLerp<Bloom>
         }
         dirtIntensity.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.dirtIntensity.overrideState ? m_fromSettings.dirtIntensity.value : m_tempSettings.dirtIntensity.value;
         dirtIntensity.y = m_toSettings != null && m_toSettings.active && m_toSettings.dirtIntensity.overrideState ? m_toSettings.dirtIntensity.value : m_tempSettings.dirtIntensity.value;
+
+        //fastMode
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.fastMode.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.fastMode.overrideState))
+        {
+            m_tempSettings.fastMode.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.fastMode.overrideState = false;
+        }
+        fromFastMode = m_fromSettings != null && m_fromSettings.active && m_fromSettings.fastMode.overrideState ? m_fromSettings.fastMode.value : m_tempSettings.fastMode.value;
+        toFastMode = m_toSettings != null && m_toSettings.active && m_toSettings.fastMode.overrideState ? m_toSettings.fastMode.value : m_tempSettings.fastMode.value;
+
+        //dirtTexture
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.dirtTexture.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.dirtTexture.overrideState))
+        {
+            m_tempSettings.dirtTexture.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.dirtTexture.overrideState = false;
+        }
+        fromDirtTexture = m_fromSettings != null && m_fromSettings.active && m_fromSettings.dirtTexture.overrideState ? m_fromSettings.dirtTexture.value : m_tempSettings.dirtTexture.value;
+        toDirtTexture = m_toSettings != null && m_toSettings.active && m_toSettings.dirtTexture.overrideState ? m_toSettings.dirtTexture.value : m_tempSettings.dirtTexture.value;
     }
 
     public override void Lerp(float t)
@@ -131,81 +161,15 @@ public class BloomLerp : PostProcessEffectSettingsLerp<Bloom>
             return;
         }
 
-        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, t);
-        m_tempSettings.threshold.value = Mathf.Lerp(threshold.x, threshold.y, t);
-        m_tempSettings.softKnee.value = Mathf.Lerp(softKnee.x, softKnee.y, t);
-        m_tempSettings.clamp.value = Mathf.Lerp(clamp.x, clamp.y, t);
-        m_tempSettings.diffusion.value = Mathf.Lerp(diffusion.x, diffusion.y, t);
-        m_tempSettings.anamorphicRatio.value = Mathf.Lerp(anamorphicRatio.x, anamorphicRatio.y, t);
-        m_tempSettings.color.value = Color.Lerp(fromColor, toColor, t);
-        m_tempSettings.dirtIntensity.value = Mathf.Lerp(dirtIntensity.x, dirtIntensity.y, t);
-
-        //fastMode
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.fastMode.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.fastMode.overrideState))
-        {
-            m_tempSettings.fastMode.overrideState = true;
-
-            if(t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.fastMode.value = m_fromSettings.fastMode.value;
-                }
-                else
-                {
-                    m_tempSettings.fastMode.value = false;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.fastMode.value = m_toSettings.fastMode.value;
-                }
-                else
-                {
-                    m_tempSettings.fastMode.value = false;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.fastMode.overrideState = false;
-        }
-
-        //dirtTexture
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.dirtTexture.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.dirtTexture.overrideState))
-        {
-            m_tempSettings.dirtTexture.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.dirtTexture.value = m_fromSettings.dirtTexture.value;
-                }
-                else
-                {
-                    m_tempSettings.dirtTexture.value = null;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.dirtTexture.value = m_toSettings.dirtTexture.value;
-                }
-                else
-                {
-                    m_tempSettings.dirtTexture.value = null;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.dirtTexture.overrideState = false;
-        }
+        m_tempSettings.intensity.Interp(intensity.x, intensity.y, t);
+        m_tempSettings.threshold.Interp(threshold.x, threshold.y, t);
+        m_tempSettings.softKnee.Interp(softKnee.x, softKnee.y, t);
+        m_tempSettings.clamp.Interp(clamp.x, clamp.y, t);
+        m_tempSettings.diffusion.Interp(diffusion.x, diffusion.y, t);
+        m_tempSettings.anamorphicRatio.Interp(anamorphicRatio.x, anamorphicRatio.y, t);
+        m_tempSettings.color.Interp(fromColor, toColor, t);
+        m_tempSettings.dirtIntensity.Interp(dirtIntensity.x, dirtIntensity.y, t);
+        m_tempSettings.fastMode.Interp(fromFastMode, toFastMode, t);
+        m_tempSettings.dirtTexture.Interp(fromDirtTexture, toDirtTexture, t);
     }
 }

@@ -3,9 +3,11 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class ScreenSpaceReflectionsLerp : PostProcessEffectSettingsLerp<ScreenSpaceReflections>
 {
-    public ScreenSpaceReflectionPreset defaultPresent;
-    public Vector2 maximumIterationCount;
-    public ScreenSpaceReflectionResolution defaultResolution;
+    public ScreenSpaceReflectionPreset fromPresent;
+    public ScreenSpaceReflectionPreset toPresent;
+    public Vector2Int maximumIterationCount;
+    public ScreenSpaceReflectionResolution fromResolution;
+    public ScreenSpaceReflectionResolution toResolution;
     public Vector2 thickness;
     public Vector2 maximumMarchDistance;
     public Vector2 distanceFade;
@@ -17,7 +19,18 @@ public class ScreenSpaceReflectionsLerp : PostProcessEffectSettingsLerp<ScreenSp
 
     public override void InitializeParameters()
     {
-        defaultPresent = m_tempSettings.preset.value;
+        //preset
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.preset.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.preset.overrideState))
+        {
+            m_tempSettings.preset.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.preset.overrideState = false;
+        }
+        fromPresent = m_fromSettings != null && m_fromSettings.active && m_fromSettings.preset.overrideState ? m_fromSettings.preset.value : m_tempSettings.preset.value;
+        toPresent = m_toSettings != null && m_toSettings.active && m_toSettings.preset.overrideState ? m_toSettings.preset.value : m_tempSettings.preset.value;
 
         //maximumIterationCount
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.maximumIterationCount.overrideState) ||
@@ -32,7 +45,18 @@ public class ScreenSpaceReflectionsLerp : PostProcessEffectSettingsLerp<ScreenSp
         maximumIterationCount.x = m_fromSettings != null && m_fromSettings.active && m_fromSettings.maximumIterationCount.overrideState ? m_fromSettings.maximumIterationCount.value : m_tempSettings.maximumIterationCount.value;
         maximumIterationCount.y = m_toSettings != null && m_toSettings.active && m_toSettings.maximumIterationCount.overrideState ? m_toSettings.maximumIterationCount.value : m_tempSettings.maximumIterationCount.value;
 
-        defaultResolution = m_tempSettings.resolution.value;
+        //resolution
+        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.resolution.overrideState) ||
+            (m_toSettings != null && m_toSettings.active && m_toSettings.resolution.overrideState))
+        {
+            m_tempSettings.resolution.overrideState = true;
+        }
+        else
+        {
+            m_tempSettings.resolution.overrideState = false;
+        }
+        fromResolution = m_fromSettings != null && m_fromSettings.active && m_fromSettings.resolution.overrideState ? m_fromSettings.resolution.value : m_tempSettings.resolution.value;
+        toResolution = m_toSettings != null && m_toSettings.active && m_toSettings.resolution.overrideState ? m_toSettings.resolution.value : m_tempSettings.resolution.value;
 
         //thickness
         if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.thickness.overrideState) ||
@@ -94,79 +118,12 @@ public class ScreenSpaceReflectionsLerp : PostProcessEffectSettingsLerp<ScreenSp
             return;
         }
 
-        //preset
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.preset.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.preset.overrideState))
-        {
-            m_tempSettings.preset.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.preset.value = m_fromSettings.preset.value;
-                }
-                else
-                {
-                    m_tempSettings.preset.value = defaultPresent;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.preset.value = m_toSettings.preset.value;
-                }
-                else
-                {
-                    m_tempSettings.preset.value = defaultPresent;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.preset.overrideState = false;
-        }
-
-        m_tempSettings.maximumIterationCount.value = (int)Mathf.Lerp(maximumIterationCount.x, maximumIterationCount.y, t);
-
-        //resolution
-        if ((m_fromSettings != null && m_fromSettings.active && m_fromSettings.resolution.overrideState) ||
-            (m_toSettings != null && m_toSettings.active && m_toSettings.resolution.overrideState))
-        {
-            m_tempSettings.resolution.overrideState = true;
-
-            if (t < 0.5f)
-            {
-                if (m_fromSettings != null)
-                {
-                    m_tempSettings.resolution.value = m_fromSettings.resolution.value;
-                }
-                else
-                {
-                    m_tempSettings.resolution.value = defaultResolution;
-                }
-            }
-            else
-            {
-                if (m_toSettings != null)
-                {
-                    m_tempSettings.resolution.value = m_toSettings.resolution.value;
-                }
-                else
-                {
-                    m_tempSettings.resolution.value = defaultResolution;
-                }
-            }
-        }
-        else
-        {
-            m_tempSettings.resolution.overrideState = false;
-        }
-
-        m_tempSettings.thickness.value = Mathf.Lerp(thickness.x, thickness.y, t);
-        m_tempSettings.maximumMarchDistance.value = Mathf.Lerp(maximumMarchDistance.x, maximumMarchDistance.y, t);
-        m_tempSettings.distanceFade.value = Mathf.Lerp(distanceFade.x, distanceFade.y, t);
-        m_tempSettings.vignette.value = Mathf.Lerp(vignette.x, vignette.y, t);
+        m_tempSettings.preset.Interp(fromPresent, toPresent, t);
+        m_tempSettings.maximumIterationCount.Interp(maximumIterationCount.x, maximumIterationCount.y, t);
+        m_tempSettings.resolution.Interp(fromResolution, toResolution, t);
+        m_tempSettings.thickness.Interp(thickness.x, thickness.y, t);
+        m_tempSettings.maximumMarchDistance.Interp(maximumMarchDistance.x, maximumMarchDistance.y, t);
+        m_tempSettings.distanceFade.Interp(distanceFade.x, distanceFade.y, t);
+        m_tempSettings.vignette.Interp(vignette.x, vignette.y, t);
     }
 }

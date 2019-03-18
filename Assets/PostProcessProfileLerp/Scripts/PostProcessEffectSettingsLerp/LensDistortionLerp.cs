@@ -102,11 +102,11 @@ public class LensDistortionLerp : PostProcessEffectSettingsLerp<LensDistortion>
             return;
         }
 
-        m_tempSettings.intensity.value = Mathf.Lerp(intensity.x, intensity.y, t);
-        m_tempSettings.intensityX.value = Mathf.Lerp(intensityX.x, intensityX.y, t);
-        m_tempSettings.intensityY.value = Mathf.Lerp(intensityY.x, intensityY.y, t);
-        m_tempSettings.centerX.value = Mathf.Lerp(centerX.x, centerX.y, t);
-        m_tempSettings.centerY.value = Mathf.Lerp(centerY.x, centerY.y, t);
-        m_tempSettings.scale.value = Mathf.Lerp(scale.x, scale.y, t);
+        m_tempSettings.intensity.Interp(intensity.x, intensity.y, t);
+        m_tempSettings.intensityX.Interp(intensityX.x, intensityX.y, t);
+        m_tempSettings.intensityY.Interp(intensityY.x, intensityY.y, t);
+        m_tempSettings.centerX.Interp(centerX.x, centerX.y, t);
+        m_tempSettings.centerY.Interp(centerY.x, centerY.y, t);
+        m_tempSettings.scale.Interp(scale.x, scale.y, t);
     }
 }
