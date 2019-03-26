@@ -1,31 +1,32 @@
-﻿using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
-
-public class UnitTest_PostProcessProfileLerp : MonoBehaviour
+﻿
+namespace UnityEngine.Rendering.PostProcessing
 {
-    public PostProcessProfile postProcessProfileA;
-    public PostProcessProfile postProcessProfileB;
-    [Range(0f, 1f)] public float lerp;
-
-    private PostProcessVolume m_postProcessVolumn;
-
-    private void Start()
+    public class UnitTest_PostProcessProfileLerp : MonoBehaviour
     {
-        m_postProcessVolumn = GetComponent<PostProcessVolume>();
-    }
+        public PostProcessProfile postProcessProfileA;
+        public PostProcessProfile postProcessProfileB;
+        [Range(0f, 1f)] public float lerp;
 
-    private void OnValidate()
-    {
-        if(m_postProcessVolumn == null)
+        private PostProcessVolume m_postProcessVolumn;
+
+        private void Start()
         {
-            return;
+            m_postProcessVolumn = GetComponent<PostProcessVolume>();
         }
 
-        if(postProcessProfileA == null || postProcessProfileB == null)
+        private void OnValidate()
         {
-            return;
-        }
+            if (m_postProcessVolumn == null)
+            {
+                return;
+            }
 
-        m_postProcessVolumn.profile = PostProcessProfileUtility.Lerp(postProcessProfileA, postProcessProfileB, lerp);
+            if (postProcessProfileA == null || postProcessProfileB == null)
+            {
+                return;
+            }
+
+            m_postProcessVolumn.profile = PostProcessProfileUtility.Lerp(postProcessProfileA, postProcessProfileB, lerp);
+        }
     }
 }

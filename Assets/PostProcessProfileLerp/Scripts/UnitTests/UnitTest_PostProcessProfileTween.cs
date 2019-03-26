@@ -1,42 +1,43 @@
-﻿using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
-
-public class UnitTest_PostProcessProfileTween : MonoBehaviour
+﻿
+namespace UnityEngine.Rendering.PostProcessing
 {
-    public PostProcessProfile postProcessProfileA;
-    public PostProcessProfile postProcessProfileB;
-    public float duration;
-
-    private PostProcessVolume m_postProcessVolume;
-    private PostProcessProfileTween m_postProcessProfileTween;
-
-    private void Start()
+    public class UnitTest_PostProcessProfileTween : MonoBehaviour
     {
-        m_postProcessVolume = GetComponent<PostProcessVolume>();
-    }
+        public PostProcessProfile postProcessProfileA;
+        public PostProcessProfile postProcessProfileB;
+        public float duration;
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        private PostProcessVolume m_postProcessVolume;
+        private PostProcessProfileTween m_postProcessProfileTween;
+
+        private void Start()
         {
-            if(m_postProcessProfileTween != null)
-            {
-                m_postProcessProfileTween.Kill();
-                m_postProcessProfileTween = null;
-            }
-
-            m_postProcessProfileTween = m_postProcessVolume.To(postProcessProfileA, duration);
+            m_postProcessVolume = GetComponent<PostProcessVolume>();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        private void Update()
         {
-            if (m_postProcessProfileTween != null)
+            if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                m_postProcessProfileTween.Kill();
-                m_postProcessProfileTween = null;
+                if (m_postProcessProfileTween != null)
+                {
+                    m_postProcessProfileTween.Kill();
+                    m_postProcessProfileTween = null;
+                }
+
+                m_postProcessProfileTween = m_postProcessVolume.To(postProcessProfileA, duration);
             }
 
-            m_postProcessProfileTween = m_postProcessVolume.To(postProcessProfileB, duration);
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                if (m_postProcessProfileTween != null)
+                {
+                    m_postProcessProfileTween.Kill();
+                    m_postProcessProfileTween = null;
+                }
+
+                m_postProcessProfileTween = m_postProcessVolume.To(postProcessProfileB, duration);
+            }
         }
     }
 }
